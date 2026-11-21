@@ -1,0 +1,17 @@
+{
+  "name": "stockledger",
+  "version": "1.0.0",
+  "description": "Stockledger (FactoryFlow ERP) - Enterprise Food Manufacturing & Inventory Management ERP",
+  "scripts": {
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build:backend": "cd backend && npm run build",
+    "build:frontend": "cd frontend && npm run build",
+    "build": "cd backend && npm run build && cd ../frontend && npm run build",
+    "test": "cd backend && npm test",
+    "test:benchmark": "cd backend && npx tsx src/engine/benchmarkRunner.ts"
+  },
+  "keywords": ["erp", "manufacturing", "inventory", "stock-ledger", "nit-trichy", "gst"],
+  "author": "Ramanan Sethuraman",
+  "license": "ISC"
+}
