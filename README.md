@@ -1,8 +1,8 @@
-# Stockledger (FactoryFlow ERP)
-> **From Order to Audit. One Connected System.**
+# Stockledger
+> **Every Stock. Every Transaction. Every Detail.**
 > Enterprise-grade Manufacturing & Inventory Management ERP designed for food manufacturing operations.
 
-[![NIT Trichy Benchmark](https://img.shields.io/badge/NIT%20Trichy%20Benchmark-100%25%20Verified-success)](#benchmark-verification)
+[![Manufacturing Benchmark](https://img.shields.io/badge/Manufacturing%20Benchmark-100%25%20Verified-success)](#benchmark-verification)
 [![Architecture](https://img.shields.io/badge/Architecture-Double--Entry%20Ledger-blue)](#architecture)
 [![Tax Compliance](https://img.shields.io/badge/Statutory-GST%20Compliant-orange)](#gst-compliance)
 
@@ -10,9 +10,9 @@
 
 ## 🏛️ Executive Summary & Engineering Architecture
 
-Stockledger (FactoryFlow ERP) is a production-grade enterprise resource planning platform engineered specifically for the precision demands of South Indian food processing enterprises. 
+Stockledger is a production-grade enterprise resource planning platform engineered specifically for the precision demands of South Indian food processing enterprises. 
 
-Unlike conventional academic prototypes or superficial CRUD applications, Stockledger incorporates:
+Unlike conventional prototypes or superficial CRUD applications, Stockledger incorporates:
 1. **Ledger-Based Inventory Model**: No direct balance overwrites; all material and finished good movements are recorded as immutable, traceable double-entry ledger entries.
 2. **Version-Controlled BOM & Production Engine**: Dynamically calculates standard material allowances, tracks actual batch issues, and isolates yield and ingredient variances.
 3. **Statutory GST Invoicing**: Full support for Intra-state (CGST + SGST) and Inter-state (IGST) tax calculation, HSN code management, and payment reconciliation.
@@ -30,13 +30,13 @@ The project includes deep-dive engineering blueprints in the `/docs` directory:
 - [UI/UX Design Specification](docs/UI_UX_DESIGN_PLAN.md)
 - [Development Roadmap & Verification Plan](docs/DEVELOPMENT_ROADMAP.md)
 - [Risk Register & Mitigation Strategy](docs/RISK_REGISTER.md)
-- [NIT Trichy Benchmark Verification Specification](docs/BENCHMARK_VERIFICATION_SPEC.md)
+- [Food Manufacturing Benchmark Verification Specification](docs/BENCHMARK_VERIFICATION_SPEC.md)
 
 ---
 
 ## 🎯 Mandatory Benchmark Verification (Murukku 200g)
 
-The system passes every criterion of the NIT Tiruchirappalli benchmark test:
+The system passes every criterion of the standard food manufacturing benchmark test:
 
 | Step / Metric | Expected Value | Stockledger Calculation | Status |
 |:---|:---:|:---:|:---:|
@@ -59,7 +59,7 @@ The system passes every criterion of the NIT Tiruchirappalli benchmark test:
 ---
 
 ## 🛠️ Technology Stack
-- **Frontend**: React 18, TypeScript, Vite, Tailwind CSS, shadcn/ui, Lucide React, TanStack Query, React Hook Form, Zod, Recharts
+- **Frontend**: React 18, TypeScript, Vite, Tailwind CSS, Lucide React, Recharts
 - **Backend**: Node.js, Express, TypeScript, RESTful architecture
 - **Database & ORM**: PostgreSQL, Prisma ORM (Strict `Decimal(12,4)` and `Decimal(14,2)` scaling)
 - **Testing**: Vitest, React Testing Library, Supertest

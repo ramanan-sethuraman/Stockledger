@@ -1,7 +1,7 @@
 {
   "name": "stockledger-backend",
   "version": "1.0.0",
-  "description": "Stockledger (FactoryFlow ERP) Enterprise Backend Service",
+  "description": "Stockledger Enterprise Backend Service",
   "main": "dist/server.js",
   "scripts": {
     "build": "tsc",

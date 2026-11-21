@@ -2,8 +2,8 @@ import Decimal from 'decimal.js';
 import { BenchmarkEngine } from './benchmarkCalculationEngine.js';
 
 console.log('====================================================');
-console.log('NIT TIRUCHIRAPPALLI ERP BENCHMARK - AUTOMATED RUNNER');
-console.log('Product: Murukku 200g (Tamil Nadu Food Manufacturing)');
+console.log('STANDARD FOOD MANUFACTURING ERP BENCHMARK - RUNNER');
+console.log('Product: Murukku 200g (Tamil Nadu Manufacturing)');
 console.log('====================================================\n');
 
 function assertEqual(actual: Decimal | number, expected: Decimal | number, label: string) {
@@ -139,5 +139,5 @@ const step12 = BenchmarkEngine.applyPayment(
 assertEqual(step12.outstanding, 3875, 'Step 12: Remaining Outstanding Balance (₹)');
 
 console.log('\n====================================================');
-console.log('🎯 ALL 15 NIT TRICHY BENCHMARK CRITERIA VERIFIED 100%');
+console.log('🎯 ALL 15 BENCHMARK CRITERIA VERIFIED 100%');
 console.log('====================================================\n');

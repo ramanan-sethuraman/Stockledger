@@ -1,5 +1,5 @@
 # SYSTEM ARCHITECTURE SPECIFICATION
-## FactoryFlow ERP / Stockledger
+## Stockledger
 
 ### 1. High-Level System Architecture Diagram
 
@@ -12,7 +12,7 @@ flowchart TD
         UI_INV["Inventory & Ledger Console (Store Manager)"]
         UI_FIN["GST Invoicing & Payments (Accounts)"]
         UI_DASH["Executive Dashboard & Audit (Owner / Auditor)"]
-        STATE_MGR["TanStack Query (Cache & Sync) + React Hook Form + Zod"]
+        STATE_MGR["State Synchronization + React Hook Form + Zod"]
     end
 
     subgraph API_GATEWAY["API Gateway & Middleware Layer (Node.js + Express + TS)"]
@@ -45,7 +45,7 @@ flowchart TD
 
     CLIENT_TIER -->|HTTPS / JSON REST| API_GATEWAY
     API_GATEWAY --> BUSINESS_ENGINES
-    BUSINESS_ENGINES -->|Prisma Client / Atomic Prisma Transactions| DATA_TIER
+    BUSINESS_ENGINES -->|Prisma Client / Atomic Transactions| DATA_TIER
 ```
 
 ---
@@ -99,14 +99,11 @@ sequenceDiagram
 
 ### 3. Key Non-Negotiable Architecture Rules
 
-1. **Immutable Stock Ledger**: Stock levels are never updated with simple `UPDATE items SET quantity = quantity - x`. Instead, every movement inserts an immutable row into `stock_ledger`. The current stock balance is either dynamically summed or maintained in a strictly synchronized projection table with optimistic locking (`version` column).
+1. **Immutable Stock Ledger**: Stock levels are never updated with simple `UPDATE items SET quantity = quantity - x`. Instead, every movement inserts an immutable row into `stock_ledger`.
 2. **Deterministic Financial Arithmetic**: All monetary quantities and fractional weights are stored with explicit scale:
-   - Money: `Decimal(14, 2)` (or integer paisa equivalent)
+   - Money: `Decimal(14, 2)`
    - Quantities & UOM rates: `Decimal(12, 4)`
    - Floating point arithmetic is strictly forbidden in calculations.
-3. **Optimistic & Pessimistic Concurrency**:
-   - Stock allocations during concurrent order placement acquire pessimistic row locks (`SELECT FOR UPDATE`) or optimistic version checks to prevent race condition overselling.
-4. **Statutory Tax Engine**:
-   - Intra-state transaction (Supplier/Factory in Tamil Nadu -> Customer in Tamil Nadu): Splits into equal CGST (2.5%) and SGST (2.5%).
+3. **Statutory Tax Engine**:
+   - Intra-state transaction (Tamil Nadu): Splits into equal CGST (2.5%) and SGST (2.5%).
    - Inter-state transaction: IGST (5.0%).
-   - Rounding conforms to Indian GST Rule 54 (half-up rounding to nearest rupee on total invoice, exact two decimals on itemized line totals).

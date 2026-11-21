@@ -1,5 +1,5 @@
 # REQUIREMENT TRACEABILITY MATRIX (RTM)
-## Stockledger / FactoryFlow ERP
+## Stockledger
 **Enterprise Food Manufacturing Order-to-Audit Management System**
 
 | Req ID | Module Name | Business Requirement & Acceptance Criteria | Architectural Component | Database Tables | Automated Test Verification |

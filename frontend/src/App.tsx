@@ -3,34 +3,24 @@ import {
   Layers,
   Package,
   Factory,
-  ShoppingCart,
   FileText,
   DollarSign,
   TrendingUp,
   AlertTriangle,
   CheckCircle2,
   Play,
-  RotateCcw,
   ShieldCheck,
-  User,
-  Search,
   Calendar,
-  Building2,
   ChevronRight,
-  Printer,
   Sparkles,
-  BarChart3,
-  Clock,
-  ArrowUpRight,
-  ArrowDownRight
+  BarChart3
 } from 'lucide-react';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<'dashboard' | 'benchmark' | 'ledger' | 'production' | 'invoicing' | 'audit'>('dashboard');
   const [activeRole, setActiveRole] = useState<'ADMIN' | 'SUPERVISOR' | 'SALES' | 'AUDITOR'>('ADMIN');
-  const [benchmarkExecuted, setBenchmarkExecuted] = useState(true);
 
-  // Exact NIT Trichy Benchmark Data States
+  // Exact Benchmark Data States
   const benchmarkSteps = [
     { id: 1, title: 'Purchase 60 kg Flour @ ₹45/kg', category: 'PURCHASE', status: 'VERIFIED', result: 'Flour stock: 160.00 kg @ ₹43.1250/kg weighted rate (Valuation: ₹6,900.00)' },
     { id: 2, title: 'Issue 40 kg Flour for Batch', category: 'PRODUCTION', status: 'VERIFIED', result: 'Flour remaining: 120.00 kg (Standard: 40 kg, Actual: 40 kg, 0% variance)' },
@@ -39,7 +29,7 @@ export default function App() {
     { id: 5, title: 'Record 188 Good Packets Output', category: 'PRODUCTION', status: 'VERIFIED', result: 'Yield variance: -6.0% (Standard: 200 pkts, Actual: 188 pkts). FG Stock: 238 pkts' },
     { id: 6, title: 'Record 6 Damaged Pouches', category: 'PACKAGING', status: 'VERIFIED', result: 'Pouches consumed: 194 (188 good + 6 scrap). Pouches remaining: 306 pcs' },
     { id: 7, title: 'Record 9 Shipping Cartons Used', category: 'PACKAGING', status: 'VERIFIED', result: 'Cartons consumed: 9 pcs. Cartons remaining: 21 pcs' },
-    { id: 8, title: 'Salesman A Orders 150 Packets', category: 'SALES', status: 'VERIFIED', result: 'Order SO-001 created for Trichy Wholesale Confectioneries' },
+    { id: 8, title: 'Salesman A Orders 150 Packets', category: 'SALES', status: 'VERIFIED', result: 'Order SO-001 created for Cauvery Wholesale Confectioneries' },
     { id: 9, title: 'Admin Approves, Invoices & Dispatches', category: 'GST & DISPATCH', status: 'VERIFIED', result: 'Taxable: ₹7,500 | CGST: ₹187.50 | SGST: ₹187.50 | Total: ₹7,875.00 | FG Remaining: 88 pkts' },
     { id: 10, title: 'Salesman B Orders 120 Packets', category: 'SALES', status: 'VERIFIED', result: 'Order SO-002 submitted by Salesman B' },
     { id: 11, title: 'Shortage Exception Handling', category: 'INVENTORY', status: 'VERIFIED', result: 'Available: 88 pkts, Requested: 120 pkts -> Shortage of 32 packets flagged!' },
@@ -61,7 +51,7 @@ export default function App() {
             </div>
             <div>
               <h1 className="font-bold text-base tracking-tight leading-none text-white">STOCKLEDGER</h1>
-              <span className="text-[10px] text-blue-300 font-medium tracking-wide uppercase">FactoryFlow ERP v1.0</span>
+              <span className="text-[10px] text-blue-300 font-medium tracking-wide uppercase">Enterprise ERP v1.0</span>
             </div>
           </div>
 
@@ -84,7 +74,7 @@ export default function App() {
               }`}
             >
               <Sparkles className="w-4 h-4 text-amber-400" />
-              NIT Trichy Benchmark
+              Manufacturing Benchmark
               <span className="ml-auto text-[10px] bg-green-500/20 text-green-300 px-1.5 py-0.5 rounded font-bold">15/15</span>
             </button>
 
@@ -147,7 +137,7 @@ export default function App() {
           </select>
           <div className="mt-2 flex items-center gap-2 text-[11px] text-slate-400 px-1">
             <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-            Backend: Online (Express + TS)
+            System Engine: Online (Express + TS)
           </div>
         </div>
       </aside>
@@ -157,7 +147,7 @@ export default function App() {
         {/* Top Header */}
         <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-8 sticky top-0 z-10">
           <div className="flex items-center gap-3 text-sm">
-            <span className="font-semibold text-slate-500">FactoryFlow ERP</span>
+            <span className="font-semibold text-slate-500">Stockledger</span>
             <ChevronRight className="w-4 h-4 text-slate-400" />
             <span className="font-bold text-slate-900 capitalize">{activeTab}</span>
           </div>
@@ -192,7 +182,7 @@ export default function App() {
                   className="flex items-center gap-2 bg-[#172554] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-900 transition-shadow shadow-sm"
                 >
                   <Play className="w-4 h-4 fill-white" />
-                  Run NIT Trichy Benchmark
+                  Run Manufacturing Benchmark
                 </button>
               </div>
 
@@ -238,7 +228,7 @@ export default function App() {
                   </div>
                   <div className="text-2xl font-black text-purple-900 font-mono">₹3,875.00</div>
                   <div className="mt-2 text-xs text-purple-700 font-semibold">
-                    Invoice: ₹7,875 - Paid: ₹4,000 (Trichy Wholesale)
+                    Invoice: ₹7,875 - Paid: ₹4,000 (Cauvery Wholesale)
                   </div>
                 </div>
               </div>
@@ -248,7 +238,7 @@ export default function App() {
                 <div>
                   <div className="inline-flex items-center gap-2 bg-green-500/20 text-green-300 px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wide mb-2">
                     <CheckCircle2 className="w-3.5 h-3.5" />
-                    NIT Trichy Evaluation Standard Verified
+                    Standard Manufacturing Benchmark Verified
                   </div>
                   <h3 className="text-lg font-bold">Mandatory South Indian Murukku 200g Benchmark</h3>
                   <p className="text-xs text-blue-200 max-w-2xl mt-1">
@@ -320,12 +310,12 @@ export default function App() {
             </div>
           )}
 
-          {/* ===================== VIEW 2: NIT TRICHY BENCHMARK ===================== */}
+          {/* ===================== VIEW 2: BENCHMARK ===================== */}
           {activeTab === 'benchmark' && (
             <div className="space-y-6">
               <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
                 <div>
-                  <h2 className="text-2xl font-bold tracking-tight text-slate-900">NIT Tiruchirappalli Benchmark Verification</h2>
+                  <h2 className="text-2xl font-bold tracking-tight text-slate-900">Standard Manufacturing Benchmark Verification</h2>
                   <p className="text-sm text-slate-500">Automated acceptance proof against the 15-step South Indian Food Manufacturing scenario.</p>
                 </div>
                 <div className="flex items-center gap-3">
@@ -584,7 +574,7 @@ export default function App() {
                     <p className="text-xs text-slate-500 mt-1">Rule 46 of Central Goods and Services Tax Rules, 2017</p>
                     <div className="mt-4 text-xs space-y-1">
                       <p className="font-bold text-slate-800">CAUVERY FOOD INDUSTRIES (TAMIL NADU PLANT)</p>
-                      <p className="text-slate-500">Factory Road, SIDCO Industrial Estate, Trichy - 620015</p>
+                      <p className="text-slate-500">Factory Road, SIDCO Industrial Estate, Tamil Nadu - 600032</p>
                       <p className="text-slate-700 font-mono"><strong>GSTIN:</strong> 33AAACF8912M1Z8 | <strong>State Code:</strong> 33 (Tamil Nadu)</p>
                     </div>
                   </div>
@@ -601,8 +591,8 @@ export default function App() {
                 {/* Billed To */}
                 <div className="bg-slate-50 p-4 rounded-lg text-xs mb-6">
                   <span className="font-bold text-slate-500 uppercase tracking-wider block mb-1">Billed To (Customer):</span>
-                  <p className="font-bold text-slate-900">Trichy Wholesale Confectioneries Pvt Ltd</p>
-                  <p className="text-slate-600">No. 14, Thillai Nagar Main Road, Tiruchirappalli, Tamil Nadu 620018</p>
+                  <p className="font-bold text-slate-900">Cauvery Wholesale Confectioneries Pvt Ltd</p>
+                  <p className="text-slate-600">No. 14, Industrial Main Road, Tamil Nadu 600018</p>
                   <p className="text-slate-700 font-mono mt-1"><strong>GSTIN:</strong> 33AABCT1332M1ZG | <strong>Place of Supply:</strong> Tamil Nadu (33)</p>
                 </div>
 

@@ -7,7 +7,7 @@ const invoicesStore = [
     id: 'inv-001',
     invoiceNumber: 'INV/2026-27/0001',
     orderNumber: 'SO/2026-27/001',
-    customerName: 'Trichy Wholesale Confectioneries Pvt Ltd',
+    customerName: 'Cauvery Wholesale Confectioneries Pvt Ltd',
     customerGstin: '33AABCT1332M1ZG',
     placeOfSupply: 'Tamil Nadu (33)',
     productDescription: 'South Indian Murukku 200g Packets',
@@ -23,8 +23,8 @@ const invoicesStore = [
     igstRate: 0.0,
     igstAmount: 0.0,
     totalInvoiceAmount: 7875.0,
-    paidAmount: 4000.0, // Benchmark Step 12
-    balanceAmount: 3875.0, // Benchmark Step 12 Outstanding
+    paidAmount: 4000.0,
+    balanceAmount: 3875.0,
     status: 'PARTIALLY_PAID',
     invoiceDate: '2026-11-21T11:00:00Z',
   },

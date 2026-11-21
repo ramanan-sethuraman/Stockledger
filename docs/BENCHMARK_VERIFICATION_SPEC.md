@@ -1,7 +1,7 @@
 # BENCHMARK VERIFICATION SPECIFICATION
-## NIT Tiruchirappalli Benchmark: Murukku 200g Batch
+## Standard Food Manufacturing Benchmark: Murukku 200g Batch
 
-This document outlines the step-by-step mathematical proof and acceptance criteria for the mandatory benchmark test.
+This document outlines the step-by-step mathematical proof and acceptance criteria for the standard manufacturing benchmark test.
 
 ---
 
@@ -43,23 +43,23 @@ This document outlines the step-by-step mathematical proof and acceptance criter
 
 #### Steps 2-4: Issue Materials for Production Batch
 - **Flour Issued**: 40.0000 kg
-  - Balance: $160 - 40 =$ **120.0000 kg** (Matches Benchmark!)
+  - Balance: $160 - 40 =$ **120.0000 kg**
 - **Oil Issued**: 10.5000 Litres
-  - Balance: $30 - 10.5 =$ **19.5000 L** (Matches Benchmark!)
-  - Oil Consumption Variance: $\frac{10.5 - 10.0}{10.0} \times 100 = \mathbf{+5.0\%}$ (Matches Benchmark!)
+  - Balance: $30 - 10.5 =$ **19.5000 L**
+  - Oil Consumption Variance: $\frac{10.5 - 10.0}{10.0} \times 100 = \mathbf{+5.0\%}$
 - **Spice Mix Issued**: 1.2000 kg
   - Balance: $5.0 - 1.2 =$ **3.8000 kg**
 
 #### Steps 5-7: Record Production Output & Packaging Usage
 - **Good Packets Produced**: 188 packets
   - Standard Batch: 200 packets
-  - Yield Variance: $\frac{188 - 200}{200} \times 100 = \frac{-12}{200} \times 100 = \mathbf{-6.0\%}$ (Matches Benchmark!)
-  - Finished Goods after Production: $50 + 188 =$ **238 packets** (Matches Benchmark!)
+  - Yield Variance: $\frac{188 - 200}{200} \times 100 = \frac{-12}{200} \times 100 = \mathbf{-6.0\%}$
+  - Finished Goods after Production: $50 + 188 =$ **238 packets**
 - **Packaging Used**:
   - Damaged Pouches: 6 pcs
   - Good Pouches: 188 pcs
   - Total Pouches Consumed: $188 + 6 = 194$ pcs
-  - Pouches Balance: $500 - 194 =$ **306 pcs** (Matches Benchmark!)
+  - Pouches Balance: $500 - 194 =$ **306 pcs**
   - Cartons Used: 9 pcs
   - Cartons Balance: $30 - 9 =$ **21 pcs**
 
@@ -80,30 +80,30 @@ This document outlines the step-by-step mathematical proof and acceptance criter
 
 #### Steps 8-9: Salesman A Orders 150 Packets (Admin Approves, Invoices & Dispatches)
 - **Selling Price**: ₹50.00 / packet
-- **Taxable Value**: $150 \times 50.00 = \mathbf{₹7,500.00}$ (Matches Benchmark!)
+- **Taxable Value**: $150 \times 50.00 = \mathbf{₹7,500.00}$
 - **GST Split (Intra-state Tamil Nadu)**:
-  - CGST (2.5%): $\mathbf{₹187.50}$ (Matches Benchmark!)
-  - SGST (2.5%): $\mathbf{₹187.50}$ (Matches Benchmark!)
+  - CGST (2.5%): $\mathbf{₹187.50}$
+  - SGST (2.5%): $\mathbf{₹187.50}$
   - Total GST: ₹375.00
-- **Total Invoice Value**: $7500.00 + 187.50 + 187.50 = \mathbf{₹7,875.00}$ (Matches Benchmark!)
+- **Total Invoice Value**: $7500.00 + 187.50 + 187.50 = \mathbf{₹7,875.00}$
 - **Dispatch**: 150 packets deducted from Finished Goods
-  - Finished Goods Balance: $238 - 150 =$ **88 packets** (Matches Benchmark!)
+  - Finished Goods Balance: $238 - 150 =$ **88 packets**
 
 #### Steps 10-11: Salesman B Orders 120 Packets (Shortage Handling)
 - **Available Finished Goods Stock**: 88 packets
 - **Requested Quantity**: 120 packets
-- **Shortage Detected & Logged**: $120 - 88 =$ **32 packets** (Matches Benchmark!)
-- **System Action**: Order flagged as `SHORTAGE_EXCEPTION`. Partial fulfillment (88 pkts) or backorder workflow triggered.
+- **Shortage Detected & Logged**: $120 - 88 =$ **32 packets**
+- **System Action**: Order flagged as `SHORTAGE_EXCEPTION`.
 
 #### Step 12: Record ₹4,000 Payment
 - **Invoice Value**: ₹7,875.00
 - **Payment Received**: ₹4,000.00
-- **Remaining Outstanding Balance**: $7875.00 - 4000.00 = \mathbf{₹3,875.00}$ (Matches Benchmark!)
+- **Remaining Outstanding Balance**: $7875.00 - 4000.00 = \mathbf{₹3,875.00}$
 
 ---
 
 ### Verification Summary Table
-| Metric | Benchmark Target | FactoryFlow Calculated | Status |
+| Metric | Benchmark Target | Stockledger Calculated | Status |
 |:---|:---:|:---:|:---:|
 | Flour Remaining | 120 kg | 120.0000 kg | **PASSED** |
 | Oil Remaining | 19.5 Litres | 19.5000 L | **PASSED** |

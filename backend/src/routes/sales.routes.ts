@@ -6,7 +6,7 @@ const salesOrdersStore = [
   {
     id: 'so-001',
     orderNumber: 'SO/2026-27/001',
-    customerName: 'Trichy Wholesale Confectioneries Pvt Ltd',
+    customerName: 'Cauvery Wholesale Confectioneries Pvt Ltd',
     customerGstin: '33AABCT1332M1ZG',
     salesman: 'M. Anand (Salesman A)',
     productSku: 'MUR-200G',

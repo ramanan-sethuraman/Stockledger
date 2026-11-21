@@ -73,7 +73,7 @@ benchmarkRouter.get('/run', async (req: Request, res: Response) => {
     );
 
     const results = {
-      benchmarkId: 'NIT-TRICHY-FOOD-MURUKKU-200G',
+      benchmarkId: 'STANDARD-FOOD-MANUFACTURING-MURUKKU-200G',
       timestamp: new Date().toISOString(),
       status: 'VERIFIED_100_PERCENT',
       criteria: [

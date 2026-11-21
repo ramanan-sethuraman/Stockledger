@@ -2,18 +2,18 @@ import { describe, it, expect } from 'vitest';
 import request from 'supertest';
 import app from '../app.js';
 
-describe('FactoryFlow ERP Comprehensive API Test Suite', () => {
+describe('Stockledger Comprehensive API Test Suite', () => {
   it('GET /api/v1/health returns online status', async () => {
     const res = await request(app).get('/api/v1/health');
     expect(res.status).toBe(200);
     expect(res.body.status).toBe('ONLINE');
-    expect(res.body.service).toContain('FactoryFlow ERP');
+    expect(res.body.service).toContain('Stockledger');
   });
 
   it('POST /api/v1/auth/login succeeds with valid credentials', async () => {
     const res = await request(app)
       .post('/api/v1/auth/login')
-      .send({ email: 'admin@factoryflow.in', password: 'Password@123' });
+      .send({ email: 'admin@stockledger.in', password: 'Password@123' });
 
     expect(res.status).toBe(200);
     expect(res.body.success).toBe(true);
@@ -24,7 +24,7 @@ describe('FactoryFlow ERP Comprehensive API Test Suite', () => {
   it('POST /api/v1/auth/login rejects invalid credentials', async () => {
     const res = await request(app)
       .post('/api/v1/auth/login')
-      .send({ email: 'admin@factoryflow.in', password: 'WrongPassword' });
+      .send({ email: 'admin@stockledger.in', password: 'WrongPassword' });
 
     expect(res.status).toBe(401);
     expect(res.body.success).toBe(false);

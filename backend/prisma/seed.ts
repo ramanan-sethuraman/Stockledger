@@ -5,18 +5,18 @@ import Decimal from 'decimal.js';
 const prisma = new PrismaClient();
 
 export async function seedDatabase() {
-  console.log('🌱 Seeding FactoryFlow ERP Database with NIT Trichy Benchmark Masters...');
+  console.log('🌱 Seeding Stockledger Database with Masters...');
 
   // 1. Seed Roles & Users
   const passwordHash = await bcrypt.hash('Password@123', 10);
 
   const users = [
-    { email: 'admin@factoryflow.in', fullName: 'Dr. R. Ramanan (System Admin)', role: UserRole.ADMIN },
-    { email: 'supervisor@factoryflow.in', fullName: 'K. Senthil (Production Supervisor)', role: UserRole.PRODUCTION_SUPERVISOR },
-    { email: 'salesmanA@factoryflow.in', fullName: 'M. Anand (Salesman A)', role: UserRole.SALES_EXECUTIVE },
-    { email: 'salesmanB@factoryflow.in', fullName: 'V. Balaji (Salesman B)', role: UserRole.SALES_EXECUTIVE },
-    { email: 'store@factoryflow.in', fullName: 'S. Murugan (Inventory Manager)', role: UserRole.INVENTORY_MANAGER },
-    { email: 'auditor@factoryflow.in', fullName: 'CA. T. Natarajan (Financial Auditor)', role: UserRole.FINANCIAL_AUDITOR },
+    { email: 'admin@stockledger.in', fullName: 'Dr. R. Ramanan (System Admin)', role: UserRole.ADMIN },
+    { email: 'supervisor@stockledger.in', fullName: 'K. Senthil (Production Supervisor)', role: UserRole.PRODUCTION_SUPERVISOR },
+    { email: 'salesmanA@stockledger.in', fullName: 'M. Anand (Salesman A)', role: UserRole.SALES_EXECUTIVE },
+    { email: 'salesmanB@stockledger.in', fullName: 'V. Balaji (Salesman B)', role: UserRole.SALES_EXECUTIVE },
+    { email: 'store@stockledger.in', fullName: 'S. Murugan (Inventory Manager)', role: UserRole.INVENTORY_MANAGER },
+    { email: 'auditor@stockledger.in', fullName: 'CA. T. Natarajan (Financial Auditor)', role: UserRole.FINANCIAL_AUDITOR },
   ];
 
   for (const u of users) {
@@ -98,7 +98,7 @@ export async function seedDatabase() {
       batchOutputQty: new Decimal(200.0),
       batchOutputUom: UomType.PACKET,
       isActive: true,
-      notes: 'NIT Trichy Standard Murukku 200g Recipe (Batch Yield: 200 packets)',
+      notes: 'Standard Murukku 200g Recipe (Batch Yield: 200 packets)',
     },
   });
 
@@ -129,11 +129,11 @@ export async function seedDatabase() {
     update: { creditLimit: new Decimal(50000.0) },
     create: {
       code: 'CUST-TN-001',
-      name: 'Trichy Wholesale Confectioneries Pvt Ltd',
+      name: 'Cauvery Wholesale Confectioneries Pvt Ltd',
       gstin: '33AABCT1332M1ZG',
       stateCode: '33', // Tamil Nadu (Intra-state)
-      billingAddress: 'No. 14, Thillai Nagar Main Road, Tiruchirappalli, Tamil Nadu 620018',
-      shippingAddress: 'Central Warehouse, Trichy Industrial Estate, Tamil Nadu 620010',
+      billingAddress: 'No. 14, Industrial Main Road, Tamil Nadu 600018',
+      shippingAddress: 'Central Warehouse, SIDCO Industrial Estate, Tamil Nadu 600010',
       creditLimit: new Decimal(50000.0),
       currentOutstanding: new Decimal(0.0),
     },
@@ -148,7 +148,7 @@ export async function seedDatabase() {
       name: 'Cauvery Agro Mills & Flour Supplies',
       gstin: '33AAACM4512N1ZQ',
       stateCode: '33',
-      address: '22, Mill Road, Dindigul, Tamil Nadu 624001',
+      address: '22, Mill Road, Tamil Nadu 624001',
       phone: '+91 94431 00221',
       email: 'orders@cauveryagro.in',
     },

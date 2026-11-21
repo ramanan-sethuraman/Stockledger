@@ -1,19 +1,18 @@
 import { Router, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
 
 export const authRouter = Router();
 
-const JWT_SECRET = process.env.JWT_SECRET || 'factoryflow_jwt_secret_token_secure_2026';
+const JWT_SECRET = process.env.JWT_SECRET || 'stockledger_jwt_secret_token_secure_2026';
 
 // Standard demo credentials available out of the box
 const DEMO_USERS = [
-  { id: 'usr-admin-01', email: 'admin@factoryflow.in', fullName: 'Dr. R. Ramanan', role: 'ADMIN' },
-  { id: 'usr-sup-01', email: 'supervisor@factoryflow.in', fullName: 'K. Senthil', role: 'PRODUCTION_SUPERVISOR' },
-  { id: 'usr-sales-01', email: 'salesmanA@factoryflow.in', fullName: 'M. Anand', role: 'SALES_EXECUTIVE' },
-  { id: 'usr-sales-02', email: 'salesmanB@factoryflow.in', fullName: 'V. Balaji', role: 'SALES_EXECUTIVE' },
-  { id: 'usr-store-01', email: 'store@factoryflow.in', fullName: 'S. Murugan', role: 'INVENTORY_MANAGER' },
-  { id: 'usr-audit-01', email: 'auditor@factoryflow.in', fullName: 'CA. T. Natarajan', role: 'FINANCIAL_AUDITOR' },
+  { id: 'usr-admin-01', email: 'admin@stockledger.in', fullName: 'Dr. R. Ramanan', role: 'ADMIN' },
+  { id: 'usr-sup-01', email: 'supervisor@stockledger.in', fullName: 'K. Senthil', role: 'PRODUCTION_SUPERVISOR' },
+  { id: 'usr-sales-01', email: 'salesmanA@stockledger.in', fullName: 'M. Anand', role: 'SALES_EXECUTIVE' },
+  { id: 'usr-sales-02', email: 'salesmanB@stockledger.in', fullName: 'V. Balaji', role: 'SALES_EXECUTIVE' },
+  { id: 'usr-store-01', email: 'store@stockledger.in', fullName: 'S. Murugan', role: 'INVENTORY_MANAGER' },
+  { id: 'usr-audit-01', email: 'auditor@stockledger.in', fullName: 'CA. T. Natarajan', role: 'FINANCIAL_AUDITOR' },
 ];
 
 authRouter.post('/login', async (req: Request, res: Response) => {

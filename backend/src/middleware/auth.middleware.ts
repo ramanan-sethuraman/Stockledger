@@ -17,7 +17,7 @@ declare global {
   }
 }
 
-const JWT_SECRET = process.env.JWT_SECRET || 'factoryflow_jwt_secret_token_secure_2026';
+const JWT_SECRET = process.env.JWT_SECRET || 'stockledger_jwt_secret_token_secure_2026';
 
 export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers['authorization'];

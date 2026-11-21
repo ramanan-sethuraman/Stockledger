@@ -35,7 +35,7 @@ app.use('/api/v1/dashboard', dashboardRouter);
 app.get('/api/v1/health', (req, res) => {
   res.json({
     status: 'ONLINE',
-    service: 'FactoryFlow ERP / Stockledger Core API',
+    service: 'Stockledger Core API',
     version: '1.0.0',
     timestamp: new Date().toISOString(),
   });

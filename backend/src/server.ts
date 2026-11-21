@@ -5,7 +5,7 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`
   ==============================================================
-  🚀 FACTORYFLOW ERP (STOCKLEDGER) BACKEND ONLINE
+  🚀 STOCKLEDGER BACKEND ONLINE
   ==============================================================
   📡 Port: http://localhost:${PORT}
   🔍 Health Check: http://localhost:${PORT}/api/v1/health
