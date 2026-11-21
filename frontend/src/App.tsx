@@ -8,8 +8,6 @@ import {
   TrendingUp,
   AlertTriangle,
   CheckCircle2,
-  Play,
-  ShieldCheck,
   Calendar,
   ChevronRight,
   Sparkles,
@@ -20,7 +18,13 @@ import {
   Lock,
   ArrowRight,
   RefreshCw,
-  X
+  X,
+  CreditCard,
+  Truck,
+  ShieldCheck,
+  Building2,
+  FileCheck2,
+  AlertCircle
 } from 'lucide-react';
 
 interface AuthUser {
@@ -30,124 +34,175 @@ interface AuthUser {
   role: 'ADMIN' | 'PRODUCTION_SUPERVISOR' | 'SALES_EXECUTIVE' | 'INVENTORY_MANAGER' | 'FINANCIAL_AUDITOR';
 }
 
+interface MaterialItem {
+  id: string;
+  code: string;
+  name: string;
+  category: 'RAW' | 'PACKAGING';
+  uom: string;
+  openingStock: number;
+  currentStock: number;
+  currentWeightedRate: number;
+  minReorderQty: number;
+}
+
+interface ProductItem {
+  id: string;
+  sku: string;
+  name: string;
+  hsnCode: string;
+  uom: string;
+  unitWeightGrams: number;
+  sellingPrice: number;
+  gstRate: number;
+  openingStock: number;
+  currentStock: number;
+}
+
+interface SalesOrder {
+  id: string;
+  orderNumber: string;
+  customerName: string;
+  productSku: string;
+  orderedQty: number;
+  dispatchedQty: number;
+  shortageQty: number;
+  unitPrice: number;
+  taxableAmount: number;
+  totalOrderValue: number;
+  status: 'SUBMITTED' | 'APPROVED' | 'DISPATCHED' | 'SHORTAGE_EXCEPTION' | 'CANCELLED';
+  createdAt: string;
+  notes?: string;
+}
+
+interface Invoice {
+  id: string;
+  invoiceNumber: string;
+  orderNumber: string;
+  customerName: string;
+  quantity: number;
+  taxableValue: number;
+  cgstAmount: number;
+  sgstAmount: number;
+  totalInvoiceAmount: number;
+  paidAmount: number;
+  balanceAmount: number;
+  status: 'DRAFT' | 'POSTED' | 'PARTIALLY_PAID' | 'PAID';
+  invoiceDate: string;
+}
+
+interface ProductionBatch {
+  id: string;
+  batchNumber: string;
+  productName: string;
+  plannedYield: number;
+  goodOutput: number;
+  yieldVariancePercent: number;
+  oilIssued: number;
+  oilVariance: number;
+  scrapPouches: number;
+  costing: {
+    totalBatchCost: number;
+    costPerGoodPacket: number;
+    grossMarginPercent: number;
+  };
+  status: string;
+  supervisor: string;
+  completedAt: string;
+}
+
+interface StockLedgerEntry {
+  id: string;
+  transactionRef: string;
+  itemCode: string;
+  itemName: string;
+  movementType: string;
+  quantityIn: number;
+  quantityOut: number;
+  balanceAfter: number;
+  uom: string;
+  unitRate: number;
+  referenceDoc: string;
+  actor: string;
+  timestamp: string;
+}
+
 export default function App() {
   // Authentication State
   const [currentUser, setCurrentUser] = useState<AuthUser | null>(() => {
     const saved = localStorage.getItem('stockledger_user');
     if (saved) {
-      try { return JSON.parse(saved); } catch (e) { return null; }
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        return null;
+      }
     }
-    return {
-      id: 'usr-admin-01',
-      email: 'admin@stockledger.in',
-      fullName: 'Dr. R. Ramanan',
-      role: 'ADMIN',
-    };
+    return null;
   });
 
   const [authMode, setAuthMode] = useState<'LOGIN' | 'REGISTER'>('LOGIN');
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [regFullName, setRegFullName] = useState('');
-  const [regRole, setRegRole] = useState<'ADMIN' | 'PRODUCTION_SUPERVISOR' | 'SALES_EXECUTIVE' | 'FINANCIAL_AUDITOR'>('SALES_EXECUTIVE');
+  const [regRole, setRegRole] = useState<'ADMIN' | 'PRODUCTION_SUPERVISOR' | 'SALES_EXECUTIVE' | 'INVENTORY_MANAGER' | 'FINANCIAL_AUDITOR'>('SALES_EXECUTIVE');
   const [authError, setAuthError] = useState('');
+  const [authLoading, setAuthLoading] = useState(false);
 
   // Navigation State
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'benchmark' | 'ledger' | 'production' | 'invoicing' | 'audit'>('dashboard');
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'materials' | 'production' | 'invoicing' | 'ledger' | 'benchmark' | 'audit'>('dashboard');
 
-  // Operational State (Live Interactive Data)
-  const [salesOrders, setSalesOrders] = useState([
-    {
-      id: 'so-001',
-      orderNumber: 'SO/2026-27/001',
-      customerName: 'Cauvery Wholesale Confectioneries Pvt Ltd',
-      productSku: 'MUR-200G',
-      orderedQty: 150,
-      dispatchedQty: 150,
-      shortageQty: 0,
-      unitPrice: 50.0,
-      taxableAmount: 7500.0,
-      totalOrderValue: 7875.0,
-      status: 'DISPATCHED',
-      createdAt: '2026-11-21 10:15',
-    },
-    {
-      id: 'so-002',
-      orderNumber: 'SO/2026-27/002',
-      customerName: 'Madurai Snacking Hub',
-      productSku: 'MUR-200G',
-      orderedQty: 120,
-      dispatchedQty: 0,
-      shortageQty: 32, // 120 requested - 88 available
-      unitPrice: 50.0,
-      taxableAmount: 6000.0,
-      totalOrderValue: 6300.0,
-      status: 'SHORTAGE_EXCEPTION',
-      createdAt: '2026-11-21 11:45',
-    },
-  ]);
+  // ERP Domain Data States (Live from Backend)
+  const [materials, setMaterials] = useState<MaterialItem[]>([]);
+  const [products, setProducts] = useState<ProductItem[]>([]);
+  const [salesOrders, setSalesOrders] = useState<SalesOrder[]>([]);
+  const [invoices, setInvoices] = useState<Invoice[]>([]);
+  const [batches, setBatches] = useState<ProductionBatch[]>([]);
+  const [stockLedger, setStockLedger] = useState<StockLedgerEntry[]>([]);
+  const [isLoadingData, setIsLoadingData] = useState(false);
+  const [notification, setNotification] = useState<string | null>(null);
 
-  const [invoices, setInvoices] = useState([
-    {
-      id: 'inv-001',
-      invoiceNumber: 'INV/2026-27/0001',
-      orderNumber: 'SO/2026-27/001',
-      customerName: 'Cauvery Wholesale Confectioneries Pvt Ltd',
-      quantity: 150,
-      taxableValue: 7500.0,
-      cgstAmount: 187.50,
-      sgstAmount: 187.50,
-      totalInvoiceAmount: 7875.0,
-      paidAmount: 4000.0,
-      balanceAmount: 3875.0,
-      status: 'PARTIALLY_PAID',
-      date: '2026-11-21',
-    },
-  ]);
-
-  const [batches, setBatches] = useState([
-    {
-      id: 'batch-001',
-      batchNumber: 'BAT-MK-001',
-      productName: 'South Indian Murukku 200g',
-      plannedYield: 200,
-      goodOutput: 188,
-      yieldVariance: -6.0,
-      oilIssued: 10.5,
-      oilVariance: 5.0,
-      scrapPouches: 6,
-      unitCost: 31.14,
-      totalCost: 5855.0,
-      status: 'COMPLETED',
-      supervisor: 'K. Senthil',
-      time: '2026-11-21 13:30',
-    },
-  ]);
-
-  const [stockLedger, setStockLedger] = useState([
-    { ref: 'TXN-001', item: 'Rice Flour (Grade A)', type: 'PURCHASE_GRN', change: '+60.0 kg', balance: '160.0 kg', doc: 'GRN-2026-001', user: 'S. Murugan' },
-    { ref: 'TXN-002', item: 'Rice Flour (Grade A)', type: 'PROD_ISSUE', change: '-40.0 kg', balance: '120.0 kg', doc: 'BAT-MK-001', user: 'K. Senthil' },
-    { ref: 'TXN-003', item: 'Refined Groundnut Oil', type: 'PROD_ISSUE', change: '-10.5 L', balance: '19.5 L', doc: 'BAT-MK-001', user: 'K. Senthil' },
-    { ref: 'TXN-004', item: 'Printed Pouches (200g)', type: 'SCRAP_DAMAGE', change: '-6.0 pcs', balance: '494.0 pcs', doc: 'BAT-MK-001', user: 'K. Senthil' },
-    { ref: 'TXN-005', item: 'South Indian Murukku 200g', type: 'PROD_YIELD', change: '+188.0 pkts', balance: '238.0 pkts', doc: 'BAT-MK-001', user: 'K. Senthil' },
-    { ref: 'TXN-006', item: 'South Indian Murukku 200g', type: 'SALES_DISPATCH', change: '-150.0 pkts', balance: '88.0 pkts', doc: 'DSP-2026-001', user: 'Dr. R. Ramanan' },
-  ]);
-
-  // Modal Dialog States
+  // Modals visibility
   const [showOrderModal, setShowOrderModal] = useState(false);
-  const [newCustomer, setNewCustomer] = useState('Kovai Sweets & Bakery');
-  const [newOrderQty, setNewOrderQty] = useState('100');
-
   const [showBatchModal, setShowBatchModal] = useState(false);
-  const [newBatchGood, setNewBatchGood] = useState('190');
-  const [newBatchOil, setNewBatchOil] = useState('10.2');
-  const [newBatchScrap, setNewBatchScrap] = useState('4');
-
+  const [showPurchaseModal, setShowPurchaseModal] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [selectedInvoiceId, setSelectedInvoiceId] = useState('');
-  const [paymentAmountInput, setPaymentAmountInput] = useState('1000');
+  const [showResetModal, setShowResetModal] = useState(false);
 
-  // Persist user session
+  // Modal Inputs (Clean unpopulated states with clear placeholders)
+  // 1. Order modal
+  const [newCustomer, setNewCustomer] = useState('');
+  const [newOrderSku, setNewOrderSku] = useState('MUR-200G');
+  const [newOrderQty, setNewOrderQty] = useState('');
+  const [newOrderPrice, setNewOrderPrice] = useState('50.00');
+
+  // 2. Batch modal
+  const [batchProductSku, setBatchProductSku] = useState('MUR-200G');
+  const [batchPlanned, setBatchPlanned] = useState('200');
+  const [batchGood, setBatchGood] = useState('');
+  const [batchFlour, setBatchFlour] = useState('');
+  const [batchOil, setBatchOil] = useState('');
+  const [batchScrap, setBatchScrap] = useState('');
+
+  // 3. Purchase GRN modal
+  const [purchaseMaterialCode, setPurchaseMaterialCode] = useState('RM-FLOUR');
+  const [purchaseQty, setPurchaseQty] = useState('');
+  const [purchaseRate, setPurchaseRate] = useState('');
+  const [purchaseSupplier, setPurchaseSupplier] = useState('');
+  const [purchaseInvoiceRef, setPurchaseInvoiceRef] = useState('');
+
+  // 4. Payment modal
+  const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
+  const [paymentAmountInput, setPaymentAmountInput] = useState('');
+  const [paymentMode, setPaymentMode] = useState('NEFT / RTGS Bank Transfer');
+
+  // Show Toast Notification
+  const notify = (msg: string) => {
+    setNotification(msg);
+    setTimeout(() => setNotification(null), 5000);
+  };
+
+  // Persist User Session
   useEffect(() => {
     if (currentUser) {
       localStorage.setItem('stockledger_user', JSON.stringify(currentUser));
@@ -156,186 +211,330 @@ export default function App() {
     }
   }, [currentUser]);
 
-  // Quick 1-Click Login Helper
-  const handleQuickLogin = (email: string, fullName: string, role: any) => {
-    setCurrentUser({ id: `usr-${Date.now()}`, email, fullName, role });
-    setAuthError('');
+  // Fetch all ERP data from backend
+  const fetchAllData = async () => {
+    setIsLoadingData(true);
+    try {
+      const [matRes, prodRes, ordersRes, invRes, batchesRes, ledgerRes] = await Promise.all([
+        fetch('/api/v1/materials').then(r => r.json()).catch(() => ({ data: [] })),
+        fetch('/api/v1/products').then(r => r.json()).catch(() => ({ data: [] })),
+        fetch('/api/v1/sales/orders').then(r => r.json()).catch(() => ({ data: [] })),
+        fetch('/api/v1/invoices').then(r => r.json()).catch(() => ({ data: [] })),
+        fetch('/api/v1/production/batches').then(r => r.json()).catch(() => ({ data: [] })),
+        fetch('/api/v1/inventory/ledger').then(r => r.json()).catch(() => ({ data: [] })),
+      ]);
+
+      if (matRes.success && matRes.data) setMaterials(matRes.data);
+      if (prodRes.success && prodRes.data) setProducts(prodRes.data);
+      if (ordersRes.success && ordersRes.data) setSalesOrders(ordersRes.data);
+      if (invRes.success && invRes.data) setInvoices(invRes.data);
+      if (batchesRes.success && batchesRes.data) setBatches(batchesRes.data);
+      if (ledgerRes.success && ledgerRes.data) setStockLedger(ledgerRes.data);
+    } catch (err) {
+      console.error('Failed to sync ERP state:', err);
+    } finally {
+      setIsLoadingData(false);
+    }
   };
 
-  // Form Submit Login
-  const handleFormLogin = (e: React.FormEvent) => {
+  useEffect(() => {
+    if (currentUser) {
+      fetchAllData();
+    }
+  }, [currentUser]);
+
+  // ---------------- AUTH HANDLERS ----------------
+  const handleFormLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!loginEmail || !loginPassword) {
-      setAuthError('Please enter email and password');
+      setAuthError('Email and password are required');
       return;
     }
-    // Determine user or create default session
-    const role = loginEmail.includes('admin') ? 'ADMIN'
-      : loginEmail.includes('super') ? 'PRODUCTION_SUPERVISOR'
-      : loginEmail.includes('audit') ? 'FINANCIAL_AUDITOR'
-      : 'SALES_EXECUTIVE';
-
-    const name = loginEmail.split('@')[0];
-    const fullName = name.charAt(0).toUpperCase() + name.slice(1);
-    setCurrentUser({ id: `usr-${Date.now()}`, email: loginEmail, fullName, role });
+    setAuthLoading(true);
     setAuthError('');
+
+    try {
+      const res = await fetch('/api/v1/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: loginEmail, password: loginPassword }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setCurrentUser(data.data.user);
+      } else {
+        setAuthError(data.error?.message || 'Invalid email or password');
+      }
+    } catch (err) {
+      setAuthError('Server communication failed. Please check connection.');
+    } finally {
+      setAuthLoading(false);
+    }
   };
 
-  // Form Submit Register
-  const handleFormRegister = (e: React.FormEvent) => {
+  const handleFormRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!loginEmail || !loginPassword || !regFullName) {
-      setAuthError('All fields are required');
+      setAuthError('All registration fields are required');
       return;
     }
-    setCurrentUser({ id: `usr-${Date.now()}`, email: loginEmail, fullName: regFullName, role: regRole });
+    setAuthLoading(true);
     setAuthError('');
-  };
 
-  // Handle New Order Creation
-  const handleCreateOrder = (e: React.FormEvent) => {
-    e.preventDefault();
-    const qty = Number(newOrderQty) || 50;
-    const price = 50.0;
-    const taxable = qty * price;
-    const total = taxable * 1.05;
-
-    // Available FG stock check
-    const available = 88;
-    const isShortage = qty > available;
-    const shortage = isShortage ? qty - available : 0;
-
-    const newOrder = {
-      id: `so-${Date.now()}`,
-      orderNumber: `SO/2026-27/${String(salesOrdersStoreLength() + 1).padStart(3, '0')}`,
-      customerName: newCustomer,
-      productSku: 'MUR-200G',
-      orderedQty: qty,
-      dispatchedQty: 0,
-      shortageQty: shortage,
-      unitPrice: price,
-      taxableAmount: taxable,
-      totalOrderValue: total,
-      status: isShortage ? 'SHORTAGE_EXCEPTION' : 'SUBMITTED',
-      createdAt: 'Just now',
-    };
-
-    setSalesOrders([newOrder, ...salesOrders]);
-    setShowOrderModal(false);
-  };
-
-  const salesOrdersStoreLength = () => salesOrders.length;
-
-  // Handle Order Approval & Dispatch
-  const handleApproveOrder = (orderId: string) => {
-    setSalesOrders(salesOrders.map(o => {
-      if (o.id === orderId) {
-        return { ...o, status: 'APPROVED', dispatchedQty: o.orderedQty };
+    try {
+      const res = await fetch('/api/v1/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: loginEmail,
+          password: loginPassword,
+          fullName: regFullName,
+          role: regRole,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setCurrentUser(data.data.user);
+        notify(`Welcome to Stockledger, ${data.data.user.fullName}!`);
+      } else {
+        setAuthError(data.error?.message || 'Registration failed');
       }
-      return o;
-    }));
-
-    const order = salesOrders.find(o => o.id === orderId);
-    if (order) {
-      // Create invoice
-      const newInv = {
-        id: `inv-${Date.now()}`,
-        invoiceNumber: `INV/2026-27/${String(invoices.length + 1).padStart(4, '0')}`,
-        orderNumber: order.orderNumber,
-        customerName: order.customerName,
-        quantity: order.orderedQty,
-        taxableValue: order.taxableAmount,
-        cgstAmount: order.taxableAmount * 0.025,
-        sgstAmount: order.taxableAmount * 0.025,
-        totalInvoiceAmount: order.totalOrderValue,
-        paidAmount: 0.0,
-        balanceAmount: order.totalOrderValue,
-        status: 'POSTED',
-        date: 'Today',
-      };
-      setInvoices([newInv, ...invoices]);
-
-      // Record in Stock Ledger
-      const newLedgerEntry = {
-        ref: `TXN-${String(stockLedger.length + 1).padStart(3, '0')}`,
-        item: 'South Indian Murukku 200g',
-        type: 'SALES_DISPATCH',
-        change: `-${order.orderedQty}.0 pkts`,
-        balance: `${Math.max(0, 88 - order.orderedQty)}.0 pkts`,
-        doc: `DSP-${String(invoices.length + 1).padStart(3, '0')}`,
-        user: currentUser?.fullName || 'Admin',
-      };
-      setStockLedger([newLedgerEntry, ...stockLedger]);
+    } catch (err) {
+      setAuthError('Registration request failed.');
+    } finally {
+      setAuthLoading(false);
     }
   };
 
-  // Handle New Batch Completion
-  const handleCreateBatch = (e: React.FormEvent) => {
-    e.preventDefault();
-    const good = Number(newBatchGood) || 190;
-    const oil = Number(newBatchOil) || 10.2;
-    const scrap = Number(newBatchScrap) || 4;
-
-    const yieldVar = ((good - 200) / 200) * 100;
-    const oilVar = ((oil - 10.0) / 10.0) * 100;
-
-    const totalBatchCost = 40 * 43.125 + oil * 140 + 1.2 * 200 + (good + scrap) * 2.50 + 9 * 15 + 1200 + 600;
-    const unitCost = Math.round((totalBatchCost / good) * 100) / 100;
-
-    const newBatch = {
-      id: `batch-${Date.now()}`,
-      batchNumber: `BAT-MK-${String(batches.length + 1).padStart(3, '0')}`,
-      productName: 'South Indian Murukku 200g',
-      plannedYield: 200,
-      goodOutput: good,
-      yieldVariance: Math.round(yieldVar * 10) / 10,
-      oilIssued: oil,
-      oilVariance: Math.round(oilVar * 10) / 10,
-      scrapPouches: scrap,
-      unitCost,
-      totalCost: Math.round(totalBatchCost),
-      status: 'COMPLETED',
-      supervisor: currentUser?.fullName || 'K. Senthil',
-      time: 'Just now',
-    };
-
-    setBatches([newBatch, ...batches]);
-
-    // Record Production in Ledger
-    const entry1 = {
-      ref: `TXN-${String(stockLedger.length + 1).padStart(3, '0')}`,
-      item: 'South Indian Murukku 200g',
-      type: 'PROD_YIELD',
-      change: `+${good}.0 pkts`,
-      balance: `${88 + good}.0 pkts`,
-      doc: newBatch.batchNumber,
-      user: currentUser?.fullName || 'Supervisor',
-    };
-    setStockLedger([entry1, ...stockLedger]);
-    setShowBatchModal(false);
-  };
-
-  // Handle Payment Recording
-  const handleRecordPayment = (e: React.FormEvent) => {
-    e.preventDefault();
-    const amount = Number(paymentAmountInput) || 1000;
-    setInvoices(invoices.map(inv => {
-      if (inv.id === selectedInvoiceId) {
-        const newPaid = Math.min(inv.totalInvoiceAmount, inv.paidAmount + amount);
-        const newBal = Math.max(0, inv.totalInvoiceAmount - newPaid);
-        return {
-          ...inv,
-          paidAmount: newPaid,
-          balanceAmount: newBal,
-          status: newBal === 0 ? 'PAID' : 'PARTIALLY_PAID',
-        };
+  const handleQuickDemoLogin = async (email: string, password = 'Password@123') => {
+    setAuthLoading(true);
+    setAuthError('');
+    try {
+      const res = await fetch('/api/v1/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setCurrentUser(data.data.user);
+      } else {
+        setAuthError(data.error?.message || 'Quick login failed');
       }
-      return inv;
-    }));
-    setShowPaymentModal(false);
+    } catch (e) {
+      setAuthError('Failed to connect to authentication API.');
+    } finally {
+      setAuthLoading(false);
+    }
   };
 
-  // If no user is logged in, show SaaS Login Portal
+  // ---------------- DOMAIN ACTION HANDLERS ----------------
+
+  // 1. Inward Purchase (GRN)
+  const handlePurchaseSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const qty = Number(purchaseQty);
+    const rate = Number(purchaseRate);
+
+    if (!qty || qty <= 0 || !rate || rate <= 0) {
+      alert('Please enter valid positive quantity and unit rate');
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/v1/materials/purchase', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          materialCode: purchaseMaterialCode,
+          quantity: qty,
+          unitRate: rate,
+          supplierName: purchaseSupplier || 'Registered Raw Material Supplier',
+          invoiceRef: purchaseInvoiceRef || `GRN-${Date.now().toString().slice(-4)}`,
+          actor: currentUser?.fullName || 'Inventory Manager',
+        }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        notify(data.message);
+        setShowPurchaseModal(false);
+        setPurchaseQty('');
+        setPurchaseRate('');
+        setPurchaseSupplier('');
+        setPurchaseInvoiceRef('');
+        fetchAllData();
+      } else {
+        alert(data.error?.message || 'Purchase inward failed');
+      }
+    } catch (err) {
+      alert('Error submitting purchase inward');
+    }
+  };
+
+  // 2. Create Sales Order
+  const handleCreateOrderSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const qty = Number(newOrderQty);
+    const price = Number(newOrderPrice) || 50.0;
+
+    if (!newCustomer.trim() || !qty || qty <= 0) {
+      alert('Please enter a valid customer name and order quantity');
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/v1/sales/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerName: newCustomer.trim(),
+          productSku: newOrderSku,
+          orderedQty: qty,
+          unitPrice: price,
+          salesman: currentUser?.fullName || 'Sales Executive',
+        }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        notify(data.message);
+        setShowOrderModal(false);
+        setNewCustomer('');
+        setNewOrderQty('');
+        fetchAllData();
+      } else {
+        alert(data.error?.message || 'Failed to create sales order');
+      }
+    } catch (err) {
+      alert('Error creating sales order');
+    }
+  };
+
+  // 3. Approve & Dispatch Sales Order
+  const handleApproveOrder = async (orderId: string) => {
+    try {
+      const res = await fetch(`/api/v1/sales/orders/${orderId}/approve`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        notify(data.message);
+        fetchAllData();
+      } else {
+        alert(data.error?.message || 'Approval failed');
+      }
+    } catch (err) {
+      alert('Error approving sales order');
+    }
+  };
+
+  // 4. Run Production Batch
+  const handleCreateBatchSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const good = Number(batchGood);
+    const planned = Number(batchPlanned) || 200;
+    const flour = Number(batchFlour) || 40.0;
+    const oil = Number(batchOil) || 10.5;
+    const scrap = Number(batchScrap) || 0;
+
+    if (!good || good <= 0) {
+      alert('Please enter valid good packets produced');
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/v1/production/batches', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          productSku: batchProductSku,
+          plannedYield: planned,
+          goodOutput: good,
+          flourIssued: flour,
+          oilIssued: oil,
+          scrapPouches: scrap,
+          supervisor: currentUser?.fullName || 'Production Supervisor',
+        }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        notify(data.message);
+        setShowBatchModal(false);
+        setBatchGood('');
+        setBatchFlour('');
+        setBatchOil('');
+        setBatchScrap('');
+        fetchAllData();
+      } else {
+        alert(data.error?.message || 'Production execution failed');
+      }
+    } catch (err) {
+      alert('Error executing production batch');
+    }
+  };
+
+  // 5. Record Invoice Payment
+  const handlePaymentSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedInvoice) return;
+    const amount = Number(paymentAmountInput);
+
+    if (!amount || amount <= 0) {
+      alert('Please enter a valid positive payment amount');
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/v1/invoices/${selectedInvoice.id}/payment`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ paymentAmount: amount }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        notify(data.message);
+        setShowPaymentModal(false);
+        setSelectedInvoice(null);
+        setPaymentAmountInput('');
+        fetchAllData();
+      } else {
+        alert(data.error?.message || 'Payment recording failed');
+      }
+    } catch (err) {
+      alert('Error recording payment');
+    }
+  };
+
+  // 6. Reset System State Controls
+  const handleSystemReset = async (type: 'opening' | 'benchmark' | 'blank') => {
+    try {
+      const endpoint =
+        type === 'opening'
+          ? '/api/v1/system/reset-opening'
+          : type === 'blank'
+          ? '/api/v1/system/reset-blank'
+          : '/api/v1/system/reset-benchmark';
+
+      const res = await fetch(endpoint, { method: 'POST' });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        notify(data.message);
+        setShowResetModal(false);
+        fetchAllData();
+      }
+    } catch (err) {
+      alert('Failed to reset system data');
+    }
+  };
+
+  // Live Selected FG Stock
+  const selectedProduct = products.find(p => p.sku === newOrderSku) || products[0];
+  const availableFgStock = selectedProduct ? selectedProduct.currentStock : 0;
+  const isOrderShortage = Number(newOrderQty) > availableFgStock;
+
+  // ==============================================================
+  // VIEW: SAAS AUTHENTICATION & REGISTRATION SCREEN (IF NOT LOGGED IN)
+  // ==============================================================
   if (!currentUser) {
     return (
       <div className="min-h-screen bg-slate-900 flex flex-col justify-center items-center p-6 text-slate-800">
@@ -370,8 +569,9 @@ export default function App() {
           </div>
 
           {authError && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-lg font-medium">
-              {authError}
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-lg font-medium flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 shrink-0 text-red-600" />
+              <span>{authError}</span>
             </div>
           )}
 
@@ -379,95 +579,103 @@ export default function App() {
           {authMode === 'LOGIN' ? (
             <form onSubmit={handleFormLogin} className="space-y-4">
               <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">Email Address</label>
+                <label className="text-xs font-bold text-slate-700 block mb-1">Corporate Email Address</label>
                 <div className="relative">
                   <User className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
                   <input
                     type="email"
                     value={loginEmail}
                     onChange={(e) => setLoginEmail(e.target.value)}
-                    placeholder="name@stockledger.in"
+                    placeholder="e.g. admin@stockledger.in"
                     className="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    required
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">Password</label>
+                <label className="text-xs font-bold text-slate-700 block mb-1">Security Password</label>
                 <div className="relative">
                   <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
                   <input
                     type="password"
                     value={loginPassword}
                     onChange={(e) => setLoginPassword(e.target.value)}
-                    placeholder="••••••••"
+                    placeholder="Enter account password"
                     className="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    required
                   />
                 </div>
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-[#172554] text-white font-bold py-2.5 rounded-lg text-sm hover:bg-blue-900 transition-colors shadow flex items-center justify-center gap-2"
+                disabled={authLoading}
+                className="w-full bg-[#172554] text-white font-bold py-2.5 rounded-lg text-sm hover:bg-blue-900 transition-colors shadow flex items-center justify-center gap-2 disabled:opacity-70"
               >
-                Sign In to Dashboard
+                {authLoading ? 'Verifying...' : 'Sign In to Workspace'}
                 <ArrowRight className="w-4 h-4" />
               </button>
             </form>
           ) : (
             <form onSubmit={handleFormRegister} className="space-y-4">
               <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">Full Name</label>
+                <label className="text-xs font-bold text-slate-700 block mb-1">Full Legal Name</label>
                 <input
                   type="text"
                   value={regFullName}
                   onChange={(e) => setRegFullName(e.target.value)}
                   placeholder="e.g. Ramesh Kumar"
                   className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                  required
                 />
               </div>
 
               <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">Email Address</label>
+                <label className="text-xs font-bold text-slate-700 block mb-1">Corporate Email Address</label>
                 <input
                   type="email"
                   value={loginEmail}
                   onChange={(e) => setLoginEmail(e.target.value)}
                   placeholder="name@company.com"
                   className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                  required
                 />
               </div>
 
               <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">Password</label>
+                <label className="text-xs font-bold text-slate-700 block mb-1">Set Account Password</label>
                 <input
                   type="password"
                   value={loginPassword}
                   onChange={(e) => setLoginPassword(e.target.value)}
-                  placeholder="••••••••"
+                  placeholder="Create secure password"
                   className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                  required
                 />
               </div>
 
               <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">Assign Functional Role</label>
+                <label className="text-xs font-bold text-slate-700 block mb-1">Functional Enterprise Role</label>
                 <select
                   value={regRole}
                   onChange={(e: any) => setRegRole(e.target.value)}
                   className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none bg-white font-medium"
                 >
-                  <option value="SALES_EXECUTIVE">Sales Executive</option>
-                  <option value="PRODUCTION_SUPERVISOR">Production Supervisor</option>
-                  <option value="ADMIN">System Administrator</option>
-                  <option value="FINANCIAL_AUDITOR">Financial Auditor</option>
+                  <option value="ADMIN">System Administrator (Full Control)</option>
+                  <option value="PRODUCTION_SUPERVISOR">Production Supervisor (Batches & Variances)</option>
+                  <option value="SALES_EXECUTIVE">Sales Executive (Orders & Shortages)</option>
+                  <option value="INVENTORY_MANAGER">Inventory Manager (GRN & Ledger)</option>
+                  <option value="FINANCIAL_AUDITOR">Financial Auditor (GST & Costing)</option>
                 </select>
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-blue-600 text-white font-bold py-2.5 rounded-lg text-sm hover:bg-blue-700 transition-colors shadow"
+                disabled={authLoading}
+                className="w-full bg-blue-600 text-white font-bold py-2.5 rounded-lg text-sm hover:bg-blue-700 transition-colors shadow disabled:opacity-70"
               >
-                Create Account & Enter
+                {authLoading ? 'Creating Profile...' : 'Register & Enter Workspace'}
               </button>
             </form>
           )}
@@ -475,38 +683,38 @@ export default function App() {
           {/* Quick 1-Click Demo Login Personas */}
           <div className="mt-8 pt-6 border-t border-slate-200">
             <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400 block mb-3 text-center">
-              Or 1-Click Instant Demo Login
+              1-Click Instant Evaluator Access
             </span>
             <div className="grid grid-cols-2 gap-2 text-xs">
               <button
-                onClick={() => handleQuickLogin('admin@stockledger.in', 'Dr. R. Ramanan', 'ADMIN')}
-                className="p-2 border border-slate-200 rounded-lg font-semibold hover:bg-blue-50 hover:border-blue-300 text-left"
+                onClick={() => handleQuickDemoLogin('admin@stockledger.in')}
+                className="p-2 border border-slate-200 rounded-lg font-semibold hover:bg-blue-50 hover:border-blue-300 text-left transition-colors"
               >
                 <span className="text-blue-900 block font-bold">Admin</span>
                 <span className="text-[10px] text-slate-500">Dr. R. Ramanan</span>
               </button>
 
               <button
-                onClick={() => handleQuickLogin('supervisor@stockledger.in', 'K. Senthil', 'PRODUCTION_SUPERVISOR')}
-                className="p-2 border border-slate-200 rounded-lg font-semibold hover:bg-amber-50 hover:border-amber-300 text-left"
+                onClick={() => handleQuickDemoLogin('supervisor@stockledger.in')}
+                className="p-2 border border-slate-200 rounded-lg font-semibold hover:bg-amber-50 hover:border-amber-300 text-left transition-colors"
               >
                 <span className="text-amber-900 block font-bold">Supervisor</span>
                 <span className="text-[10px] text-slate-500">K. Senthil</span>
               </button>
 
               <button
-                onClick={() => handleQuickLogin('salesmanA@stockledger.in', 'M. Anand', 'SALES_EXECUTIVE')}
-                className="p-2 border border-slate-200 rounded-lg font-semibold hover:bg-green-50 hover:border-green-300 text-left"
+                onClick={() => handleQuickDemoLogin('salesmanA@stockledger.in')}
+                className="p-2 border border-slate-200 rounded-lg font-semibold hover:bg-green-50 hover:border-green-300 text-left transition-colors"
               >
-                <span className="text-green-900 block font-bold">Salesman</span>
+                <span className="text-green-900 block font-bold">Sales Executive</span>
                 <span className="text-[10px] text-slate-500">M. Anand</span>
               </button>
 
               <button
-                onClick={() => handleQuickLogin('auditor@stockledger.in', 'CA. T. Natarajan', 'FINANCIAL_AUDITOR')}
-                className="p-2 border border-slate-200 rounded-lg font-semibold hover:bg-purple-50 hover:border-purple-300 text-left"
+                onClick={() => handleQuickDemoLogin('auditor@stockledger.in')}
+                className="p-2 border border-slate-200 rounded-lg font-semibold hover:bg-purple-50 hover:border-purple-300 text-left transition-colors"
               >
-                <span className="text-purple-900 block font-bold">Auditor</span>
+                <span className="text-purple-900 block font-bold">Financial Auditor</span>
                 <span className="text-[10px] text-slate-500">CA. T. Natarajan</span>
               </button>
             </div>
@@ -516,9 +724,19 @@ export default function App() {
     );
   }
 
-  // Logged-in Enterprise Dashboard View
+  // ==============================================================
+  // VIEW: LOGGED-IN ENTERPRISE APPLICATION
+  // ==============================================================
   return (
     <div className="flex h-screen bg-[#F8FAFC] overflow-hidden text-slate-800">
+      {/* Toast Notification Bar */}
+      {notification && (
+        <div className="fixed top-4 right-4 z-50 bg-[#172554] text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 border border-blue-400/30 text-xs font-semibold animate-bounce">
+          <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />
+          <span>{notification}</span>
+        </div>
+      )}
+
       {/* ----------------- LEFT SIDEBAR ----------------- */}
       <aside className="w-64 bg-[#172554] text-white flex flex-col justify-between shrink-0 shadow-xl">
         <div>
@@ -570,6 +788,21 @@ export default function App() {
             >
               <Factory className="w-4 h-4" />
               Production & Batches
+              {batches.length > 0 && (
+                <span className="ml-auto text-[10px] bg-amber-500/30 text-white px-1.5 py-0.5 rounded font-bold">
+                  {batches.length}
+                </span>
+              )}
+            </button>
+
+            <button
+              onClick={() => setActiveTab('materials')}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
+                activeTab === 'materials' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-300 hover:bg-blue-900/40 hover:text-white'
+              }`}
+            >
+              <Package className="w-4 h-4" />
+              Warehouse & Materials
             </button>
 
             <button
@@ -580,6 +813,9 @@ export default function App() {
             >
               <Layers className="w-4 h-4" />
               Double-Entry Ledger
+              <span className="ml-auto text-[10px] bg-green-500/30 text-white px-1.5 py-0.5 rounded font-bold">
+                {stockLedger.length}
+              </span>
             </button>
 
             <button
@@ -626,9 +862,18 @@ export default function App() {
             </button>
           </div>
 
-          <div className="flex items-center gap-2 text-[11px] text-slate-400 px-1 pt-2 border-t border-blue-900/30">
-            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-            System Engine: Online (Port 5000)
+          <div className="flex items-center justify-between text-[11px] text-slate-400 px-1 pt-2 border-t border-blue-900/30">
+            <div className="flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+              API: Online (Port 5000)
+            </div>
+            <button
+              onClick={fetchAllData}
+              title="Refresh all data from backend"
+              className="hover:text-white text-slate-400"
+            >
+              <RefreshCw className={`w-3.5 h-3.5 ${isLoadingData ? 'animate-spin' : ''}`} />
+            </button>
           </div>
         </div>
       </aside>
@@ -643,32 +888,56 @@ export default function App() {
             <span className="font-bold text-slate-900 capitalize">{activeTab}</span>
           </div>
 
-          <div className="flex items-center gap-4">
-            {/* Quick Action Button based on tab */}
-            {activeTab === 'invoicing' && (
+          <div className="flex items-center gap-3">
+            {/* System State Controller Dropdown */}
+            <div className="flex items-center bg-slate-100 rounded-lg p-1 border border-slate-200 text-xs">
               <button
-                onClick={() => setShowOrderModal(true)}
-                className="flex items-center gap-2 bg-blue-600 text-white px-3.5 py-1.5 rounded-lg text-xs font-bold hover:bg-blue-700 shadow-sm"
+                onClick={() => handleSystemReset('opening')}
+                title="Reset warehouse to opening stock (100kg Flour, 30L Oil, 50 pkts FG) and 0 orders"
+                className="px-2.5 py-1 rounded text-slate-700 hover:bg-white font-semibold transition-all"
               >
-                <Plus className="w-4 h-4" />
-                New Sales Order
+                Reset Opening
               </button>
-            )}
-
-            {activeTab === 'production' && (
               <button
-                onClick={() => setShowBatchModal(true)}
-                className="flex items-center gap-2 bg-amber-600 text-white px-3.5 py-1.5 rounded-lg text-xs font-bold hover:bg-amber-700 shadow-sm"
+                onClick={() => handleSystemReset('benchmark')}
+                title="Load the standard 15-step verified benchmark scenario"
+                className="px-2.5 py-1 rounded text-blue-900 hover:bg-white font-semibold transition-all"
               >
-                <Plus className="w-4 h-4" />
-                Run Production Batch
+                Load Demo
               </button>
-            )}
-
-            <div className="flex items-center gap-2 text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full text-xs font-medium">
-              <Calendar className="w-3.5 h-3.5" />
-              <span>Tamil Nadu Facility | FY 2026-27</span>
+              <button
+                onClick={() => handleSystemReset('blank')}
+                title="Wipe state to 0 for custom input"
+                className="px-2.5 py-1 rounded text-slate-500 hover:bg-white font-semibold transition-all"
+              >
+                Clean Slate
+              </button>
             </div>
+
+            {/* Quick Action Button based on context */}
+            <button
+              onClick={() => setShowPurchaseModal(true)}
+              className="flex items-center gap-1.5 bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-emerald-800 shadow-sm"
+            >
+              <Package className="w-3.5 h-3.5" />
+              + Inward GRN
+            </button>
+
+            <button
+              onClick={() => setShowOrderModal(true)}
+              className="flex items-center gap-1.5 bg-blue-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-blue-700 shadow-sm"
+            >
+              <Plus className="w-3.5 h-3.5" />
+              + Sales Order
+            </button>
+
+            <button
+              onClick={() => setShowBatchModal(true)}
+              className="flex items-center gap-1.5 bg-[#172554] text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-blue-900 shadow-sm"
+            >
+              <Factory className="w-3.5 h-3.5" />
+              + Run Batch
+            </button>
           </div>
         </header>
 
@@ -680,23 +949,11 @@ export default function App() {
               <div className="flex items-center justify-between">
                 <div>
                   <h2 className="text-2xl font-bold tracking-tight text-slate-900">Manufacturing & Commercial Overview</h2>
-                  <p className="text-sm text-slate-500">Real-time indicators computed from immutable double-entry ledger records.</p>
+                  <p className="text-sm text-slate-500">Live operational indicators connected to backend REST endpoints and stock ledger.</p>
                 </div>
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => setShowOrderModal(true)}
-                    className="flex items-center gap-2 bg-blue-600 text-white px-3.5 py-2 rounded-lg text-xs font-bold hover:bg-blue-700 shadow-sm"
-                  >
-                    <Plus className="w-4 h-4" />
-                    + New Sales Order
-                  </button>
-                  <button
-                    onClick={() => setShowBatchModal(true)}
-                    className="flex items-center gap-2 bg-[#172554] text-white px-3.5 py-2 rounded-lg text-xs font-bold hover:bg-blue-900 shadow-sm"
-                  >
-                    <Factory className="w-4 h-4" />
-                    + Run Batch
-                  </button>
+                <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 bg-white px-3 py-1.5 rounded-lg border border-slate-200">
+                  <Calendar className="w-4 h-4 text-blue-600" />
+                  <span>Tamil Nadu Manufacturing Facility | FY 2026-27</span>
                 </div>
               </div>
 
@@ -707,9 +964,11 @@ export default function App() {
                     <span className="text-xs font-bold uppercase tracking-wider">Raw Material Valuation</span>
                     <Package className="w-4 h-4 text-blue-600" />
                   </div>
-                  <div className="text-2xl font-black text-slate-900 font-mono">₹8,685.00</div>
-                  <div className="mt-2 text-xs text-green-700 font-semibold">
-                    Flour (120kg @ ₹43.125) + Oil (19.5L) + Spices
+                  <div className="text-2xl font-black text-slate-900 font-mono">
+                    ₹{materials.reduce((acc, m) => acc + (m.currentStock * m.currentWeightedRate), 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  </div>
+                  <div className="mt-2 text-xs text-slate-500 font-medium">
+                    Weighted valuation across {materials.length} inventory items
                   </div>
                 </div>
 
@@ -718,20 +977,24 @@ export default function App() {
                     <span className="text-xs font-bold uppercase tracking-wider">Finished Murukku Stock</span>
                     <Factory className="w-4 h-4 text-amber-600" />
                   </div>
-                  <div className="text-2xl font-black text-slate-900 font-mono">88 pkts</div>
+                  <div className="text-2xl font-black text-slate-900 font-mono">
+                    {products.find(p => p.sku === 'MUR-200G')?.currentStock || 0} pkts
+                  </div>
                   <div className="mt-2 text-xs text-slate-500 font-medium">
-                    238 produced - 150 dispatched
+                    Available for immediate commercial dispatch
                   </div>
                 </div>
 
                 <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
                   <div className="flex items-center justify-between text-slate-500 mb-2">
-                    <span className="text-xs font-bold uppercase tracking-wider">Batch Production Cost</span>
+                    <span className="text-xs font-bold uppercase tracking-wider">Latest Batch Cost</span>
                     <TrendingUp className="w-4 h-4 text-green-600" />
                   </div>
-                  <div className="text-2xl font-black text-slate-900 font-mono">₹31.14 <span className="text-sm font-normal text-slate-500">/ pkt</span></div>
+                  <div className="text-2xl font-black text-slate-900 font-mono">
+                    ₹{batches[0]?.costing.costPerGoodPacket.toFixed(2) || '31.14'} <span className="text-sm font-normal text-slate-500">/ pkt</span>
+                  </div>
                   <div className="mt-2 text-xs text-green-700 font-semibold">
-                    Gross Margin: 37.7% (₹18.86 / pkt @ ₹50 SP)
+                    Gross Margin: {batches[0]?.costing.grossMarginPercent.toFixed(1) || '37.7'}% (@ ₹50 SP)
                   </div>
                 </div>
 
@@ -741,67 +1004,69 @@ export default function App() {
                     <DollarSign className="w-4 h-4 text-purple-600" />
                   </div>
                   <div className="text-2xl font-black text-purple-900 font-mono">
-                    ₹{invoices.reduce((acc, i) => acc + i.balanceAmount, 0).toFixed(2)}
+                    ₹{invoices.reduce((acc, i) => acc + i.balanceAmount, 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </div>
                   <div className="mt-2 text-xs text-purple-700 font-semibold">
-                    Live balance across posted invoices
+                    Across {invoices.filter(i => i.balanceAmount > 0).length} unpaid / partial invoices
                   </div>
                 </div>
               </div>
 
-              {/* Active Orders Quick Table */}
-              <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider">Recent Sales Orders</h3>
-                  <button onClick={() => setActiveTab('invoicing')} className="text-xs text-blue-600 font-bold hover:underline">
-                    View All Orders & Invoices $\rightarrow$
-                  </button>
-                </div>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-xs font-mono">
-                    <thead className="bg-slate-50 text-slate-600 font-sans font-semibold uppercase">
-                      <tr>
-                        <th className="p-3">Order No</th>
-                        <th className="p-3">Customer</th>
-                        <th className="p-3 text-right">Quantity</th>
-                        <th className="p-3 text-right">Total (incl GST)</th>
-                        <th className="p-3">Status</th>
-                        <th className="p-3 text-right">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-100">
-                      {salesOrders.map(order => (
-                        <tr key={order.id} className="hover:bg-slate-50">
-                          <td className="p-3 font-bold text-blue-600">{order.orderNumber}</td>
-                          <td className="p-3 font-sans font-medium text-slate-900">{order.customerName}</td>
-                          <td className="p-3 text-right font-bold">{order.orderedQty} pkts</td>
-                          <td className="p-3 text-right font-bold">₹{order.totalOrderValue.toFixed(2)}</td>
-                          <td className="p-3">
-                            <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                              order.status === 'DISPATCHED' ? 'bg-green-100 text-green-800' :
-                              order.status === 'SHORTAGE_EXCEPTION' ? 'bg-red-100 text-red-800' :
-                              'bg-amber-100 text-amber-800'
+              {/* Operational Status Panels */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Active Sales Orders Preview */}
+                <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-bold text-slate-900 text-sm">Recent Commercial Orders</h3>
+                    <button onClick={() => setActiveTab('invoicing')} className="text-xs text-blue-600 font-bold hover:underline">
+                      View All
+                    </button>
+                  </div>
+                  <div className="space-y-3">
+                    {salesOrders.length === 0 ? (
+                      <div className="p-8 text-center text-slate-400 text-xs">
+                        No sales orders created yet. Click "+ Sales Order" above to place your first order.
+                      </div>
+                    ) : (
+                      salesOrders.slice(0, 3).map((o) => (
+                        <div key={o.id} className="p-3 bg-slate-50 rounded-lg border border-slate-200 flex items-center justify-between text-xs">
+                          <div>
+                            <span className="font-bold text-blue-900">{o.orderNumber}</span>
+                            <span className="text-slate-500 block">{o.customerName}</span>
+                          </div>
+                          <div className="text-right">
+                            <span className="font-mono font-bold text-slate-900">{o.orderedQty} pkts</span>
+                            <span className={`block font-bold text-[10px] ${
+                              o.status === 'SHORTAGE_EXCEPTION' ? 'text-amber-700' : o.status === 'DISPATCHED' ? 'text-green-700' : 'text-blue-700'
                             }`}>
-                              {order.status}
+                              {o.status}
                             </span>
-                          </td>
-                          <td className="p-3 text-right">
-                            {order.status === 'SUBMITTED' && (
-                              <button
-                                onClick={() => handleApproveOrder(order.id)}
-                                className="bg-green-600 text-white px-2 py-1 rounded text-[10px] font-bold hover:bg-green-700"
-                              >
-                                Approve & Ship
-                              </button>
-                            )}
-                            {order.status === 'SHORTAGE_EXCEPTION' && (
-                              <span className="text-[10px] text-red-600 font-bold">Shortage {order.shortageQty} pkts</span>
-                            )}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </div>
+
+                {/* Warehouse Inventory Preview */}
+                <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-bold text-slate-900 text-sm">Warehouse Stock Balances</h3>
+                    <button onClick={() => setActiveTab('materials')} className="text-xs text-blue-600 font-bold hover:underline">
+                      Manage Stock
+                    </button>
+                  </div>
+                  <div className="space-y-2">
+                    {materials.map((m) => (
+                      <div key={m.id} className="flex items-center justify-between text-xs py-2 border-b border-slate-100 last:border-0">
+                        <span className="font-medium text-slate-800">{m.name}</span>
+                        <div className="flex items-center gap-4">
+                          <span className="font-mono font-bold text-slate-900">{m.currentStock} {m.uom}</span>
+                          <span className="text-[11px] text-slate-400 font-mono">@ ₹{m.currentWeightedRate.toFixed(2)}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -812,214 +1077,376 @@ export default function App() {
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-2xl font-bold tracking-tight text-slate-900">Sales Orders & Statutory Invoicing</h2>
-                  <p className="text-sm text-slate-500">Live order management, stock availability validation, and GST invoice generation.</p>
+                  <h2 className="text-2xl font-bold tracking-tight text-slate-900">Commercial Orders & GST Invoices</h2>
+                  <p className="text-sm text-slate-500">Order approval, real-time inventory shortage verification, dispatch, and partial payments.</p>
                 </div>
                 <button
                   onClick={() => setShowOrderModal(true)}
-                  className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-blue-700 shadow-sm"
+                  className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-blue-700 shadow-sm"
                 >
                   <Plus className="w-4 h-4" />
                   + Create New Sales Order
                 </button>
               </div>
 
-              {/* Sales Orders List */}
-              <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
-                <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4">All Sales Orders</h3>
-                <table className="w-full text-left text-xs font-mono">
-                  <thead className="bg-slate-50 text-slate-600 font-sans font-semibold uppercase">
+              {/* Orders Table */}
+              <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                <div className="p-4 bg-slate-50 border-b border-slate-200 font-bold text-xs text-slate-700 uppercase tracking-wider flex justify-between items-center">
+                  <span>Sales Orders & Shortage Exception Workflow</span>
+                  <span className="text-slate-500 font-mono font-normal">Total: {salesOrders.length} orders</span>
+                </div>
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-slate-100 text-slate-600 font-bold border-b border-slate-200">
                     <tr>
-                      <th className="p-3">Order No</th>
-                      <th className="p-3">Customer</th>
-                      <th className="p-3 text-right">Ordered Qty</th>
-                      <th className="p-3 text-right">Taxable</th>
-                      <th className="p-3 text-right">Total (5% GST)</th>
-                      <th className="p-3">Status</th>
-                      <th className="p-3 text-right">Action</th>
+                      <th className="p-3.5">Order No</th>
+                      <th className="p-3.5">Customer Name</th>
+                      <th className="p-3.5 text-right">Ordered Qty</th>
+                      <th className="p-3.5 text-right">Total (Incl GST)</th>
+                      <th className="p-3.5 text-center">Status</th>
+                      <th className="p-3.5 text-right">Action</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100">
-                    {salesOrders.map(o => (
-                      <tr key={o.id} className="hover:bg-slate-50">
-                        <td className="p-3 font-bold text-blue-600">{o.orderNumber}</td>
-                        <td className="p-3 font-sans font-medium text-slate-900">{o.customerName}</td>
-                        <td className="p-3 text-right font-bold">{o.orderedQty} pkts</td>
-                        <td className="p-3 text-right">₹{o.taxableAmount.toFixed(2)}</td>
-                        <td className="p-3 text-right font-bold">₹{o.totalOrderValue.toFixed(2)}</td>
-                        <td className="p-3">
-                          <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                            o.status === 'DISPATCHED' ? 'bg-green-100 text-green-800' :
-                            o.status === 'SHORTAGE_EXCEPTION' ? 'bg-red-100 text-red-800' :
-                            'bg-amber-100 text-amber-800'
-                          }`}>
-                            {o.status}
-                          </span>
-                        </td>
-                        <td className="p-3 text-right">
-                          {o.status === 'SUBMITTED' && (
-                            <button
-                              onClick={() => handleApproveOrder(o.id)}
-                              className="bg-green-600 text-white px-2.5 py-1 rounded text-xs font-bold hover:bg-green-700"
-                            >
-                              Approve & Dispatch
-                            </button>
-                          )}
-                          {o.status === 'SHORTAGE_EXCEPTION' && (
-                            <span className="text-red-600 font-bold">Hold (Short {o.shortageQty})</span>
-                          )}
+                  <tbody className="divide-y divide-slate-100 font-mono">
+                    {salesOrders.length === 0 ? (
+                      <tr>
+                        <td colSpan={6} className="p-8 text-center text-slate-400 font-sans">
+                          No sales orders found. Click "+ Create New Sales Order" to test the order lifecycle.
                         </td>
                       </tr>
-                    ))}
+                    ) : (
+                      salesOrders.map((o) => (
+                        <tr key={o.id} className="hover:bg-slate-50">
+                          <td className="p-3.5 font-bold text-blue-900">{o.orderNumber}</td>
+                          <td className="p-3.5 font-sans font-medium text-slate-800">{o.customerName}</td>
+                          <td className="p-3.5 text-right font-bold">{o.orderedQty} pkts</td>
+                          <td className="p-3.5 text-right font-bold text-slate-900">₹{o.totalOrderValue.toFixed(2)}</td>
+                          <td className="p-3.5 text-center font-sans">
+                            <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold ${
+                              o.status === 'SHORTAGE_EXCEPTION'
+                                ? 'bg-amber-100 text-amber-800 border border-amber-300'
+                                : o.status === 'DISPATCHED'
+                                ? 'bg-green-100 text-green-800 border border-green-300'
+                                : 'bg-blue-100 text-blue-800 border border-blue-300'
+                            }`}>
+                              {o.status === 'SHORTAGE_EXCEPTION' ? `SHORTAGE (Deficit: ${o.shortageQty} pkts)` : o.status}
+                            </span>
+                          </td>
+                          <td className="p-3.5 text-right font-sans">
+                            {o.status === 'SUBMITTED' ? (
+                              <button
+                                onClick={() => handleApproveOrder(o.id)}
+                                className="bg-emerald-600 text-white px-3 py-1 rounded text-xs font-bold hover:bg-emerald-700 shadow-sm"
+                              >
+                                Approve & Dispatch
+                              </button>
+                            ) : o.status === 'SHORTAGE_EXCEPTION' ? (
+                              <span className="text-[11px] text-amber-700 font-bold bg-amber-50 px-2 py-1 rounded border border-amber-200">
+                                Blocked: Need Production
+                              </span>
+                            ) : (
+                              <span className="text-[11px] text-green-700 font-bold">Dispatched</span>
+                            )}
+                          </td>
+                        </tr>
+                      ))
+                    )}
                   </tbody>
                 </table>
               </div>
 
-              {/* Invoices List */}
-              <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider">Posted GST Invoices</h3>
+              {/* Invoices & Payments Table */}
+              <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden mt-6">
+                <div className="p-4 bg-slate-50 border-b border-slate-200 font-bold text-xs text-slate-700 uppercase tracking-wider flex justify-between items-center">
+                  <span>GST Tax Invoices & Partial Payment Reconciliation</span>
+                  <span className="text-slate-500 font-mono font-normal">Total: {invoices.length} invoices</span>
                 </div>
-                <table className="w-full text-left text-xs font-mono">
-                  <thead className="bg-slate-50 text-slate-600 font-sans font-semibold uppercase">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-slate-100 text-slate-600 font-bold border-b border-slate-200">
                     <tr>
-                      <th className="p-3">Invoice No</th>
-                      <th className="p-3">Order Ref</th>
-                      <th className="p-3">Customer</th>
-                      <th className="p-3 text-right">Taxable</th>
-                      <th className="p-3 text-right">CGST+SGST</th>
-                      <th className="p-3 text-right">Total Amount</th>
-                      <th className="p-3 text-right">Paid</th>
-                      <th className="p-3 text-right">Outstanding</th>
-                      <th className="p-3 text-right">Record Payment</th>
+                      <th className="p-3.5">Invoice No</th>
+                      <th className="p-3.5">Customer</th>
+                      <th className="p-3.5 text-right">Taxable (₹)</th>
+                      <th className="p-3.5 text-right">GST 5% (₹)</th>
+                      <th className="p-3.5 text-right">Total (₹)</th>
+                      <th className="p-3.5 text-right">Paid (₹)</th>
+                      <th className="p-3.5 text-right">Balance Due</th>
+                      <th className="p-3.5 text-center">Status</th>
+                      <th className="p-3.5 text-right">Action</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100">
-                    {invoices.map(inv => (
-                      <tr key={inv.id} className="hover:bg-slate-50">
-                        <td className="p-3 font-bold text-blue-900">{inv.invoiceNumber}</td>
-                        <td className="p-3">{inv.orderNumber}</td>
-                        <td className="p-3 font-sans font-medium">{inv.customerName}</td>
-                        <td className="p-3 text-right">₹{inv.taxableValue.toFixed(2)}</td>
-                        <td className="p-3 text-right">₹{(inv.cgstAmount + inv.sgstAmount).toFixed(2)}</td>
-                        <td className="p-3 text-right font-bold">₹{inv.totalInvoiceAmount.toFixed(2)}</td>
-                        <td className="p-3 text-right text-green-700 font-bold">₹{inv.paidAmount.toFixed(2)}</td>
-                        <td className="p-3 text-right text-purple-900 font-black">₹{inv.balanceAmount.toFixed(2)}</td>
-                        <td className="p-3 text-right">
-                          {inv.balanceAmount > 0 ? (
-                            <button
-                              onClick={() => { setSelectedInvoiceId(inv.id); setShowPaymentModal(true); }}
-                              className="bg-purple-600 text-white px-2.5 py-1 rounded text-xs font-bold hover:bg-purple-700"
-                            >
-                              + Pay
-                            </button>
-                          ) : (
-                            <span className="text-green-700 font-bold">PAID FULL</span>
-                          )}
+                  <tbody className="divide-y divide-slate-100 font-mono">
+                    {invoices.length === 0 ? (
+                      <tr>
+                        <td colSpan={9} className="p-8 text-center text-slate-400 font-sans">
+                          No invoices generated yet. Invoices are automatically generated when a sales order is approved and dispatched.
                         </td>
                       </tr>
-                    ))}
+                    ) : (
+                      invoices.map((inv) => (
+                        <tr key={inv.id} className="hover:bg-slate-50">
+                          <td className="p-3.5 font-bold text-purple-900">{inv.invoiceNumber}</td>
+                          <td className="p-3.5 font-sans font-medium text-slate-800">{inv.customerName}</td>
+                          <td className="p-3.5 text-right">₹{inv.taxableValue.toFixed(2)}</td>
+                          <td className="p-3.5 text-right text-slate-500">
+                            ₹{(inv.cgstAmount + inv.sgstAmount).toFixed(2)}
+                            <span className="text-[10px] block text-slate-400">CGST+SGST</span>
+                          </td>
+                          <td className="p-3.5 text-right font-black text-slate-900">₹{inv.totalInvoiceAmount.toFixed(2)}</td>
+                          <td className="p-3.5 text-right text-green-700 font-bold">₹{inv.paidAmount.toFixed(2)}</td>
+                          <td className="p-3.5 text-right text-red-600 font-black">₹{inv.balanceAmount.toFixed(2)}</td>
+                          <td className="p-3.5 text-center font-sans">
+                            <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                              inv.status === 'PAID' ? 'bg-green-100 text-green-800' : 'bg-purple-100 text-purple-800'
+                            }`}>
+                              {inv.status}
+                            </span>
+                          </td>
+                          <td className="p-3.5 text-right font-sans">
+                            {inv.balanceAmount > 0 ? (
+                              <button
+                                onClick={() => {
+                                  setSelectedInvoice(inv);
+                                  setPaymentAmountInput(inv.balanceAmount.toFixed(2));
+                                  setShowPaymentModal(true);
+                                }}
+                                className="bg-purple-600 text-white px-2.5 py-1 rounded text-xs font-bold hover:bg-purple-700 shadow-sm"
+                              >
+                                + Record Pay
+                              </button>
+                            ) : (
+                              <span className="text-green-700 font-bold text-xs">Cleared</span>
+                            )}
+                          </td>
+                        </tr>
+                      ))
+                    )}
                   </tbody>
                 </table>
               </div>
             </div>
           )}
 
-          {/* ===================== VIEW 3: PRODUCTION & BATCHES ===================== */}
+          {/* ===================== VIEW 3: PRODUCTION ===================== */}
           {activeTab === 'production' && (
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-2xl font-bold tracking-tight text-slate-900">Production Engine & Batch History</h2>
-                  <p className="text-sm text-slate-500">Run batches, log actual material consumption, and track absorption costing.</p>
+                  <h2 className="text-2xl font-bold tracking-tight text-slate-900">Production Batches & Costing</h2>
+                  <p className="text-sm text-slate-500">Bill of Materials execution, yield variance, oil consumption, and unit packet costing.</p>
                 </div>
                 <button
                   onClick={() => setShowBatchModal(true)}
-                  className="flex items-center gap-2 bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-amber-700 shadow-sm"
+                  className="flex items-center gap-2 bg-amber-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-amber-700 shadow-sm"
                 >
                   <Plus className="w-4 h-4" />
-                  + Run New Production Batch
+                  + Run Production Batch
                 </button>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {batches.map(b => (
-                  <div key={b.id} className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm space-y-3">
-                    <div className="flex justify-between items-start border-b border-slate-100 pb-2">
-                      <div>
-                        <span className="text-xs font-bold text-blue-600 font-mono">{b.batchNumber}</span>
-                        <h4 className="text-sm font-bold text-slate-900">{b.productName}</h4>
-                      </div>
-                      <span className="bg-green-100 text-green-800 text-[10px] font-bold px-2 py-0.5 rounded">
-                        {b.status}
-                      </span>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-2 text-xs font-mono">
-                      <div className="p-2 bg-slate-50 rounded">
-                        <span className="text-slate-500 block text-[10px]">Good Output</span>
-                        <span className="font-bold text-slate-900">{b.goodOutput} pkts ({b.yieldVariance}% var)</span>
-                      </div>
-                      <div className="p-2 bg-slate-50 rounded">
-                        <span className="text-slate-500 block text-[10px]">Oil Used</span>
-                        <span className="font-bold text-slate-900">{b.oilIssued} L (+{b.oilVariance}% var)</span>
-                      </div>
-                      <div className="p-2 bg-slate-50 rounded">
-                        <span className="text-slate-500 block text-[10px]">Total Batch Cost</span>
-                        <span className="font-bold text-blue-900">₹{b.totalCost.toFixed(2)}</span>
-                      </div>
-                      <div className="p-2 bg-green-50 border border-green-200 rounded">
-                        <span className="text-green-700 block text-[10px] font-bold">Unit Cost</span>
-                        <span className="font-black text-green-950 text-sm">₹{b.unitCost.toFixed(2)} / pkt</span>
-                      </div>
-                    </div>
+              {/* Standard BOM Reference Card */}
+              <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm text-xs">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-500 block mb-3">
+                  Standard Bill of Materials (BOM) — Murukku 200g (Batch Size: 200 Packets)
+                </span>
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-3 font-mono">
+                  <div className="p-2.5 bg-slate-50 rounded-lg border border-slate-200">
+                    <span className="text-slate-500 block text-[10px]">Rice Flour</span>
+                    <span className="font-bold text-slate-900">40.0 kg</span>
                   </div>
-                ))}
+                  <div className="p-2.5 bg-slate-50 rounded-lg border border-slate-200">
+                    <span className="text-slate-500 block text-[10px]">Groundnut Oil</span>
+                    <span className="font-bold text-slate-900">10.0 L</span>
+                  </div>
+                  <div className="p-2.5 bg-slate-50 rounded-lg border border-slate-200">
+                    <span className="text-slate-500 block text-[10px]">Spice Mix</span>
+                    <span className="font-bold text-slate-900">1.2 kg</span>
+                  </div>
+                  <div className="p-2.5 bg-slate-50 rounded-lg border border-slate-200">
+                    <span className="text-slate-500 block text-[10px]">Nitrogen Pouches</span>
+                    <span className="font-bold text-slate-900">200 pcs</span>
+                  </div>
+                  <div className="p-2.5 bg-slate-50 rounded-lg border border-slate-200">
+                    <span className="text-slate-500 block text-[10px]">Shipping Cartons</span>
+                    <span className="font-bold text-slate-900">10 pcs</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Batches Table */}
+              <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                <div className="p-4 bg-slate-50 border-b border-slate-200 font-bold text-xs text-slate-700 uppercase tracking-wider">
+                  Completed Production Batches & Operational Variances
+                </div>
+                <div className="divide-y divide-slate-100">
+                  {batches.length === 0 ? (
+                    <div className="p-8 text-center text-slate-400 text-xs">
+                      No production batches recorded. Click "+ Run Production Batch" above to execute your first batch.
+                    </div>
+                  ) : (
+                    batches.map((b) => (
+                      <div key={b.id} className="p-5 hover:bg-slate-50/50 transition-colors">
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="flex items-center gap-3">
+                            <span className="font-bold text-slate-900 text-sm font-mono">{b.batchNumber}</span>
+                            <span className="text-xs text-slate-600 font-medium">{b.productName}</span>
+                          </div>
+                          <span className="text-xs text-slate-500">Supervisor: <strong className="text-slate-800">{b.supervisor}</strong></span>
+                        </div>
+
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs font-mono">
+                          <div className="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <span className="text-slate-500 block text-[10px]">Output vs Planned</span>
+                            <span className="font-bold text-slate-900">{b.goodOutput} / {b.plannedYield} pkts</span>
+                            <span className={`text-[10px] block font-bold mt-0.5 ${b.yieldVariancePercent < 0 ? 'text-amber-700' : 'text-green-700'}`}>
+                              Yield Variance: {b.yieldVariancePercent}%
+                            </span>
+                          </div>
+
+                          <div className="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <span className="text-slate-500 block text-[10px]">Oil Consumed</span>
+                            <span className="font-bold text-slate-900">{b.oilIssued} L (Std: 10.0L)</span>
+                            <span className="text-[10px] block font-bold text-amber-700 mt-0.5">
+                              Oil Variance: +{b.oilVariance}%
+                            </span>
+                          </div>
+
+                          <div className="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <span className="text-slate-500 block text-[10px]">Total Batch Cost</span>
+                            <span className="font-bold text-slate-900">₹{b.costing.totalBatchCost.toFixed(2)}</span>
+                            <span className="text-[10px] block text-slate-500 mt-0.5">RM + PM + Labour + Overhead</span>
+                          </div>
+
+                          <div className="p-3 bg-green-50 rounded-lg border border-green-200">
+                            <span className="text-green-700 block text-[10px] font-bold">Unit Cost & Margin</span>
+                            <span className="font-black text-green-950 text-sm">₹{b.costing.costPerGoodPacket.toFixed(2)} / pkt</span>
+                            <span className="text-[10px] block font-bold text-green-800 mt-0.5">
+                              Gross Margin: {b.costing.grossMarginPercent.toFixed(1)}% (@ ₹50 SP)
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
               </div>
             </div>
           )}
 
-          {/* ===================== VIEW 4: DOUBLE-ENTRY LEDGER ===================== */}
+          {/* ===================== VIEW 4: WAREHOUSE & MATERIALS ===================== */}
+          {activeTab === 'materials' && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-2xl font-bold tracking-tight text-slate-900">Warehouse Raw & Packaging Materials</h2>
+                  <p className="text-sm text-slate-500">Live stock on hand, weighted-average valuation, inward purchases (GRN), and reorder alerts.</p>
+                </div>
+                <button
+                  onClick={() => setShowPurchaseModal(true)}
+                  className="flex items-center gap-2 bg-emerald-700 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-emerald-800 shadow-sm"
+                >
+                  <Package className="w-4 h-4" />
+                  + Record Inward Purchase (GRN)
+                </button>
+              </div>
+
+              {/* Materials Table */}
+              <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-slate-100 text-slate-600 font-bold border-b border-slate-200">
+                    <tr>
+                      <th className="p-3.5">Code</th>
+                      <th className="p-3.5">Material Name</th>
+                      <th className="p-3.5">Category</th>
+                      <th className="p-3.5 text-right">Stock on Hand</th>
+                      <th className="p-3.5 text-right">Weighted Rate</th>
+                      <th className="p-3.5 text-right">Total Valuation</th>
+                      <th className="p-3.5 text-center">Reorder Status</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100 font-mono">
+                    {materials.map((m) => {
+                      const valuation = m.currentStock * m.currentWeightedRate;
+                      const isLowStock = m.currentStock <= m.minReorderQty;
+                      return (
+                        <tr key={m.id} className="hover:bg-slate-50">
+                          <td className="p-3.5 font-bold text-blue-900">{m.code}</td>
+                          <td className="p-3.5 font-sans font-semibold text-slate-900">{m.name}</td>
+                          <td className="p-3.5 font-sans">
+                            <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                              m.category === 'RAW' ? 'bg-amber-100 text-amber-800' : 'bg-blue-100 text-blue-800'
+                            }`}>
+                              {m.category}
+                            </span>
+                          </td>
+                          <td className="p-3.5 text-right font-black text-slate-900">{m.currentStock} {m.uom}</td>
+                          <td className="p-3.5 text-right font-bold text-slate-700">₹{m.currentWeightedRate.toFixed(4)}</td>
+                          <td className="p-3.5 text-right font-black text-slate-900">₹{valuation.toFixed(2)}</td>
+                          <td className="p-3.5 text-center font-sans">
+                            {isLowStock ? (
+                              <span className="bg-red-100 text-red-800 px-2 py-0.5 rounded text-[10px] font-bold">
+                                Low Stock Alert
+                              </span>
+                            ) : (
+                              <span className="bg-green-100 text-green-800 px-2 py-0.5 rounded text-[10px] font-bold">
+                                Adequate
+                              </span>
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {/* ===================== VIEW 5: DOUBLE-ENTRY LEDGER ===================== */}
           {activeTab === 'ledger' && (
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-2xl font-bold tracking-tight text-slate-900">Immutable Double-Entry Stock Ledger</h2>
-                  <p className="text-sm text-slate-500">Every movement is recorded as an immutable debit/credit row. Direct balance overwrites are blocked.</p>
+                  <h2 className="text-2xl font-bold tracking-tight text-slate-900">Immutable Double-Entry Stock Movement Ledger</h2>
+                  <p className="text-sm text-slate-500">Every inventory movement requires an explicit journal entry, reference document, and running balance.</p>
+                </div>
+                <div className="text-xs font-mono text-slate-500 bg-white px-3 py-1.5 rounded-lg border border-slate-200">
+                  Total Entries: <strong>{stockLedger.length}</strong>
                 </div>
               </div>
 
               <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
                 <table className="w-full text-left text-xs font-mono">
-                  <thead className="bg-slate-50 border-b border-slate-200 text-slate-600 font-sans font-semibold uppercase">
+                  <thead className="bg-slate-100 text-slate-600 font-bold border-b border-slate-200 font-sans">
                     <tr>
-                      <th className="p-3.5">Txn Ref</th>
+                      <th className="p-3.5">Journal Ref</th>
                       <th className="p-3.5">Item Name</th>
                       <th className="p-3.5">Movement Type</th>
-                      <th className="p-3.5 text-right">Qty Change</th>
+                      <th className="p-3.5 text-right">Change</th>
                       <th className="p-3.5 text-right">Balance After</th>
                       <th className="p-3.5">Reference Doc</th>
                       <th className="p-3.5">Actor</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100">
-                    {stockLedger.map((row, i) => (
-                      <tr key={i} className="hover:bg-slate-50">
-                        <td className="p-3.5 font-bold text-blue-600">{row.ref}</td>
-                        <td className="p-3.5 font-sans font-medium text-slate-900">{row.item}</td>
-                        <td className="p-3.5">
+                    {stockLedger.map((row) => (
+                      <tr key={row.id} className="hover:bg-slate-50">
+                        <td className="p-3.5 font-bold text-blue-600">{row.transactionRef}</td>
+                        <td className="p-3.5 font-sans font-medium text-slate-900">{row.itemName}</td>
+                        <td className="p-3.5 font-sans">
                           <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                            row.type.includes('PURCHASE') || row.type.includes('YIELD') ? 'bg-green-100 text-green-800' : 'bg-amber-100 text-amber-800'
+                            row.movementType.includes('PURCHASE') || row.movementType.includes('YIELD') || row.movementType.includes('OPENING')
+                              ? 'bg-green-100 text-green-800'
+                              : 'bg-amber-100 text-amber-800'
                           }`}>
-                            {row.type}
+                            {row.movementType}
                           </span>
                         </td>
-                        <td className={`p-3.5 text-right font-bold ${row.change.startsWith('+') ? 'text-green-700' : 'text-red-600'}`}>
-                          {row.change}
+                        <td className={`p-3.5 text-right font-bold ${row.quantityIn > 0 ? 'text-green-700' : 'text-red-600'}`}>
+                          {row.quantityIn > 0 ? `+${row.quantityIn} ${row.uom}` : `-${row.quantityOut} ${row.uom}`}
                         </td>
-                        <td className="p-3.5 text-right font-black text-slate-900">{row.balance}</td>
-                        <td className="p-3.5 font-sans">{row.doc}</td>
-                        <td className="p-3.5 font-sans text-slate-500">{row.user}</td>
+                        <td className="p-3.5 text-right font-black text-slate-900">{row.balanceAfter} {row.uom}</td>
+                        <td className="p-3.5 font-sans">{row.referenceDoc}</td>
+                        <td className="p-3.5 font-sans text-slate-500">{row.actor}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -1028,7 +1455,7 @@ export default function App() {
             </div>
           )}
 
-          {/* ===================== VIEW 5: BENCHMARK ===================== */}
+          {/* ===================== VIEW 6: STANDARD BENCHMARK PROOF ===================== */}
           {activeTab === 'benchmark' && (
             <div className="space-y-6">
               <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
@@ -1070,12 +1497,12 @@ export default function App() {
             </div>
           )}
 
-          {/* ===================== VIEW 6: AUDIT & TRACEABILITY ===================== */}
+          {/* ===================== VIEW 7: TRACEABILITY & AUDIT ===================== */}
           {activeTab === 'audit' && (
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-2xl font-bold tracking-tight text-slate-900">Lot Traceability & Regulatory Audit</h2>
+                  <h2 className="text-2xl font-bold tracking-tight text-slate-900">Lot Traceability & Statutory Audit</h2>
                   <p className="text-sm text-slate-500">Unbroken chain of custody from raw material supplier GRN to customer invoice delivery.</p>
                 </div>
               </div>
@@ -1124,7 +1551,7 @@ export default function App() {
         </main>
       </div>
 
-      {/* ===================== MODAL: CREATE SALES ORDER ===================== */}
+      {/* ===================== MODAL 1: CREATE SALES ORDER ===================== */}
       {showOrderModal && (
         <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200">
@@ -1135,55 +1562,82 @@ export default function App() {
               </button>
             </div>
 
-            <form onSubmit={handleCreateOrder} className="space-y-4">
+            <form onSubmit={handleCreateOrderSubmit} className="space-y-4">
               <div>
                 <label className="text-xs font-bold text-slate-700 block mb-1">Customer Name</label>
                 <input
                   type="text"
                   value={newCustomer}
                   onChange={(e) => setNewCustomer(e.target.value)}
+                  placeholder="e.g. Cauvery Wholesale Confectioneries Pvt Ltd"
                   className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
                   required
                 />
               </div>
 
               <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">Product</label>
-                <input
-                  type="text"
-                  disabled
-                  value="South Indian Murukku 200g (HSN: 1905, Rate: ₹50.00)"
-                  className="w-full px-3 py-2 bg-slate-100 border border-slate-200 rounded-lg text-xs font-medium text-slate-600"
-                />
+                <label className="text-xs font-bold text-slate-700 block mb-1">Product SKU</label>
+                <select
+                  value={newOrderSku}
+                  onChange={(e) => setNewOrderSku(e.target.value)}
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs bg-white font-medium"
+                >
+                  {products.map(p => (
+                    <option key={p.id} value={p.sku}>{p.sku} — {p.name} (Stock: {p.currentStock} pkts)</option>
+                  ))}
+                </select>
               </div>
 
               <div>
                 <div className="flex justify-between items-center mb-1">
-                  <label className="text-xs font-bold text-slate-700">Quantity (Packets)</label>
-                  <span className="text-[11px] font-bold text-green-700">Available: 88 pkts</span>
+                  <label className="text-xs font-bold text-slate-700">Order Quantity (Packets)</label>
+                  <span className="text-[11px] font-bold text-slate-500">Stock on Hand: {availableFgStock} pkts</span>
                 </div>
                 <input
                   type="number"
                   value={newOrderQty}
                   onChange={(e) => setNewOrderQty(e.target.value)}
+                  placeholder="e.g. 150"
                   className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm font-mono focus:ring-2 focus:ring-blue-600 focus:outline-none"
                   min="1"
                   required
                 />
               </div>
 
+              {/* Dynamic Shortage Warning */}
+              {newOrderQty && (
+                <div className={`p-3 rounded-lg text-xs font-medium border ${
+                  isOrderShortage ? 'bg-amber-50 border-amber-200 text-amber-900' : 'bg-green-50 border-green-200 text-green-900'
+                }`}>
+                  {isOrderShortage ? (
+                    <div className="flex items-start gap-2">
+                      <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                      <div>
+                        <strong>Shortage Exception Warning:</strong> Order of {newOrderQty} packets exceeds available stock of {availableFgStock} pkts.
+                        <span className="block font-bold mt-0.5">Deficit of {Number(newOrderQty) - availableFgStock} pkts will be flagged for production fulfillment.</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-600 shrink-0" />
+                      <span>Stock available in warehouse. Order can be approved and dispatched immediately.</span>
+                    </div>
+                  )}
+                </div>
+              )}
+
               <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg text-xs font-mono space-y-1">
                 <div className="flex justify-between text-slate-600">
-                  <span>Subtotal:</span>
-                  <span>₹{(Number(newOrderQty) * 50).toFixed(2)}</span>
+                  <span>Taxable Value:</span>
+                  <span>₹{((Number(newOrderQty) || 0) * (Number(newOrderPrice) || 50)).toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-slate-600">
-                  <span>GST (5% Intra-state):</span>
-                  <span>₹{(Number(newOrderQty) * 50 * 0.05).toFixed(2)}</span>
+                  <span>GST 5% (CGST 2.5% + SGST 2.5%):</span>
+                  <span>₹{((Number(newOrderQty) || 0) * (Number(newOrderPrice) || 50) * 0.05).toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between font-bold text-blue-950 pt-1 border-t border-blue-200 text-sm">
                   <span>Total Order Value:</span>
-                  <span>₹{(Number(newOrderQty) * 50 * 1.05).toFixed(2)}</span>
+                  <span>₹{((Number(newOrderQty) || 0) * (Number(newOrderPrice) || 50) * 1.05).toFixed(2)}</span>
                 </div>
               </div>
 
@@ -1198,7 +1652,105 @@ export default function App() {
         </div>
       )}
 
-      {/* ===================== MODAL: RUN PRODUCTION BATCH ===================== */}
+      {/* ===================== MODAL 2: INWARD PURCHASE GRN ===================== */}
+      {showPurchaseModal && (
+        <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-base font-bold text-slate-900">Record Inward Material Purchase (GRN)</h3>
+              <button onClick={() => setShowPurchaseModal(false)} className="text-slate-400 hover:text-slate-600">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handlePurchaseSubmit} className="space-y-4">
+              <div>
+                <label className="text-xs font-bold text-slate-700 block mb-1">Select Material</label>
+                <select
+                  value={purchaseMaterialCode}
+                  onChange={(e) => setPurchaseMaterialCode(e.target.value)}
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs bg-white font-medium"
+                >
+                  {materials.map(m => (
+                    <option key={m.id} value={m.code}>{m.code} — {m.name} (Current Stock: {m.currentStock} {m.uom})</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="text-xs font-bold text-slate-700 block mb-1">Quantity Received</label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    value={purchaseQty}
+                    onChange={(e) => setPurchaseQty(e.target.value)}
+                    placeholder="e.g. 60.0"
+                    className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm font-mono focus:ring-2 focus:ring-emerald-600"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-slate-700 block mb-1">Purchase Rate (₹/unit)</label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    value={purchaseRate}
+                    onChange={(e) => setPurchaseRate(e.target.value)}
+                    placeholder="e.g. 45.00"
+                    className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm font-mono focus:ring-2 focus:ring-emerald-600"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs font-bold text-slate-700 block mb-1">Supplier Name</label>
+                <input
+                  type="text"
+                  value={purchaseSupplier}
+                  onChange={(e) => setPurchaseSupplier(e.target.value)}
+                  placeholder="e.g. Thanjavur Agro Mills Pvt Ltd"
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-bold text-slate-700 block mb-1">Purchase Order / Challan Ref</label>
+                <input
+                  type="text"
+                  value={purchaseInvoiceRef}
+                  onChange={(e) => setPurchaseInvoiceRef(e.target.value)}
+                  placeholder="e.g. PO-2026-001"
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm"
+                />
+              </div>
+
+              {purchaseQty && purchaseRate && (
+                <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-xs font-mono space-y-1">
+                  <div className="flex justify-between text-slate-600">
+                    <span>Total Purchase Value:</span>
+                    <span className="font-bold text-emerald-950">₹{(Number(purchaseQty) * Number(purchaseRate)).toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between text-slate-600 text-[11px]">
+                    <span>Weighted Rate Formula:</span>
+                    <span>(Old Val + Inward Val) / New Stock</span>
+                  </div>
+                </div>
+              )}
+
+              <button
+                type="submit"
+                className="w-full bg-emerald-700 text-white font-bold py-2.5 rounded-lg text-sm hover:bg-emerald-800 shadow"
+              >
+                Confirm Inward & Post to Stock Ledger
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* ===================== MODAL 3: RUN PRODUCTION BATCH ===================== */}
       {showBatchModal && (
         <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200">
@@ -1209,10 +1761,10 @@ export default function App() {
               </button>
             </div>
 
-            <form onSubmit={handleCreateBatch} className="space-y-4">
+            <form onSubmit={handleCreateBatchSubmit} className="space-y-4">
               <div className="grid grid-cols-2 gap-3 text-xs">
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Standard Batch</label>
+                  <label className="font-bold text-slate-700 block mb-1">Standard Batch Output</label>
                   <input
                     type="text"
                     disabled
@@ -1221,55 +1773,71 @@ export default function App() {
                   />
                 </div>
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Actual Good Output</label>
+                  <label className="font-bold text-slate-700 block mb-1">Actual Good Packets Output</label>
                   <input
                     type="number"
-                    value={newBatchGood}
-                    onChange={(e) => setNewBatchGood(e.target.value)}
+                    value={batchGood}
+                    onChange={(e) => setBatchGood(e.target.value)}
+                    placeholder="e.g. 188"
                     className="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg font-mono focus:ring-2 focus:ring-amber-500"
                     required
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3 text-xs">
+              <div className="grid grid-cols-3 gap-2 text-xs">
+                <div>
+                  <label className="font-bold text-slate-700 block mb-1">Flour (kg)</label>
+                  <input
+                    type="number"
+                    step="0.1"
+                    value={batchFlour}
+                    onChange={(e) => setBatchFlour(e.target.value)}
+                    placeholder="e.g. 40.0"
+                    className="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg font-mono focus:ring-2 focus:ring-amber-500"
+                  />
+                </div>
                 <div>
                   <label className="font-bold text-slate-700 block mb-1">Oil Issued (L)</label>
                   <input
                     type="number"
                     step="0.1"
-                    value={newBatchOil}
-                    onChange={(e) => setNewBatchOil(e.target.value)}
+                    value={batchOil}
+                    onChange={(e) => setBatchOil(e.target.value)}
+                    placeholder="e.g. 10.5"
                     className="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg font-mono focus:ring-2 focus:ring-amber-500"
-                    required
                   />
                 </div>
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Damaged Pouches Scrap</label>
+                  <label className="font-bold text-slate-700 block mb-1">Scrap Pouches</label>
                   <input
                     type="number"
-                    value={newBatchScrap}
-                    onChange={(e) => setNewBatchScrap(e.target.value)}
+                    value={batchScrap}
+                    onChange={(e) => setBatchScrap(e.target.value)}
+                    placeholder="e.g. 6"
                     className="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg font-mono focus:ring-2 focus:ring-amber-500"
-                    required
                   />
                 </div>
               </div>
 
-              <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg text-xs font-mono space-y-1">
-                <div className="flex justify-between text-slate-700">
-                  <span>Yield Variance:</span>
-                  <span className="font-bold text-amber-900">
-                    {(((Number(newBatchGood) - 200) / 200) * 100).toFixed(1)}%
-                  </span>
+              {batchGood && (
+                <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg text-xs font-mono space-y-1">
+                  <div className="flex justify-between text-slate-700">
+                    <span>Yield Variance:</span>
+                    <span className="font-bold text-amber-900">
+                      {(((Number(batchGood) - 200) / 200) * 100).toFixed(1)}%
+                    </span>
+                  </div>
+                  {batchOil && (
+                    <div className="flex justify-between text-slate-700">
+                      <span>Oil Variance:</span>
+                      <span className="font-bold text-amber-900">
+                        {(((Number(batchOil) - 10.0) / 10.0) * 100).toFixed(1)}%
+                      </span>
+                    </div>
+                  )}
                 </div>
-                <div className="flex justify-between text-slate-700">
-                  <span>Oil Variance:</span>
-                  <span className="font-bold text-amber-900">
-                    {(((Number(newBatchOil) - 10.0) / 10.0) * 100).toFixed(1)}%
-                  </span>
-                </div>
-              </div>
+              )}
 
               <button
                 type="submit"
@@ -1282,8 +1850,8 @@ export default function App() {
         </div>
       )}
 
-      {/* ===================== MODAL: RECORD PAYMENT ===================== */}
-      {showPaymentModal && (
+      {/* ===================== MODAL 4: RECORD PAYMENT ===================== */}
+      {showPaymentModal && selectedInvoice && (
         <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-slate-200">
             <div className="flex justify-between items-center mb-4">
@@ -1293,7 +1861,26 @@ export default function App() {
               </button>
             </div>
 
-            <form onSubmit={handleRecordPayment} className="space-y-4">
+            <div className="p-3 bg-purple-50 rounded-lg border border-purple-200 text-xs font-mono mb-4 space-y-1">
+              <div className="flex justify-between text-slate-700">
+                <span>Invoice No:</span>
+                <span className="font-bold text-purple-950">{selectedInvoice.invoiceNumber}</span>
+              </div>
+              <div className="flex justify-between text-slate-700">
+                <span>Customer:</span>
+                <span className="font-bold truncate max-w-[180px]">{selectedInvoice.customerName}</span>
+              </div>
+              <div className="flex justify-between text-slate-700">
+                <span>Total Invoice:</span>
+                <span className="font-bold">₹{selectedInvoice.totalInvoiceAmount.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between text-purple-900 font-bold border-t border-purple-200 pt-1">
+                <span>Outstanding Balance:</span>
+                <span>₹{selectedInvoice.balanceAmount.toFixed(2)}</span>
+              </div>
+            </div>
+
+            <form onSubmit={handlePaymentSubmit} className="space-y-4">
               <div>
                 <label className="text-xs font-bold text-slate-700 block mb-1">Payment Amount (₹)</label>
                 <input
@@ -1301,16 +1888,22 @@ export default function App() {
                   step="0.01"
                   value={paymentAmountInput}
                   onChange={(e) => setPaymentAmountInput(e.target.value)}
+                  placeholder="e.g. 4000.00"
+                  max={selectedInvoice.balanceAmount}
                   className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm font-mono focus:ring-2 focus:ring-purple-600 focus:outline-none"
                   required
                 />
               </div>
 
               <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">Payment Mode</label>
-                <select className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs bg-white font-medium">
+                <label className="text-xs font-bold text-slate-700 block mb-1">Payment Channel</label>
+                <select
+                  value={paymentMode}
+                  onChange={(e) => setPaymentMode(e.target.value)}
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs bg-white font-medium"
+                >
                   <option>NEFT / RTGS Bank Transfer</option>
-                  <option>UPI Transfer</option>
+                  <option>UPI Corporate Transfer</option>
                   <option>Cheque Deposit</option>
                 </select>
               </div>
@@ -1319,7 +1912,7 @@ export default function App() {
                 type="submit"
                 className="w-full bg-purple-600 text-white font-bold py-2.5 rounded-lg text-sm hover:bg-purple-700 shadow"
               >
-                Confirm Payment & Update Balance
+                Confirm Payment & Clear Balance
               </button>
             </form>
           </div>

@@ -12,6 +12,7 @@ import { salesRouter } from './routes/sales.routes.js';
 import { invoiceRouter } from './routes/invoice.routes.js';
 import { inventoryRouter } from './routes/inventory.routes.js';
 import { dashboardRouter } from './routes/dashboard.routes.js';
+import { systemRouter } from './routes/system.routes.js';
 
 export const app = express();
 
@@ -30,6 +31,7 @@ app.use('/api/v1/sales', salesRouter);
 app.use('/api/v1/invoices', invoiceRouter);
 app.use('/api/v1/inventory', inventoryRouter);
 app.use('/api/v1/dashboard', dashboardRouter);
+app.use('/api/v1/system', systemRouter);
 
 // Health check endpoint
 app.get('/api/v1/health', (req, res) => {
