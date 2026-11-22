@@ -12,6 +12,4 @@
   <path d="M11 18 L16 21 L21 18 L16 15 Z" fill="#60A5FA" opacity="0.9"/>
   <path d="M11 18 L16 21 L16 24.5 L11 21.5 Z" fill="#1D4ED8"/>
   <path d="M16 21 L21 18 L21 21.5 L16 24.5 Z" fill="#0F172A"/>
-
-  <circle cx="16" cy="6" r="1" fill="#BAE6FD"/>
 </svg>

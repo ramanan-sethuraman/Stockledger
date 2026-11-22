@@ -72,8 +72,7 @@ export const Logo: React.FC<LogoProps> = ({
         <path d="M50 79 L64 72 L64 77 L50 84 Z" fill="#0F172A" />
 
         {/* Precision Highlights */}
-        <path d="M22 30 L50 44 L78 30" stroke="#BAE6FD" stroke-width="1.5" stroke-linecap="round" />
-        <circle cx="50" cy="16" r="2.5" fill="#67E8F9" />
+        <path d="M22 30 L50 44 L78 30" stroke="#BAE6FD" strokeWidth="1.5" strokeLinecap="round" />
       </svg>
     </div>
   );

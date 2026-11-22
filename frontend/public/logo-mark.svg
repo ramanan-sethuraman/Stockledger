@@ -76,9 +76,4 @@
   <!-- Dynamic S-Line Cutout / Precision Accent Lines -->
   <path d="M24 31 L50 44 L76 31" stroke="#BAE6FD" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M50 44 L50 55" stroke="#93C5FD" stroke-width="1.2" stroke-linecap="round"/>
-  
-  <!-- Embedded Audit Precision Nodes -->
-  <circle cx="76" cy="31" r="2.2" fill="#38BDF8"/>
-  <circle cx="24" cy="31" r="2.2" fill="#38BDF8"/>
-  <circle cx="50" cy="18" r="2.5" fill="#67E8F9"/>
 </svg>
