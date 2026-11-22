@@ -12,6 +12,6 @@
     "test:benchmark": "cd backend && npx tsx src/engine/benchmarkRunner.ts"
   },
   "keywords": ["erp", "manufacturing", "inventory", "stock-ledger", "gst"],
-  "author": "Ramanan Sethuraman",
+  "author": "Stockledger Systems",
   "license": "ISC"
 }

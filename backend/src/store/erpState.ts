@@ -167,7 +167,7 @@ class ErpStateManager {
       { id: '6', transactionRef: 'TXN-006', itemType: 'MATERIAL', itemCode: 'PM-POUCH', itemName: 'Printed Pouches (200g)', movementType: 'PROD_ISSUE', quantityIn: 0.0, quantityOut: 188.0, balanceAfter: 306.0, uom: 'pcs', unitRate: 2.50, referenceDoc: 'BAT-MK-001', actor: 'K. Senthil', timestamp: '2026-11-21 13:00' },
       { id: '7', transactionRef: 'TXN-007', itemType: 'MATERIAL', itemCode: 'PM-CARTON', itemName: 'Shipping Cartons (20-Pack)', movementType: 'PROD_ISSUE', quantityIn: 0.0, quantityOut: 9.0, balanceAfter: 21.0, uom: 'pcs', unitRate: 15.0, referenceDoc: 'BAT-MK-001', actor: 'K. Senthil', timestamp: '2026-11-21 13:15' },
       { id: '8', transactionRef: 'TXN-008', itemType: 'PRODUCT', itemCode: 'MUR-200G', itemName: 'South Indian Murukku 200g', movementType: 'PROD_YIELD', quantityIn: 188.0, quantityOut: 0.0, balanceAfter: 238.0, uom: 'pkts', unitRate: 31.1436, referenceDoc: 'BAT-MK-001', actor: 'K. Senthil', timestamp: '2026-11-21 13:30' },
-      { id: '9', transactionRef: 'TXN-009', itemType: 'PRODUCT', itemCode: 'MUR-200G', itemName: 'South Indian Murukku 200g', movementType: 'SALES_DISPATCH', quantityIn: 0.0, quantityOut: 150.0, balanceAfter: 88.0, uom: 'pkts', unitRate: 31.1436, referenceDoc: 'DSP-2026-001', actor: 'Dr. R. Ramanan', timestamp: '2026-11-21 14:30' },
+      { id: '9', transactionRef: 'TXN-009', itemType: 'PRODUCT', itemCode: 'MUR-200G', itemName: 'South Indian Murukku 200g', movementType: 'SALES_DISPATCH', quantityIn: 0.0, quantityOut: 150.0, balanceAfter: 88.0, uom: 'pkts', unitRate: 31.1436, referenceDoc: 'DSP-2026-001', actor: 'R. Sundaram', timestamp: '2026-11-21 14:30' },
     ];
 
     this.salesOrders = [
