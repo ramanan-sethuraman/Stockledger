@@ -2,7 +2,7 @@ import React from 'react';
 
 interface LogoProps {
   variant?: 'mark' | 'horizontal' | 'compact' | 'stacked';
-  theme?: 'dark' | 'light';
+  theme?: 'dark' | 'light' | 'auto';
   size?: 'sm' | 'md' | 'lg' | 'xl';
   className?: string;
   showTagline?: boolean;
@@ -26,7 +26,7 @@ export const Logo: React.FC<LogoProps> = ({
   // Standalone Mark (Circular emblem with authentic purple mark)
   const MarkIcon = () => (
     <div
-      className={`relative ${currentSize.markSize} rounded-full bg-purple-50 border border-purple-200 shadow-sm flex items-center justify-center overflow-hidden shrink-0 group transition-all duration-300 hover:scale-105`}
+      className={`relative ${currentSize.markSize} rounded-full bg-purple-50 dark:bg-purple-950/70 border border-purple-200 dark:border-purple-800 shadow-sm flex items-center justify-center overflow-hidden shrink-0 group transition-all duration-300 hover:scale-105`}
     >
       <img
         src="/stockledger-mark.png"
@@ -57,7 +57,7 @@ export const Logo: React.FC<LogoProps> = ({
     );
   }
 
-  // Horizontal variant (pure clean logo without any surrounding container box)
+  // Horizontal variant (pure crisp authentic purple logo without any surrounding container box)
   return (
     <div className={`inline-flex items-center ${className}`}>
       <img

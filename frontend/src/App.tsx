@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Logo } from './components/Logo.js';
 import { LandingPage } from './components/LandingPage.js';
 import { VideoSplashScreen } from './components/VideoSplashScreen.js';
+import { ThemeToggle } from './components/ThemeToggle.js';
 import {
   Layers,
   Package,
@@ -593,10 +594,10 @@ export default function App() {
         {/* Interactive Auth Modal Dialog */}
         {showAuthModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fadeIn">
-            <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-6 sm:p-8 border border-slate-200 relative max-h-[90vh] overflow-y-auto">
+            <div className="w-full max-w-md bg-white dark:bg-[#150F24] rounded-2xl shadow-2xl p-6 sm:p-8 border border-slate-200 dark:border-purple-900/40 relative max-h-[90vh] overflow-y-auto text-slate-900 dark:text-slate-100 transition-colors">
               <button
                 onClick={() => setShowAuthModal(false)}
-                className="absolute right-4 top-4 text-slate-400 hover:text-slate-700 p-1.5 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
+                className="absolute right-4 top-4 text-slate-400 hover:text-slate-700 dark:hover:text-white p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-purple-900/40 transition-colors cursor-pointer"
                 title="Close dialog"
               >
                 <X className="w-5 h-5" />
@@ -604,15 +605,15 @@ export default function App() {
 
               {/* Logo Header */}
               <div className="text-center mb-6 flex flex-col items-center">
-                <Logo variant="stacked" size="md" theme="light" />
+                <Logo variant="stacked" size="md" />
               </div>
 
               {/* Tab: Sign In vs Register */}
-              <div className="flex border-b border-slate-200 mb-6">
+              <div className="flex border-b border-slate-200 dark:border-purple-900/40 mb-6">
                 <button
                   onClick={() => { setAuthMode('LOGIN'); setAuthError(''); }}
                   className={`flex-1 pb-3 text-sm font-bold transition-all border-b-2 cursor-pointer ${
-                    authMode === 'LOGIN' ? 'border-purple-600 text-purple-600' : 'border-transparent text-slate-400 hover:text-slate-600'
+                    authMode === 'LOGIN' ? 'border-purple-600 text-purple-600 dark:text-purple-400 dark:border-purple-400' : 'border-transparent text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'
                   }`}
                 >
                   Sign In
@@ -620,7 +621,7 @@ export default function App() {
                 <button
                   onClick={() => { setAuthMode('REGISTER'); setAuthError(''); }}
                   className={`flex-1 pb-3 text-sm font-bold transition-all border-b-2 cursor-pointer ${
-                    authMode === 'REGISTER' ? 'border-purple-600 text-purple-600' : 'border-transparent text-slate-400 hover:text-slate-600'
+                    authMode === 'REGISTER' ? 'border-purple-600 text-purple-600 dark:text-purple-400 dark:border-purple-400' : 'border-transparent text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'
                   }`}
                 >
                   New User Register
@@ -827,7 +828,7 @@ export default function App() {
   // VIEW: LOGGED-IN ENTERPRISE APPLICATION
   // ==============================================================
   return (
-    <div className="flex h-screen bg-[#F8FAFC] overflow-hidden text-slate-800 relative select-none">
+    <div className="flex h-screen bg-[#F8FAFC] dark:bg-[#0A0614] overflow-hidden text-slate-800 dark:text-slate-100 relative select-none transition-colors duration-200">
       {showIntroSplash && (
         <VideoSplashScreen onComplete={() => setShowIntroSplash(false)} />
       )}
@@ -990,20 +991,20 @@ export default function App() {
       </aside>
 
       {/* ----------------- MAIN VIEW CONTAINER ----------------- */}
-      <div className="flex-1 flex flex-col overflow-y-auto w-full">
+      <div className="flex-1 flex flex-col overflow-y-auto w-full bg-[#F8FAFC] dark:bg-[#0A0614] text-slate-800 dark:text-slate-100 transition-colors duration-200">
         {/* Top Header with Hamburger Menu Button & User Controls */}
-        <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 sm:px-6 sticky top-0 z-10 shadow-sm">
+        <header className="h-16 bg-white dark:bg-[#120B22] border-b border-slate-200 dark:border-purple-900/40 flex items-center justify-between px-4 sm:px-6 sticky top-0 z-10 shadow-sm transition-colors duration-200">
           <div className="flex items-center gap-2 sm:gap-3 text-sm">
             <button
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className="p-2 rounded-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900 border border-slate-200 transition-colors flex items-center justify-center shrink-0 cursor-pointer shadow-sm"
+              className="p-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-purple-900/40 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-purple-800 transition-colors flex items-center justify-center shrink-0 cursor-pointer shadow-sm"
               title="Toggle navigation menu"
             >
-              <Menu className="w-5 h-5 text-slate-800" />
+              <Menu className="w-5 h-5 text-slate-800 dark:text-slate-200" />
             </button>
-            <span className="font-semibold text-slate-500 hidden sm:inline">Stockledger</span>
-            <ChevronRight className="w-4 h-4 text-slate-400 hidden sm:inline" />
-            <span className="font-bold text-slate-900 capitalize">{activeTab}</span>
+            <span className="font-semibold text-slate-500 dark:text-slate-400 hidden sm:inline">Stockledger</span>
+            <ChevronRight className="w-4 h-4 text-slate-400 dark:text-slate-500 hidden sm:inline" />
+            <span className="font-bold text-slate-900 dark:text-white capitalize">{activeTab}</span>
 
             {/* Quick button to view Landing Page */}
             <button
@@ -1011,7 +1012,7 @@ export default function App() {
                 setCurrentUser(null);
                 notify('Switched to Public Landing Page preview.');
               }}
-              className="ml-2 hidden md:flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold text-slate-600 hover:text-purple-600 hover:bg-purple-50 rounded-lg border border-slate-200 transition-colors cursor-pointer"
+              className="ml-2 hidden md:flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-950/60 rounded-lg border border-slate-200 dark:border-purple-800 transition-colors cursor-pointer"
               title="View Public Landing Page"
             >
               <span>Landing Page</span>
@@ -1021,29 +1022,32 @@ export default function App() {
 
           <div className="flex items-center gap-2 sm:gap-3">
             {/* System State Controller Dropdown */}
-            <div className="flex items-center bg-slate-100 rounded-lg p-1 border border-slate-200 text-xs">
+            <div className="flex items-center bg-slate-100 dark:bg-purple-950/60 rounded-lg p-1 border border-slate-200 dark:border-purple-900/40 text-xs">
               <button
                 onClick={() => handleSystemReset('opening')}
                 title="Reset warehouse to opening stock (100kg Flour, 30L Oil, 50 pkts FG) and 0 orders"
-                className="px-2 py-1 rounded text-slate-700 hover:bg-white font-semibold transition-all cursor-pointer text-[11px]"
+                className="px-2 py-1 rounded text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-purple-900/60 font-semibold transition-all cursor-pointer text-[11px]"
               >
                 Reset Opening
               </button>
               <button
                 onClick={() => handleSystemReset('benchmark')}
                 title="Load the standard 15-step verified benchmark scenario"
-                className="px-2 py-1 rounded text-purple-900 hover:bg-white font-bold transition-all cursor-pointer text-[11px]"
+                className="px-2 py-1 rounded text-purple-900 dark:text-purple-300 hover:bg-white dark:hover:bg-purple-900/60 font-bold transition-all cursor-pointer text-[11px]"
               >
                 Load Demo
               </button>
               <button
                 onClick={() => handleSystemReset('blank')}
                 title="Wipe state to 0 for custom input (for new users starting fresh)"
-                className="px-2 py-1 rounded text-slate-500 hover:bg-white font-semibold transition-all cursor-pointer text-[11px]"
+                className="px-2 py-1 rounded text-slate-500 dark:text-slate-400 hover:bg-white dark:hover:bg-purple-900/60 font-semibold transition-all cursor-pointer text-[11px]"
               >
                 Clean Slate
               </button>
             </div>
+
+            {/* Dark Mode Moon/Sun Toggle */}
+            <ThemeToggle />
 
             {/* Quick Action Buttons */}
             <div className="hidden xl:flex items-center gap-2">
@@ -1071,7 +1075,7 @@ export default function App() {
             </div>
 
             {/* Header Divider */}
-            <div className="h-6 w-px bg-slate-200 hidden sm:block mx-0.5" />
+            <div className="h-6 w-px bg-slate-200 dark:bg-purple-900/40 hidden sm:block mx-0.5" />
 
             {/* Logged-In User Profile & Prominent Logout Button */}
             <div className="flex items-center gap-2">
@@ -1079,19 +1083,19 @@ export default function App() {
                 {currentUser.fullName.charAt(0)}
               </div>
               <div className="hidden lg:block text-left">
-                <span className="text-xs font-bold text-slate-900 block leading-tight truncate max-w-[120px]">
+                <span className="text-xs font-bold text-slate-900 dark:text-white block leading-tight truncate max-w-[120px]">
                   {currentUser.fullName}
                 </span>
-                <span className="text-[10px] text-purple-600 font-bold uppercase tracking-wider block">
+                <span className="text-[10px] text-purple-600 dark:text-purple-400 font-bold uppercase tracking-wider block">
                   {currentUser.role.replace(/_/g, ' ')}
                 </span>
               </div>
               <button
                 onClick={handleLogout}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-lg text-xs font-bold transition-all shadow-sm cursor-pointer ml-1"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-rose-50 dark:bg-rose-950/40 hover:bg-rose-100 dark:hover:bg-rose-900/60 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-900/60 rounded-lg text-xs font-bold transition-all shadow-sm cursor-pointer ml-1"
                 title="Sign out of Stockledger"
               >
-                <LogOut className="w-3.5 h-3.5 text-rose-600" />
+                <LogOut className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400" />
                 <span className="hidden sm:inline">Log Out</span>
               </button>
             </div>
