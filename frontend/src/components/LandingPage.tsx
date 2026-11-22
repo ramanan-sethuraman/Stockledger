@@ -507,21 +507,15 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       </section>
 
       {/* ----------------- FOOTER ----------------- */}
-      <footer className="py-12 px-6 bg-slate-100 dark:bg-[#07040D] border-t border-slate-200 dark:border-purple-900/40 text-xs text-slate-500 dark:text-slate-400 transition-colors duration-200">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+      <footer className="py-10 px-6 bg-slate-100 dark:bg-[#07040D] border-t border-slate-200 dark:border-purple-900/40 text-xs text-slate-500 dark:text-slate-400 transition-colors duration-200">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <Logo variant="mark" size="sm" />
-            <span className="font-bold text-slate-800 dark:text-slate-200">STOCKLEDGER ERP</span>
-            <span>—</span>
-            <span>Every Stock. Every Transaction. Every Detail.</span>
+            <span className="font-bold text-slate-800 dark:text-slate-200 tracking-wide">STOCKLEDGER ERP</span>
           </div>
 
-          <div className="flex items-center gap-6 font-medium text-slate-600 dark:text-slate-400">
-            <span>React 18</span>
-            <span>TypeScript</span>
-            <span>Tailwind CSS</span>
-            <span>Express.js</span>
-            <span>Decimal.js</span>
+          <div className="font-medium text-slate-600 dark:text-slate-400 text-center sm:text-right">
+            <span>© 2026 Stockledger. All Rights Are Reserved.</span>
           </div>
         </div>
       </footer>
