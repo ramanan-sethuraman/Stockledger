@@ -23,10 +23,10 @@ export const Logo: React.FC<LogoProps> = ({
 
   const currentSize = sizeMap[size];
 
-  // Standalone Mark (Circular emblem with authentic purple mark)
+  // Standalone Mark (Circular emblem with authentic purple mark and silver metallic outline)
   const MarkIcon = () => (
     <div
-      className={`relative ${currentSize.markSize} rounded-full bg-purple-50 dark:bg-purple-950/70 border border-purple-200 dark:border-purple-800 shadow-sm flex items-center justify-center overflow-hidden shrink-0 group transition-all duration-300 hover:scale-105`}
+      className={`relative ${currentSize.markSize} rounded-full bg-white dark:bg-[#150F24] border-2 border-slate-300 dark:border-slate-400 ring-1 ring-slate-200/80 dark:ring-slate-600/50 shadow-sm flex items-center justify-center overflow-hidden shrink-0 group transition-all duration-300 hover:scale-105`}
     >
       <img
         src="/stockledger-mark.png"
