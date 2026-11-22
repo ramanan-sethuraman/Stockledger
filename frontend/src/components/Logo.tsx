@@ -35,20 +35,24 @@ export const Logo: React.FC<LogoProps> = ({
       {/* Outer Subtle Concentric Orbit Ring */}
       <div className="absolute inset-1 rounded-full border border-sky-400/15 pointer-events-none" />
 
-      {/* Isometric Vector SVG Symbol */}
+      {/* Isometric Vector SVG Symbol with circular disc base */}
       <svg viewBox="0 0 100 100" fill="none" className="w-full h-full relative z-10 transition-transform duration-300 group-hover:scale-105">
+        {/* Deep Circular Disc Background */}
+        <circle cx="50" cy="50" r="48" fill="#0B132B" stroke="#38BDF8" strokeWidth="2.5" />
+        <circle cx="50" cy="50" r="44" stroke="#60A5FA" strokeWidth="1" strokeDasharray="3 3" opacity="0.6" />
+
         <defs>
           <linearGradient id="compTop" x1="20" y1="15" x2="80" y2="45" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#38BDF8" />
-            <stop offset="100%" stop-color="#0284C7" />
+            <stop offset="0%" stopColor="#38BDF8" />
+            <stop offset="100%" stopColor="#0284C7" />
           </linearGradient>
           <linearGradient id="compLeft" x1="15" y1="40" x2="50" y2="90" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#2563EB" />
-            <stop offset="100%" stop-color="#1D4ED8" />
+            <stop offset="0%" stopColor="#2563EB" />
+            <stop offset="100%" stopColor="#1D4ED8" />
           </linearGradient>
           <linearGradient id="compRight" x1="50" y1="40" x2="85" y2="90" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#1E40AF" />
-            <stop offset="100%" stop-color="#0F172A" />
+            <stop offset="0%" stopColor="#1E40AF" />
+            <stop offset="100%" stopColor="#0F172A" />
           </linearGradient>
         </defs>
 
