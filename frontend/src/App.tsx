@@ -1109,21 +1109,21 @@ export default function App() {
                 className="flex items-center gap-1.5 bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-emerald-800 shadow-sm cursor-pointer"
               >
                 <Package className="w-3.5 h-3.5" />
-                + Inward GRN
+                Inward GRN
               </button>
               <button
                 onClick={() => setShowOrderModal(true)}
                 className="flex items-center gap-1.5 bg-blue-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-blue-700 shadow-sm cursor-pointer"
               >
                 <Plus className="w-3.5 h-3.5" />
-                + Sales Order
+                Sales Order
               </button>
               <button
                 onClick={() => setShowBatchModal(true)}
                 className="flex items-center gap-1.5 bg-[#172554] text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-blue-900 shadow-sm cursor-pointer"
               >
                 <Factory className="w-3.5 h-3.5" />
-                + Run Batch
+                Run Batch
               </button>
             </div>
 
@@ -1239,7 +1239,7 @@ export default function App() {
                   <div className="space-y-3">
                     {salesOrders.length === 0 ? (
                       <div className="p-8 text-center text-slate-400 text-xs">
-                        No sales orders created yet. Click "+ Sales Order" above to place your first order.
+                        No sales orders created yet. Click "Sales Order" above to place your first order.
                       </div>
                     ) : (
                       salesOrders.slice(0, 3).map((o) => (
@@ -1299,7 +1299,7 @@ export default function App() {
                   className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-blue-700 shadow-sm"
                 >
                   <Plus className="w-4 h-4" />
-                  + Create New Sales Order
+                  Create Sales Order
                 </button>
               </div>
 
@@ -1324,7 +1324,7 @@ export default function App() {
                     {salesOrders.length === 0 ? (
                       <tr>
                         <td colSpan={6} className="p-8 text-center text-slate-400 font-sans">
-                          No sales orders found. Click "+ Create New Sales Order" to test the order lifecycle.
+                          No sales orders found. Click "Create Sales Order" to test the order lifecycle.
                         </td>
                       </tr>
                     ) : (
@@ -1425,7 +1425,7 @@ export default function App() {
                                 }}
                                 className="bg-purple-600 text-white px-2.5 py-1 rounded text-xs font-bold hover:bg-purple-700 shadow-sm"
                               >
-                                + Record Pay
+                                Record Payment
                               </button>
                             ) : (
                               <span className="text-green-700 font-bold text-xs">Cleared</span>
@@ -1453,7 +1453,7 @@ export default function App() {
                   className="flex items-center gap-2 bg-amber-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-amber-700 shadow-sm"
                 >
                   <Plus className="w-4 h-4" />
-                  + Run Production Batch
+                  Run Production Batch
                 </button>
               </div>
 
@@ -1494,7 +1494,7 @@ export default function App() {
                 <div className="divide-y divide-slate-100">
                   {batches.length === 0 ? (
                     <div className="p-8 text-center text-slate-400 text-xs">
-                      No production batches recorded. Click "+ Run Production Batch" above to execute your first batch.
+                      No production batches recorded. Click "Run Production Batch" above to execute your first batch.
                     </div>
                   ) : (
                     batches.map((b) => (
@@ -1559,7 +1559,7 @@ export default function App() {
                   className="flex items-center gap-2 bg-emerald-700 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-emerald-800 shadow-sm"
                 >
                   <Package className="w-4 h-4" />
-                  + Record Inward Purchase (GRN)
+                  Record Inward Purchase (GRN)
                 </button>
               </div>
 
