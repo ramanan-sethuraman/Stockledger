@@ -7,7 +7,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'stockledger_jwt_secret_token_secur
 
 // Registered users store
 export let usersStore = [
-  { id: 'usr-admin-01', email: 'admin@stockledger.in', password: 'Password@123', fullName: 'R. Sundaram', role: 'ADMIN' },
+  { id: 'usr-admin-01', email: 'admin@stockledger.in', password: 'Password@123', fullName: 'S. Ramanan', role: 'ADMIN' },
   { id: 'usr-sup-01', email: 'supervisor@stockledger.in', password: 'Password@123', fullName: 'K. Senthil', role: 'PRODUCTION_SUPERVISOR' },
   { id: 'usr-sales-01', email: 'salesmanA@stockledger.in', password: 'Password@123', fullName: 'M. Anand', role: 'SALES_EXECUTIVE' },
   { id: 'usr-sales-02', email: 'salesmanB@stockledger.in', password: 'Password@123', fullName: 'V. Balaji', role: 'SALES_EXECUTIVE' },

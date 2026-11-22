@@ -11,7 +11,7 @@ export async function seedDatabase() {
   const passwordHash = await bcrypt.hash('Password@123', 10);
 
   const users = [
-    { email: 'admin@stockledger.in', fullName: 'R. Sundaram (System Admin)', role: UserRole.ADMIN },
+    { email: 'admin@stockledger.in', fullName: 'S. Ramanan (System Admin)', role: UserRole.ADMIN },
     { email: 'supervisor@stockledger.in', fullName: 'K. Senthil (Production Supervisor)', role: UserRole.PRODUCTION_SUPERVISOR },
     { email: 'salesmanA@stockledger.in', fullName: 'M. Anand (Salesman A)', role: UserRole.SALES_EXECUTIVE },
     { email: 'salesmanB@stockledger.in', fullName: 'V. Balaji (Salesman B)', role: UserRole.SALES_EXECUTIVE },
