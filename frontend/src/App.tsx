@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Logo } from './components/Logo.js';
 import {
   Layers,
   Package,
@@ -540,12 +541,8 @@ export default function App() {
       <div className="min-h-screen bg-slate-900 flex flex-col justify-center items-center p-6 text-slate-800">
         <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-8 border border-slate-200">
           {/* Logo Header */}
-          <div className="text-center mb-8">
-            <div className="w-14 h-14 bg-[#172554] rounded-xl flex items-center justify-center text-white font-black text-2xl mx-auto shadow-md mb-3">
-              SL
-            </div>
-            <h1 className="text-2xl font-black text-slate-900 tracking-tight">STOCKLEDGER</h1>
-            <p className="text-xs text-slate-500 mt-1 font-medium">Every Stock. Every Transaction. Every Detail.</p>
+          <div className="text-center mb-8 flex flex-col items-center">
+            <Logo variant="stacked" size="lg" theme="light" />
           </div>
 
           {/* Tab: Sign In vs Register */}
@@ -741,16 +738,8 @@ export default function App() {
       <aside className="w-64 bg-[#172554] text-white flex flex-col justify-between shrink-0 shadow-xl">
         <div>
           {/* Brand Identity */}
-          <div className="p-5 border-b border-blue-900/50 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center font-black tracking-widest text-lg shadow-md text-white">
-                SL
-              </div>
-              <div>
-                <h1 className="font-bold text-base tracking-tight leading-none text-white">STOCKLEDGER</h1>
-                <span className="text-[10px] text-blue-300 font-medium tracking-wide uppercase">Enterprise ERP v1.0</span>
-              </div>
-            </div>
+          <div className="p-4 border-b border-blue-900/50 flex items-center justify-between">
+            <Logo variant="horizontal" size="md" theme="dark" showTagline={false} />
           </div>
 
           {/* Navigation Links */}

@@ -1,6 +1,11 @@
-# Stockledger
-> **Every Stock. Every Transaction. Every Detail.**
-> Enterprise-grade Manufacturing & Inventory Management ERP designed for food manufacturing operations.
+<div align="center">
+  <img src="frontend/public/logo-full.svg" alt="STOCKLEDGER Logo" width="440" />
+
+  ### *Every Stock. Every Transaction. Every Detail.*
+  **Enterprise-grade Manufacturing & Inventory Management ERP designed for food manufacturing operations.**
+
+  <br />
+</div>
 
 [![Manufacturing Benchmark](https://img.shields.io/badge/Manufacturing%20Benchmark-100%25%20Verified-success)](#benchmark-verification)
 [![Architecture](https://img.shields.io/badge/Architecture-Double--Entry%20Ledger-blue)](#architecture)
