@@ -1,10 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
-  <rect width="32" height="32" rx="8" fill="#172554"/>
-  <path d="M16 6 L26 11 L16 16 L6 11 Z" fill="#38BDF8"/>
-  <path d="M6 11 L16 16 L16 21 L6 16 Z" fill="#2563EB"/>
-  <path d="M16 16 L26 11 L26 16 L16 21 Z" fill="#1E40AF"/>
-  <path d="M10 18 L16 21 L22 18 L16 15 Z" fill="#60A5FA" opacity="0.8"/>
-  <path d="M10 18 L16 21 L16 25 L10 22 Z" fill="#1D4ED8"/>
-  <path d="M16 21 L22 18 L22 22 L16 25 Z" fill="#0F172A"/>
-  <circle cx="16" cy="6" r="1.2" fill="#BAE6FD"/>
+  <!-- Round Circular Disc -->
+  <circle cx="16" cy="16" r="15" fill="#0F172A" stroke="#38BDF8" stroke-width="1.5"/>
+  <circle cx="16" cy="16" r="13" stroke="#2563EB" stroke-width="0.5" stroke-dasharray="2 2" opacity="0.6"/>
+
+  <!-- Isometric Stock Block -->
+  <path d="M16 6 L25 11 L16 16 L7 11 Z" fill="#38BDF8"/>
+  <path d="M7 11 L16 16 L16 20 L7 15 Z" fill="#2563EB"/>
+  <path d="M16 16 L25 11 L25 15 L16 20 Z" fill="#1E40AF"/>
+
+  <!-- Interlocking S-Ribbon -->
+  <path d="M11 18 L16 21 L21 18 L16 15 Z" fill="#60A5FA" opacity="0.9"/>
+  <path d="M11 18 L16 21 L16 24.5 L11 21.5 Z" fill="#1D4ED8"/>
+  <path d="M16 21 L21 18 L21 21.5 L16 24.5 Z" fill="#0F172A"/>
+
+  <circle cx="16" cy="6" r="1" fill="#BAE6FD"/>
 </svg>

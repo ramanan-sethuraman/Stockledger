@@ -24,13 +24,16 @@ export const Logo: React.FC<LogoProps> = ({
 
   const currentSize = sizeMap[size];
 
-  // Standalone Mark
+  // Standalone Mark (Perfect Circle / Round Badge)
   const MarkIcon = () => (
     <div
-      className={`relative ${currentSize.mark} rounded-xl bg-[#0F172A] border border-blue-500/20 shadow-lg shadow-blue-950/40 flex items-center justify-center p-1.5 overflow-hidden shrink-0 group`}
+      className={`relative ${currentSize.mark} rounded-full bg-[#0F172A] border-2 border-sky-400/40 ring-2 ring-blue-600/30 shadow-xl shadow-blue-950/50 flex items-center justify-center p-2 overflow-hidden shrink-0 group transition-all duration-300 hover:ring-sky-400/50 hover:border-sky-300`}
     >
       {/* Dynamic Ambient Background Glow */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-blue-700/20 via-sky-500/10 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-tr from-blue-700/30 via-sky-500/15 to-transparent rounded-full pointer-events-none" />
+
+      {/* Outer Subtle Concentric Orbit Ring */}
+      <div className="absolute inset-1 rounded-full border border-sky-400/15 pointer-events-none" />
 
       {/* Isometric Vector SVG Symbol */}
       <svg viewBox="0 0 100 100" fill="none" className="w-full h-full relative z-10 transition-transform duration-300 group-hover:scale-105">
