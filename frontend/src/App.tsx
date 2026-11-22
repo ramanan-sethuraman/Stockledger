@@ -639,7 +639,7 @@ export default function App() {
               {authMode === 'LOGIN' ? (
                 <form onSubmit={handleFormLogin} className="space-y-4">
                   <div>
-                    <label className="text-xs font-bold text-slate-700 block mb-1">Corporate Email Address</label>
+                    <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">Corporate Email Address</label>
                     <div className="relative">
                       <User className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
                       <input
@@ -647,14 +647,14 @@ export default function App() {
                         value={loginEmail}
                         onChange={(e) => setLoginEmail(e.target.value)}
                         placeholder="e.g. admin@stockledger.in"
-                        className="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-purple-600 focus:outline-none"
+                        className="w-full pl-9 pr-3 py-2 border border-slate-300 dark:border-purple-900/60 rounded-lg text-sm bg-white dark:bg-[#0D0818] text-slate-900 dark:text-white focus:ring-2 focus:ring-purple-600 focus:outline-none"
                         required
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="text-xs font-bold text-slate-700 block mb-1">Security Password</label>
+                    <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">Security Password</label>
                     <div className="relative">
                       <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
                       <input
@@ -662,27 +662,27 @@ export default function App() {
                         value={loginPassword}
                         onChange={(e) => setLoginPassword(e.target.value)}
                         placeholder="Enter account password"
-                        className="w-full pl-9 pr-10 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-purple-600 focus:outline-none"
+                        className="w-full pl-9 pr-10 py-2 border border-slate-300 dark:border-purple-900/60 rounded-lg text-sm bg-white dark:bg-[#0D0818] text-slate-900 dark:text-white focus:ring-2 focus:ring-purple-600 focus:outline-none"
                         required
                       />
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3 top-2.5 text-slate-400 hover:text-slate-600 cursor-pointer"
+                        className="absolute right-3 top-2.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer"
                         title={showPassword ? 'Hide password' : 'Show password'}
                       >
                         {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                       </button>
                     </div>
-                    <div className="flex justify-between items-center text-[11px] text-slate-500 pt-1.5">
-                      <span>Default password: <code className="bg-slate-100 px-1 py-0.5 rounded text-slate-700 font-mono">Password@123</code></span>
+                    <div className="flex justify-between items-center text-[11px] text-slate-500 dark:text-slate-400 pt-1.5">
+                      <span>Default password: <code className="bg-slate-100 dark:bg-purple-950/60 px-1 py-0.5 rounded text-slate-700 dark:text-purple-300 font-mono">Password@123</code></span>
                       <button
                         type="button"
                         onClick={() => {
                           setLoginEmail('admin@stockledger.in');
                           setLoginPassword('Password@123');
                         }}
-                        className="text-purple-600 font-bold hover:underline cursor-pointer"
+                        className="text-purple-600 dark:text-purple-400 font-bold hover:underline cursor-pointer"
                       >
                         Fill Admin
                       </button>
@@ -701,44 +701,44 @@ export default function App() {
               ) : (
                 <form onSubmit={handleFormRegister} className="space-y-4">
                   <div>
-                    <label className="text-xs font-bold text-slate-700 block mb-1">Full Legal Name</label>
+                    <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">Full Legal Name</label>
                     <input
                       type="text"
                       value={regFullName}
                       onChange={(e) => setRegFullName(e.target.value)}
                       placeholder="e.g. Ramesh Kumar"
-                      className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-purple-600 focus:outline-none"
+                      className="w-full px-3 py-2 border border-slate-300 dark:border-purple-900/60 rounded-lg text-sm bg-white dark:bg-[#0D0818] text-slate-900 dark:text-white focus:ring-2 focus:ring-purple-600 focus:outline-none"
                       required
                     />
                   </div>
 
                   <div>
-                    <label className="text-xs font-bold text-slate-700 block mb-1">Corporate Email Address</label>
+                    <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">Corporate Email Address</label>
                     <input
                       type="email"
                       value={loginEmail}
                       onChange={(e) => setLoginEmail(e.target.value)}
                       placeholder="name@company.com"
-                      className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-purple-600 focus:outline-none"
+                      className="w-full px-3 py-2 border border-slate-300 dark:border-purple-900/60 rounded-lg text-sm bg-white dark:bg-[#0D0818] text-slate-900 dark:text-white focus:ring-2 focus:ring-purple-600 focus:outline-none"
                       required
                     />
                   </div>
 
                   <div>
-                    <label className="text-xs font-bold text-slate-700 block mb-1">Set Account Password</label>
+                    <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">Set Account Password</label>
                     <div className="relative">
                       <input
                         type={showPassword ? 'text' : 'password'}
                         value={loginPassword}
                         onChange={(e) => setLoginPassword(e.target.value)}
                         placeholder="Create secure password"
-                        className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-purple-600 focus:outline-none pr-10"
+                        className="w-full px-3 py-2 border border-slate-300 dark:border-purple-900/60 rounded-lg text-sm bg-white dark:bg-[#0D0818] text-slate-900 dark:text-white focus:ring-2 focus:ring-purple-600 focus:outline-none pr-10"
                         required
                       />
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3 top-2.5 text-slate-400 hover:text-slate-600 cursor-pointer"
+                        className="absolute right-3 top-2.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer"
                       >
                         {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                       </button>
@@ -746,17 +746,17 @@ export default function App() {
                   </div>
 
                   <div>
-                    <label className="text-xs font-bold text-slate-700 block mb-1">Functional Enterprise Role</label>
+                    <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">Functional Enterprise Role</label>
                     <select
                       value={regRole}
                       onChange={(e: any) => setRegRole(e.target.value)}
-                      className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-purple-600 focus:outline-none bg-white font-medium"
+                      className="w-full px-3 py-2 border border-slate-300 dark:border-purple-900/60 rounded-lg text-sm focus:ring-2 focus:ring-purple-600 focus:outline-none bg-white dark:bg-[#0D0818] text-slate-900 dark:text-white font-medium"
                     >
-                      <option value="ADMIN">System Administrator (Full Control)</option>
-                      <option value="PRODUCTION_SUPERVISOR">Production Supervisor (Batches & Variances)</option>
-                      <option value="SALES_EXECUTIVE">Sales Executive (Orders & Shortages)</option>
-                      <option value="INVENTORY_MANAGER">Inventory Manager (GRN & Ledger)</option>
-                      <option value="FINANCIAL_AUDITOR">Financial Auditor (GST & Costing)</option>
+                      <option value="ADMIN" className="dark:bg-[#0D0818]">System Administrator (Full Control)</option>
+                      <option value="PRODUCTION_SUPERVISOR" className="dark:bg-[#0D0818]">Production Supervisor (Batches & Variances)</option>
+                      <option value="SALES_EXECUTIVE" className="dark:bg-[#0D0818]">Sales Executive (Orders & Shortages)</option>
+                      <option value="INVENTORY_MANAGER" className="dark:bg-[#0D0818]">Inventory Manager (GRN & Ledger)</option>
+                      <option value="FINANCIAL_AUDITOR" className="dark:bg-[#0D0818]">Financial Auditor (GST & Costing)</option>
                     </select>
                   </div>
 
@@ -1109,65 +1109,65 @@ export default function App() {
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-2xl font-bold tracking-tight text-slate-900">Manufacturing & Commercial Overview</h2>
-                  <p className="text-sm text-slate-500">Live operational indicators connected to backend REST endpoints and stock ledger.</p>
+                  <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Manufacturing & Commercial Overview</h2>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">Live operational indicators connected to backend REST endpoints and stock ledger.</p>
                 </div>
-                <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 bg-white px-3 py-1.5 rounded-lg border border-slate-200">
-                  <Calendar className="w-4 h-4 text-purple-600" />
+                <div className="flex items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-300 bg-white dark:bg-[#150F24] px-3 py-1.5 rounded-lg border border-slate-200 dark:border-purple-900/40 shadow-sm">
+                  <Calendar className="w-4 h-4 text-purple-600 dark:text-purple-400" />
                   <span>Tamil Nadu Manufacturing Facility | FY 2026-27</span>
                 </div>
               </div>
 
               {/* KPI Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-                  <div className="flex items-center justify-between text-slate-500 mb-2">
+                <div className="bg-white dark:bg-[#150F24] p-5 rounded-xl border border-slate-200 dark:border-purple-900/40 shadow-sm transition-colors">
+                  <div className="flex items-center justify-between text-slate-500 dark:text-slate-400 mb-2">
                     <span className="text-xs font-bold uppercase tracking-wider">Raw Material Valuation</span>
-                    <Package className="w-4 h-4 text-purple-600" />
+                    <Package className="w-4 h-4 text-purple-600 dark:text-purple-400" />
                   </div>
-                  <div className="text-2xl font-black text-slate-900 font-mono">
+                  <div className="text-2xl font-black text-slate-900 dark:text-white font-mono">
                     ₹{materials.reduce((acc, m) => acc + (m.currentStock * m.currentWeightedRate), 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </div>
-                  <div className="mt-2 text-xs text-slate-500 font-medium">
+                  <div className="mt-2 text-xs text-slate-500 dark:text-slate-400 font-medium">
                     Weighted valuation across {materials.length} inventory items
                   </div>
                 </div>
 
-                <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-                  <div className="flex items-center justify-between text-slate-500 mb-2">
+                <div className="bg-white dark:bg-[#150F24] p-5 rounded-xl border border-slate-200 dark:border-purple-900/40 shadow-sm transition-colors">
+                  <div className="flex items-center justify-between text-slate-500 dark:text-slate-400 mb-2">
                     <span className="text-xs font-bold uppercase tracking-wider">Finished Murukku Stock</span>
-                    <Factory className="w-4 h-4 text-amber-600" />
+                    <Factory className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                   </div>
-                  <div className="text-2xl font-black text-slate-900 font-mono">
+                  <div className="text-2xl font-black text-slate-900 dark:text-white font-mono">
                     {products.find(p => p.sku === 'MUR-200G')?.currentStock || 0} pkts
                   </div>
-                  <div className="mt-2 text-xs text-slate-500 font-medium">
+                  <div className="mt-2 text-xs text-slate-500 dark:text-slate-400 font-medium">
                     Available for immediate commercial dispatch
                   </div>
                 </div>
 
-                <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-                  <div className="flex items-center justify-between text-slate-500 mb-2">
+                <div className="bg-white dark:bg-[#150F24] p-5 rounded-xl border border-slate-200 dark:border-purple-900/40 shadow-sm transition-colors">
+                  <div className="flex items-center justify-between text-slate-500 dark:text-slate-400 mb-2">
                     <span className="text-xs font-bold uppercase tracking-wider">Latest Batch Cost</span>
-                    <TrendingUp className="w-4 h-4 text-green-600" />
+                    <TrendingUp className="w-4 h-4 text-green-600 dark:text-emerald-400" />
                   </div>
-                  <div className="text-2xl font-black text-slate-900 font-mono">
-                    ₹{batches[0]?.costing.costPerGoodPacket.toFixed(2) || '31.14'} <span className="text-sm font-normal text-slate-500">/ pkt</span>
+                  <div className="text-2xl font-black text-slate-900 dark:text-white font-mono">
+                    ₹{batches[0]?.costing.costPerGoodPacket.toFixed(2) || '31.14'} <span className="text-sm font-normal text-slate-500 dark:text-slate-400">/ pkt</span>
                   </div>
-                  <div className="mt-2 text-xs text-green-700 font-semibold">
+                  <div className="mt-2 text-xs text-green-700 dark:text-emerald-400 font-semibold">
                     Gross Margin: {batches[0]?.costing.grossMarginPercent.toFixed(1) || '37.7'}% (@ ₹50 SP)
                   </div>
                 </div>
 
-                <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-                  <div className="flex items-center justify-between text-slate-500 mb-2">
+                <div className="bg-white dark:bg-[#150F24] p-5 rounded-xl border border-slate-200 dark:border-purple-900/40 shadow-sm transition-colors">
+                  <div className="flex items-center justify-between text-slate-500 dark:text-slate-400 mb-2">
                     <span className="text-xs font-bold uppercase tracking-wider">Outstanding Receivables</span>
-                    <DollarSign className="w-4 h-4 text-purple-600" />
+                    <DollarSign className="w-4 h-4 text-purple-600 dark:text-purple-400" />
                   </div>
-                  <div className="text-2xl font-black text-purple-900 font-mono">
+                  <div className="text-2xl font-black text-purple-900 dark:text-purple-300 font-mono">
                     ₹{invoices.reduce((acc, i) => acc + i.balanceAmount, 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </div>
-                  <div className="mt-2 text-xs text-purple-700 font-semibold">
+                  <div className="mt-2 text-xs text-purple-700 dark:text-purple-400 font-semibold">
                     Across {invoices.filter(i => i.balanceAmount > 0).length} unpaid / partial invoices
                   </div>
                 </div>
@@ -1176,29 +1176,29 @@ export default function App() {
               {/* Operational Status Panels */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Active Sales Orders Preview */}
-                <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
+                <div className="bg-white dark:bg-[#150F24] rounded-xl border border-slate-200 dark:border-purple-900/40 shadow-sm p-5 transition-colors">
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="font-bold text-slate-900 text-sm">Recent Commercial Orders</h3>
-                    <button onClick={() => setActiveTab('invoicing')} className="text-xs text-purple-600 font-bold hover:underline">
+                    <h3 className="font-bold text-slate-900 dark:text-white text-sm">Recent Commercial Orders</h3>
+                    <button onClick={() => setActiveTab('invoicing')} className="text-xs text-purple-600 dark:text-purple-400 font-bold hover:underline cursor-pointer">
                       View All
                     </button>
                   </div>
                   <div className="space-y-3">
                     {salesOrders.length === 0 ? (
-                      <div className="p-8 text-center text-slate-400 text-xs">
+                      <div className="p-8 text-center text-slate-400 dark:text-slate-500 text-xs">
                         No sales orders created yet. Click "Sales Order" above to place your first order.
                       </div>
                     ) : (
                       salesOrders.slice(0, 3).map((o) => (
-                        <div key={o.id} className="p-3 bg-slate-50 rounded-lg border border-slate-200 flex items-center justify-between text-xs">
+                        <div key={o.id} className="p-3 bg-slate-50 dark:bg-[#1A122E] rounded-lg border border-slate-200 dark:border-purple-900/40 flex items-center justify-between text-xs">
                           <div>
-                            <span className="font-bold text-purple-900">{o.orderNumber}</span>
-                            <span className="text-slate-500 block">{o.customerName}</span>
+                            <span className="font-bold text-purple-900 dark:text-purple-300">{o.orderNumber}</span>
+                            <span className="text-slate-500 dark:text-slate-400 block">{o.customerName}</span>
                           </div>
                           <div className="text-right">
-                            <span className="font-mono font-bold text-slate-900">{o.orderedQty} pkts</span>
+                            <span className="font-mono font-bold text-slate-900 dark:text-white">{o.orderedQty} pkts</span>
                             <span className={`block font-bold text-[10px] ${
-                              o.status === 'SHORTAGE_EXCEPTION' ? 'text-amber-700' : o.status === 'DISPATCHED' ? 'text-green-700' : 'text-purple-700'
+                              o.status === 'SHORTAGE_EXCEPTION' ? 'text-amber-700 dark:text-amber-400' : o.status === 'DISPATCHED' ? 'text-green-700 dark:text-emerald-400' : 'text-purple-700 dark:text-purple-300'
                             }`}>
                               {o.status}
                             </span>
@@ -1210,20 +1210,20 @@ export default function App() {
                 </div>
 
                 {/* Warehouse Inventory Preview */}
-                <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
+                <div className="bg-white dark:bg-[#150F24] rounded-xl border border-slate-200 dark:border-purple-900/40 shadow-sm p-5 transition-colors">
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="font-bold text-slate-900 text-sm">Warehouse Stock Balances</h3>
-                    <button onClick={() => setActiveTab('materials')} className="text-xs text-purple-600 font-bold hover:underline">
+                    <h3 className="font-bold text-slate-900 dark:text-white text-sm">Warehouse Stock Balances</h3>
+                    <button onClick={() => setActiveTab('materials')} className="text-xs text-purple-600 dark:text-purple-400 font-bold hover:underline cursor-pointer">
                       Manage Stock
                     </button>
                   </div>
                   <div className="space-y-2">
                     {materials.map((m) => (
-                      <div key={m.id} className="flex items-center justify-between text-xs py-2 border-b border-slate-100 last:border-0">
-                        <span className="font-medium text-slate-800">{m.name}</span>
+                      <div key={m.id} className="flex items-center justify-between text-xs py-2 border-b border-slate-100 dark:border-purple-900/20 last:border-0">
+                        <span className="font-medium text-slate-800 dark:text-slate-200">{m.name}</span>
                         <div className="flex items-center gap-4">
-                          <span className="font-mono font-bold text-slate-900">{m.currentStock} {m.uom}</span>
-                          <span className="text-[11px] text-slate-400 font-mono">@ ₹{m.currentWeightedRate.toFixed(2)}</span>
+                          <span className="font-mono font-bold text-slate-900 dark:text-white">{m.currentStock} {m.uom}</span>
+                          <span className="text-[11px] text-slate-400 dark:text-slate-500 font-mono">@ ₹{m.currentWeightedRate.toFixed(2)}</span>
                         </div>
                       </div>
                     ))}
@@ -1238,12 +1238,12 @@ export default function App() {
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-2xl font-bold tracking-tight text-slate-900">Commercial Orders & GST Invoices</h2>
-                  <p className="text-sm text-slate-500">Order approval, real-time inventory shortage verification, dispatch, and partial payments.</p>
+                  <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Commercial Orders & GST Invoices</h2>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">Order approval, real-time inventory shortage verification, dispatch, and partial payments.</p>
                 </div>
                 <button
                   onClick={() => setShowOrderModal(true)}
-                  className="flex items-center gap-2 bg-purple-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-purple-700 shadow-sm"
+                  className="flex items-center gap-2 bg-purple-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-purple-700 shadow-sm cursor-pointer"
                 >
                   <Plus className="w-4 h-4" />
                   Create Sales Order
@@ -1251,13 +1251,13 @@ export default function App() {
               </div>
 
               {/* Orders Table */}
-              <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-                <div className="p-4 bg-slate-50 border-b border-slate-200 font-bold text-xs text-slate-700 uppercase tracking-wider flex justify-between items-center">
+              <div className="bg-white dark:bg-[#150F24] rounded-xl border border-slate-200 dark:border-purple-900/40 shadow-sm overflow-hidden transition-colors">
+                <div className="p-4 bg-slate-50 dark:bg-[#1A122E] border-b border-slate-200 dark:border-purple-900/40 font-bold text-xs text-slate-700 dark:text-slate-300 uppercase tracking-wider flex justify-between items-center">
                   <span>Sales Orders & Shortage Exception Workflow</span>
-                  <span className="text-slate-500 font-mono font-normal">Total: {salesOrders.length} orders</span>
+                  <span className="text-slate-500 dark:text-slate-400 font-mono font-normal">Total: {salesOrders.length} orders</span>
                 </div>
                 <table className="w-full text-left text-xs">
-                  <thead className="bg-slate-100 text-slate-600 font-bold border-b border-slate-200">
+                  <thead className="bg-slate-100 dark:bg-[#1C1433] text-slate-600 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-purple-900/40">
                     <tr>
                       <th className="p-3.5">Order No</th>
                       <th className="p-3.5">Customer Name</th>
@@ -1267,27 +1267,27 @@ export default function App() {
                       <th className="p-3.5 text-right">Action</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100 font-mono">
+                  <tbody className="divide-y divide-slate-100 dark:divide-purple-950/40 font-mono">
                     {salesOrders.length === 0 ? (
                       <tr>
-                        <td colSpan={6} className="p-8 text-center text-slate-400 font-sans">
+                        <td colSpan={6} className="p-8 text-center text-slate-400 dark:text-slate-500 font-sans">
                           No sales orders found. Click "Create Sales Order" to test the order lifecycle.
                         </td>
                       </tr>
                     ) : (
                       salesOrders.map((o) => (
-                        <tr key={o.id} className="hover:bg-slate-50">
-                          <td className="p-3.5 font-bold text-purple-900">{o.orderNumber}</td>
-                          <td className="p-3.5 font-sans font-medium text-slate-800">{o.customerName}</td>
-                          <td className="p-3.5 text-right font-bold">{o.orderedQty} pkts</td>
-                          <td className="p-3.5 text-right font-bold text-slate-900">₹{o.totalOrderValue.toFixed(2)}</td>
+                        <tr key={o.id} className="hover:bg-slate-50 dark:hover:bg-purple-950/30 transition-colors">
+                          <td className="p-3.5 font-bold text-purple-900 dark:text-purple-300">{o.orderNumber}</td>
+                          <td className="p-3.5 font-sans font-medium text-slate-800 dark:text-slate-200">{o.customerName}</td>
+                          <td className="p-3.5 text-right font-bold text-slate-900 dark:text-white">{o.orderedQty} pkts</td>
+                          <td className="p-3.5 text-right font-bold text-slate-900 dark:text-white">₹{o.totalOrderValue.toFixed(2)}</td>
                           <td className="p-3.5 text-center font-sans">
                             <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold ${
                               o.status === 'SHORTAGE_EXCEPTION'
-                                ? 'bg-amber-100 text-amber-800 border border-amber-300'
+                                ? 'bg-amber-100 dark:bg-amber-950/70 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-700'
                                 : o.status === 'DISPATCHED'
-                                ? 'bg-green-100 text-green-800 border border-green-300'
-                                : 'bg-purple-100 text-purple-800 border border-purple-300'
+                                ? 'bg-green-100 dark:bg-emerald-950/70 text-green-800 dark:text-emerald-300 border border-green-300 dark:border-emerald-700'
+                                : 'bg-purple-100 dark:bg-purple-950/70 text-purple-800 dark:text-purple-300 border border-purple-300 dark:border-purple-700'
                             }`}>
                               {o.status === 'SHORTAGE_EXCEPTION' ? `SHORTAGE (Deficit: ${o.shortageQty} pkts)` : o.status}
                             </span>
@@ -1296,16 +1296,16 @@ export default function App() {
                             {o.status === 'SUBMITTED' ? (
                               <button
                                 onClick={() => handleApproveOrder(o.id)}
-                                className="bg-emerald-600 text-white px-3 py-1 rounded text-xs font-bold hover:bg-emerald-700 shadow-sm"
+                                className="bg-emerald-600 text-white px-3 py-1 rounded text-xs font-bold hover:bg-emerald-700 shadow-sm cursor-pointer"
                               >
                                 Approve & Dispatch
                               </button>
                             ) : o.status === 'SHORTAGE_EXCEPTION' ? (
-                              <span className="text-[11px] text-amber-700 font-bold bg-amber-50 px-2 py-1 rounded border border-amber-200">
+                              <span className="text-[11px] text-amber-700 dark:text-amber-300 font-bold bg-amber-50 dark:bg-amber-950/50 px-2 py-1 rounded border border-amber-200 dark:border-amber-800/60">
                                 Blocked: Need Production
                               </span>
                             ) : (
-                              <span className="text-[11px] text-green-700 font-bold">Dispatched</span>
+                              <span className="text-[11px] text-green-700 dark:text-emerald-400 font-bold">Dispatched</span>
                             )}
                           </td>
                         </tr>
@@ -1316,13 +1316,13 @@ export default function App() {
               </div>
 
               {/* Invoices & Payments Table */}
-              <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden mt-6">
-                <div className="p-4 bg-slate-50 border-b border-slate-200 font-bold text-xs text-slate-700 uppercase tracking-wider flex justify-between items-center">
+              <div className="bg-white dark:bg-[#150F24] rounded-xl border border-slate-200 dark:border-purple-900/40 shadow-sm overflow-hidden mt-6 transition-colors">
+                <div className="p-4 bg-slate-50 dark:bg-[#1A122E] border-b border-slate-200 dark:border-purple-900/40 font-bold text-xs text-slate-700 dark:text-slate-300 uppercase tracking-wider flex justify-between items-center">
                   <span>GST Tax Invoices & Partial Payment Reconciliation</span>
-                  <span className="text-slate-500 font-mono font-normal">Total: {invoices.length} invoices</span>
+                  <span className="text-slate-500 dark:text-slate-400 font-mono font-normal">Total: {invoices.length} invoices</span>
                 </div>
                 <table className="w-full text-left text-xs">
-                  <thead className="bg-slate-100 text-slate-600 font-bold border-b border-slate-200">
+                  <thead className="bg-slate-100 dark:bg-[#1C1433] text-slate-600 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-purple-900/40">
                     <tr>
                       <th className="p-3.5">Invoice No</th>
                       <th className="p-3.5">Customer</th>
@@ -1335,29 +1335,29 @@ export default function App() {
                       <th className="p-3.5 text-right">Action</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100 font-mono">
+                  <tbody className="divide-y divide-slate-100 dark:divide-purple-950/40 font-mono">
                     {invoices.length === 0 ? (
                       <tr>
-                        <td colSpan={9} className="p-8 text-center text-slate-400 font-sans">
+                        <td colSpan={9} className="p-8 text-center text-slate-400 dark:text-slate-500 font-sans">
                           No invoices generated yet. Invoices are automatically generated when a sales order is approved and dispatched.
                         </td>
                       </tr>
                     ) : (
                       invoices.map((inv) => (
-                        <tr key={inv.id} className="hover:bg-slate-50">
-                          <td className="p-3.5 font-bold text-purple-900">{inv.invoiceNumber}</td>
-                          <td className="p-3.5 font-sans font-medium text-slate-800">{inv.customerName}</td>
-                          <td className="p-3.5 text-right">₹{inv.taxableValue.toFixed(2)}</td>
-                          <td className="p-3.5 text-right text-slate-500">
+                        <tr key={inv.id} className="hover:bg-slate-50 dark:hover:bg-purple-950/30 transition-colors">
+                          <td className="p-3.5 font-bold text-purple-900 dark:text-purple-300">{inv.invoiceNumber}</td>
+                          <td className="p-3.5 font-sans font-medium text-slate-800 dark:text-slate-200">{inv.customerName}</td>
+                          <td className="p-3.5 text-right text-slate-700 dark:text-slate-300">₹{inv.taxableValue.toFixed(2)}</td>
+                          <td className="p-3.5 text-right text-slate-500 dark:text-slate-400">
                             ₹{(inv.cgstAmount + inv.sgstAmount).toFixed(2)}
-                            <span className="text-[10px] block text-slate-400">CGST+SGST</span>
+                            <span className="text-[10px] block text-slate-400 dark:text-slate-500">CGST+SGST</span>
                           </td>
-                          <td className="p-3.5 text-right font-black text-slate-900">₹{inv.totalInvoiceAmount.toFixed(2)}</td>
-                          <td className="p-3.5 text-right text-green-700 font-bold">₹{inv.paidAmount.toFixed(2)}</td>
-                          <td className="p-3.5 text-right text-red-600 font-black">₹{inv.balanceAmount.toFixed(2)}</td>
+                          <td className="p-3.5 text-right font-black text-slate-900 dark:text-white">₹{inv.totalInvoiceAmount.toFixed(2)}</td>
+                          <td className="p-3.5 text-right text-green-700 dark:text-emerald-400 font-bold">₹{inv.paidAmount.toFixed(2)}</td>
+                          <td className="p-3.5 text-right text-red-600 dark:text-rose-400 font-black">₹{inv.balanceAmount.toFixed(2)}</td>
                           <td className="p-3.5 text-center font-sans">
                             <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                              inv.status === 'PAID' ? 'bg-green-100 text-green-800' : 'bg-purple-100 text-purple-800'
+                              inv.status === 'PAID' ? 'bg-green-100 dark:bg-emerald-950/70 text-green-800 dark:text-emerald-300' : 'bg-purple-100 dark:bg-purple-950/70 text-purple-800 dark:text-purple-300'
                             }`}>
                               {inv.status}
                             </span>
@@ -1370,12 +1370,12 @@ export default function App() {
                                   setPaymentAmountInput(inv.balanceAmount.toFixed(2));
                                   setShowPaymentModal(true);
                                 }}
-                                className="bg-purple-600 text-white px-2.5 py-1 rounded text-xs font-bold hover:bg-purple-700 shadow-sm"
+                                className="bg-purple-600 text-white px-2.5 py-1 rounded text-xs font-bold hover:bg-purple-700 shadow-sm cursor-pointer"
                               >
                                 Record Payment
                               </button>
                             ) : (
-                              <span className="text-green-700 font-bold text-xs">Cleared</span>
+                              <span className="text-green-700 dark:text-emerald-400 font-bold text-xs">Cleared</span>
                             )}
                           </td>
                         </tr>
@@ -1392,12 +1392,12 @@ export default function App() {
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-2xl font-bold tracking-tight text-slate-900">Production Batches & Costing</h2>
-                  <p className="text-sm text-slate-500">Bill of Materials execution, yield variance, oil consumption, and unit packet costing.</p>
+                  <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Production Batches & Costing</h2>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">Bill of Materials execution, yield variance, oil consumption, and unit packet costing.</p>
                 </div>
                 <button
                   onClick={() => setShowBatchModal(true)}
-                  className="flex items-center gap-2 bg-amber-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-amber-700 shadow-sm"
+                  className="flex items-center gap-2 bg-amber-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-amber-700 shadow-sm cursor-pointer"
                 >
                   <Plus className="w-4 h-4" />
                   Run Production Batch
@@ -1405,82 +1405,82 @@ export default function App() {
               </div>
 
               {/* Standard BOM Reference Card */}
-              <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm text-xs">
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-500 block mb-3">
+              <div className="bg-white dark:bg-[#150F24] p-5 rounded-xl border border-slate-200 dark:border-purple-900/40 shadow-sm text-xs transition-colors">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block mb-3">
                   Standard Bill of Materials (BOM) — Murukku 200g (Batch Size: 200 Packets)
                 </span>
                 <div className="grid grid-cols-2 md:grid-cols-5 gap-3 font-mono">
-                  <div className="p-2.5 bg-slate-50 rounded-lg border border-slate-200">
-                    <span className="text-slate-500 block text-[10px]">Rice Flour</span>
-                    <span className="font-bold text-slate-900">40.0 kg</span>
+                  <div className="p-2.5 bg-slate-50 dark:bg-[#1A122E] rounded-lg border border-slate-200 dark:border-purple-900/40">
+                    <span className="text-slate-500 dark:text-slate-400 block text-[10px]">Rice Flour</span>
+                    <span className="font-bold text-slate-900 dark:text-white">40.0 kg</span>
                   </div>
-                  <div className="p-2.5 bg-slate-50 rounded-lg border border-slate-200">
-                    <span className="text-slate-500 block text-[10px]">Groundnut Oil</span>
-                    <span className="font-bold text-slate-900">10.0 L</span>
+                  <div className="p-2.5 bg-slate-50 dark:bg-[#1A122E] rounded-lg border border-slate-200 dark:border-purple-900/40">
+                    <span className="text-slate-500 dark:text-slate-400 block text-[10px]">Groundnut Oil</span>
+                    <span className="font-bold text-slate-900 dark:text-white">10.0 L</span>
                   </div>
-                  <div className="p-2.5 bg-slate-50 rounded-lg border border-slate-200">
-                    <span className="text-slate-500 block text-[10px]">Spice Mix</span>
-                    <span className="font-bold text-slate-900">1.2 kg</span>
+                  <div className="p-2.5 bg-slate-50 dark:bg-[#1A122E] rounded-lg border border-slate-200 dark:border-purple-900/40">
+                    <span className="text-slate-500 dark:text-slate-400 block text-[10px]">Spice Mix</span>
+                    <span className="font-bold text-slate-900 dark:text-white">1.2 kg</span>
                   </div>
-                  <div className="p-2.5 bg-slate-50 rounded-lg border border-slate-200">
-                    <span className="text-slate-500 block text-[10px]">Nitrogen Pouches</span>
-                    <span className="font-bold text-slate-900">200 pcs</span>
+                  <div className="p-2.5 bg-slate-50 dark:bg-[#1A122E] rounded-lg border border-slate-200 dark:border-purple-900/40">
+                    <span className="text-slate-500 dark:text-slate-400 block text-[10px]">Nitrogen Pouches</span>
+                    <span className="font-bold text-slate-900 dark:text-white">200 pcs</span>
                   </div>
-                  <div className="p-2.5 bg-slate-50 rounded-lg border border-slate-200">
-                    <span className="text-slate-500 block text-[10px]">Shipping Cartons</span>
-                    <span className="font-bold text-slate-900">10 pcs</span>
+                  <div className="p-2.5 bg-slate-50 dark:bg-[#1A122E] rounded-lg border border-slate-200 dark:border-purple-900/40">
+                    <span className="text-slate-500 dark:text-slate-400 block text-[10px]">Shipping Cartons</span>
+                    <span className="font-bold text-slate-900 dark:text-white">10 pcs</span>
                   </div>
                 </div>
               </div>
 
               {/* Batches Table */}
-              <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-                <div className="p-4 bg-slate-50 border-b border-slate-200 font-bold text-xs text-slate-700 uppercase tracking-wider">
+              <div className="bg-white dark:bg-[#150F24] rounded-xl border border-slate-200 dark:border-purple-900/40 shadow-sm overflow-hidden transition-colors">
+                <div className="p-4 bg-slate-50 dark:bg-[#1A122E] border-b border-slate-200 dark:border-purple-900/40 font-bold text-xs text-slate-700 dark:text-slate-300 uppercase tracking-wider">
                   Completed Production Batches & Operational Variances
                 </div>
-                <div className="divide-y divide-slate-100">
+                <div className="divide-y divide-slate-100 dark:divide-purple-950/40">
                   {batches.length === 0 ? (
-                    <div className="p-8 text-center text-slate-400 text-xs">
+                    <div className="p-8 text-center text-slate-400 dark:text-slate-500 text-xs">
                       No production batches recorded. Click "Run Production Batch" above to execute your first batch.
                     </div>
                   ) : (
                     batches.map((b) => (
-                      <div key={b.id} className="p-5 hover:bg-slate-50/50 transition-colors">
+                      <div key={b.id} className="p-5 hover:bg-slate-50/50 dark:hover:bg-purple-950/30 transition-colors">
                         <div className="flex items-center justify-between mb-3">
                           <div className="flex items-center gap-3">
-                            <span className="font-bold text-slate-900 text-sm font-mono">{b.batchNumber}</span>
-                            <span className="text-xs text-slate-600 font-medium">{b.productName}</span>
+                            <span className="font-bold text-slate-900 dark:text-white text-sm font-mono">{b.batchNumber}</span>
+                            <span className="text-xs text-slate-600 dark:text-slate-300 font-medium">{b.productName}</span>
                           </div>
-                          <span className="text-xs text-slate-500">Supervisor: <strong className="text-slate-800">{b.supervisor}</strong></span>
+                          <span className="text-xs text-slate-500 dark:text-slate-400">Supervisor: <strong className="text-slate-800 dark:text-slate-200">{b.supervisor}</strong></span>
                         </div>
 
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs font-mono">
-                          <div className="p-3 bg-slate-50 rounded-lg border border-slate-200">
-                            <span className="text-slate-500 block text-[10px]">Output vs Planned</span>
-                            <span className="font-bold text-slate-900">{b.goodOutput} / {b.plannedYield} pkts</span>
-                            <span className={`text-[10px] block font-bold mt-0.5 ${b.yieldVariancePercent < 0 ? 'text-amber-700' : 'text-green-700'}`}>
+                          <div className="p-3 bg-slate-50 dark:bg-[#1A122E] rounded-lg border border-slate-200 dark:border-purple-900/40">
+                            <span className="text-slate-500 dark:text-slate-400 block text-[10px]">Output vs Planned</span>
+                            <span className="font-bold text-slate-900 dark:text-white">{b.goodOutput} / {b.plannedYield} pkts</span>
+                            <span className={`text-[10px] block font-bold mt-0.5 ${b.yieldVariancePercent < 0 ? 'text-amber-700 dark:text-amber-400' : 'text-green-700 dark:text-emerald-400'}`}>
                               Yield Variance: {b.yieldVariancePercent}%
                             </span>
                           </div>
 
-                          <div className="p-3 bg-slate-50 rounded-lg border border-slate-200">
-                            <span className="text-slate-500 block text-[10px]">Oil Consumed</span>
-                            <span className="font-bold text-slate-900">{b.oilIssued} L (Std: 10.0L)</span>
-                            <span className="text-[10px] block font-bold text-amber-700 mt-0.5">
+                          <div className="p-3 bg-slate-50 dark:bg-[#1A122E] rounded-lg border border-slate-200 dark:border-purple-900/40">
+                            <span className="text-slate-500 dark:text-slate-400 block text-[10px]">Oil Consumed</span>
+                            <span className="font-bold text-slate-900 dark:text-white">{b.oilIssued} L (Std: 10.0L)</span>
+                            <span className="text-[10px] block font-bold text-amber-700 dark:text-amber-400 mt-0.5">
                               Oil Variance: +{b.oilVariance}%
                             </span>
                           </div>
 
-                          <div className="p-3 bg-slate-50 rounded-lg border border-slate-200">
-                            <span className="text-slate-500 block text-[10px]">Total Batch Cost</span>
-                            <span className="font-bold text-slate-900">₹{b.costing.totalBatchCost.toFixed(2)}</span>
-                            <span className="text-[10px] block text-slate-500 mt-0.5">RM + PM + Labour + Overhead</span>
+                          <div className="p-3 bg-slate-50 dark:bg-[#1A122E] rounded-lg border border-slate-200 dark:border-purple-900/40">
+                            <span className="text-slate-500 dark:text-slate-400 block text-[10px]">Total Batch Cost</span>
+                            <span className="font-bold text-slate-900 dark:text-white">₹{b.costing.totalBatchCost.toFixed(2)}</span>
+                            <span className="text-[10px] block text-slate-500 dark:text-slate-400 mt-0.5">RM + PM + Labour + Overhead</span>
                           </div>
 
-                          <div className="p-3 bg-green-50 rounded-lg border border-green-200">
-                            <span className="text-green-700 block text-[10px] font-bold">Unit Cost & Margin</span>
-                            <span className="font-black text-green-950 text-sm">₹{b.costing.costPerGoodPacket.toFixed(2)} / pkt</span>
-                            <span className="text-[10px] block font-bold text-green-800 mt-0.5">
+                          <div className="p-3 bg-green-50 dark:bg-emerald-950/40 rounded-lg border border-green-200 dark:border-emerald-800/60">
+                            <span className="text-green-700 dark:text-emerald-400 block text-[10px] font-bold">Unit Cost & Margin</span>
+                            <span className="font-black text-green-950 dark:text-emerald-300 text-sm">₹{b.costing.costPerGoodPacket.toFixed(2)} / pkt</span>
+                            <span className="text-[10px] block font-bold text-green-800 dark:text-emerald-400 mt-0.5">
                               Gross Margin: {b.costing.grossMarginPercent.toFixed(1)}% (@ ₹50 SP)
                             </span>
                           </div>
@@ -1498,12 +1498,12 @@ export default function App() {
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-2xl font-bold tracking-tight text-slate-900">Warehouse Raw & Packaging Materials</h2>
-                  <p className="text-sm text-slate-500">Live stock on hand, weighted-average valuation, inward purchases (GRN), and reorder alerts.</p>
+                  <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Warehouse Raw & Packaging Materials</h2>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">Live stock on hand, weighted-average valuation, inward purchases (GRN), and reorder alerts.</p>
                 </div>
                 <button
                   onClick={() => setShowPurchaseModal(true)}
-                  className="flex items-center gap-2 bg-emerald-700 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-emerald-800 shadow-sm"
+                  className="flex items-center gap-2 bg-emerald-700 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-emerald-800 shadow-sm cursor-pointer"
                 >
                   <Package className="w-4 h-4" />
                   Record Inward Purchase (GRN)
@@ -1511,9 +1511,9 @@ export default function App() {
               </div>
 
               {/* Materials Table */}
-              <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+              <div className="bg-white dark:bg-[#150F24] rounded-xl border border-slate-200 dark:border-purple-900/40 shadow-sm overflow-hidden transition-colors">
                 <table className="w-full text-left text-xs">
-                  <thead className="bg-slate-100 text-slate-600 font-bold border-b border-slate-200">
+                  <thead className="bg-slate-100 dark:bg-[#1C1433] text-slate-600 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-purple-900/40">
                     <tr>
                       <th className="p-3.5">Code</th>
                       <th className="p-3.5">Material Name</th>
@@ -1524,31 +1524,31 @@ export default function App() {
                       <th className="p-3.5 text-center">Reorder Status</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100 font-mono">
+                  <tbody className="divide-y divide-slate-100 dark:divide-purple-950/40 font-mono">
                     {materials.map((m) => {
                       const valuation = m.currentStock * m.currentWeightedRate;
                       const isLowStock = m.currentStock <= m.minReorderQty;
                       return (
-                        <tr key={m.id} className="hover:bg-slate-50">
-                          <td className="p-3.5 font-bold text-purple-900">{m.code}</td>
-                          <td className="p-3.5 font-sans font-semibold text-slate-900">{m.name}</td>
+                        <tr key={m.id} className="hover:bg-slate-50 dark:hover:bg-purple-950/30 transition-colors">
+                          <td className="p-3.5 font-bold text-purple-900 dark:text-purple-300">{m.code}</td>
+                          <td className="p-3.5 font-sans font-semibold text-slate-900 dark:text-white">{m.name}</td>
                           <td className="p-3.5 font-sans">
                             <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                              m.category === 'RAW' ? 'bg-amber-100 text-amber-800' : 'bg-purple-100 text-purple-800'
+                              m.category === 'RAW' ? 'bg-amber-100 dark:bg-amber-950/70 text-amber-800 dark:text-amber-300' : 'bg-purple-100 dark:bg-purple-950/70 text-purple-800 dark:text-purple-300'
                             }`}>
                               {m.category}
                             </span>
                           </td>
-                          <td className="p-3.5 text-right font-black text-slate-900">{m.currentStock} {m.uom}</td>
-                          <td className="p-3.5 text-right font-bold text-slate-700">₹{m.currentWeightedRate.toFixed(4)}</td>
-                          <td className="p-3.5 text-right font-black text-slate-900">₹{valuation.toFixed(2)}</td>
+                          <td className="p-3.5 text-right font-black text-slate-900 dark:text-white">{m.currentStock} {m.uom}</td>
+                          <td className="p-3.5 text-right font-bold text-slate-700 dark:text-slate-300">₹{m.currentWeightedRate.toFixed(4)}</td>
+                          <td className="p-3.5 text-right font-black text-slate-900 dark:text-white">₹{valuation.toFixed(2)}</td>
                           <td className="p-3.5 text-center font-sans">
                             {isLowStock ? (
-                              <span className="bg-red-100 text-red-800 px-2 py-0.5 rounded text-[10px] font-bold">
+                              <span className="bg-red-100 dark:bg-rose-950/70 text-red-800 dark:text-rose-300 px-2 py-0.5 rounded text-[10px] font-bold">
                                 Low Stock Alert
                               </span>
                             ) : (
-                              <span className="bg-green-100 text-green-800 px-2 py-0.5 rounded text-[10px] font-bold">
+                              <span className="bg-green-100 dark:bg-emerald-950/70 text-green-800 dark:text-emerald-300 px-2 py-0.5 rounded text-[10px] font-bold">
                                 Adequate
                               </span>
                             )}
@@ -1567,17 +1567,17 @@ export default function App() {
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-2xl font-bold tracking-tight text-slate-900">Immutable Double-Entry Stock Movement Ledger</h2>
-                  <p className="text-sm text-slate-500">Every inventory movement requires an explicit journal entry, reference document, and running balance.</p>
+                  <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Immutable Double-Entry Stock Movement Ledger</h2>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">Every inventory movement requires an explicit journal entry, reference document, and running balance.</p>
                 </div>
-                <div className="text-xs font-mono text-slate-500 bg-white px-3 py-1.5 rounded-lg border border-slate-200">
-                  Total Entries: <strong>{stockLedger.length}</strong>
+                <div className="text-xs font-mono text-slate-500 dark:text-slate-300 bg-white dark:bg-[#150F24] px-3 py-1.5 rounded-lg border border-slate-200 dark:border-purple-900/40 shadow-sm">
+                  Total Entries: <strong className="text-slate-900 dark:text-white">{stockLedger.length}</strong>
                 </div>
               </div>
 
-              <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+              <div className="bg-white dark:bg-[#150F24] rounded-xl border border-slate-200 dark:border-purple-900/40 shadow-sm overflow-hidden transition-colors">
                 <table className="w-full text-left text-xs font-mono">
-                  <thead className="bg-slate-100 text-slate-600 font-bold border-b border-slate-200 font-sans">
+                  <thead className="bg-slate-100 dark:bg-[#1C1433] text-slate-600 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-purple-900/40 font-sans">
                     <tr>
                       <th className="p-3.5">Journal Ref</th>
                       <th className="p-3.5">Item Name</th>
@@ -1588,26 +1588,26 @@ export default function App() {
                       <th className="p-3.5">Actor</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100">
+                  <tbody className="divide-y divide-slate-100 dark:divide-purple-950/40">
                     {stockLedger.map((row) => (
-                      <tr key={row.id} className="hover:bg-slate-50">
-                        <td className="p-3.5 font-bold text-purple-600">{row.transactionRef}</td>
-                        <td className="p-3.5 font-sans font-medium text-slate-900">{row.itemName}</td>
+                      <tr key={row.id} className="hover:bg-slate-50 dark:hover:bg-purple-950/30 transition-colors">
+                        <td className="p-3.5 font-bold text-purple-600 dark:text-purple-400">{row.transactionRef}</td>
+                        <td className="p-3.5 font-sans font-medium text-slate-900 dark:text-white">{row.itemName}</td>
                         <td className="p-3.5 font-sans">
                           <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
                             row.movementType.includes('PURCHASE') || row.movementType.includes('YIELD') || row.movementType.includes('OPENING')
-                              ? 'bg-green-100 text-green-800'
-                              : 'bg-amber-100 text-amber-800'
+                              ? 'bg-green-100 dark:bg-emerald-950/70 text-green-800 dark:text-emerald-300'
+                              : 'bg-amber-100 dark:bg-amber-950/70 text-amber-800 dark:text-amber-300'
                           }`}>
                             {row.movementType}
                           </span>
                         </td>
-                        <td className={`p-3.5 text-right font-bold ${row.quantityIn > 0 ? 'text-green-700' : 'text-red-600'}`}>
+                        <td className={`p-3.5 text-right font-bold ${row.quantityIn > 0 ? 'text-green-700 dark:text-emerald-400' : 'text-red-600 dark:text-rose-400'}`}>
                           {row.quantityIn > 0 ? `+${row.quantityIn} ${row.uom}` : `-${row.quantityOut} ${row.uom}`}
                         </td>
-                        <td className="p-3.5 text-right font-black text-slate-900">{row.balanceAfter} {row.uom}</td>
-                        <td className="p-3.5 font-sans">{row.referenceDoc}</td>
-                        <td className="p-3.5 font-sans text-slate-500">{row.actor}</td>
+                        <td className="p-3.5 text-right font-black text-slate-900 dark:text-white">{row.balanceAfter} {row.uom}</td>
+                        <td className="p-3.5 font-sans text-slate-700 dark:text-slate-300">{row.referenceDoc}</td>
+                        <td className="p-3.5 font-sans text-slate-500 dark:text-slate-400">{row.actor}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -1619,14 +1619,14 @@ export default function App() {
           {/* ===================== VIEW 6: STANDARD BENCHMARK PROOF ===================== */}
           {activeTab === 'benchmark' && (
             <div className="space-y-6">
-              <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+              <div className="bg-white dark:bg-[#150F24] p-6 rounded-xl border border-slate-200 dark:border-purple-900/40 shadow-sm flex items-center justify-between transition-colors">
                 <div>
-                  <h2 className="text-2xl font-bold tracking-tight text-slate-900">Standard Manufacturing Benchmark Verification</h2>
-                  <p className="text-sm text-slate-500">Automated acceptance proof against the 15-step South Indian Food Manufacturing scenario.</p>
+                  <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Standard Manufacturing Benchmark Verification</h2>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">Automated acceptance proof against the 15-step South Indian Food Manufacturing scenario.</p>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="inline-flex items-center gap-1.5 bg-green-100 text-green-800 px-3 py-1.5 rounded-full text-xs font-bold">
-                    <CheckCircle2 className="w-4 h-4 text-green-600" />
+                  <span className="inline-flex items-center gap-1.5 bg-green-100 dark:bg-emerald-950/70 text-green-800 dark:text-emerald-300 px-3 py-1.5 rounded-full text-xs font-bold border border-green-200 dark:border-emerald-800">
+                    <CheckCircle2 className="w-4 h-4 text-green-600 dark:text-emerald-400" />
                     All 15 Criteria 100% Passed
                   </span>
                 </div>
@@ -1635,20 +1635,20 @@ export default function App() {
               {/* 15 Steps Verification Grid */}
               <div className="space-y-3">
                 {benchmarkSteps.map((step) => (
-                  <div key={step.id} className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-start gap-4">
-                    <div className="w-8 h-8 rounded-full bg-purple-50 text-purple-900 font-bold flex items-center justify-center shrink-0 text-xs">
+                  <div key={step.id} className="bg-white dark:bg-[#150F24] p-4 rounded-xl border border-slate-200 dark:border-purple-900/40 shadow-sm flex items-start gap-4 transition-colors">
+                    <div className="w-8 h-8 rounded-full bg-purple-50 dark:bg-purple-950/70 text-purple-900 dark:text-purple-300 font-bold flex items-center justify-center shrink-0 text-xs border border-purple-200 dark:border-purple-800/80">
                       #{step.id}
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center justify-between">
-                        <h4 className="text-sm font-bold text-slate-900">{step.title}</h4>
-                        <span className="text-[10px] font-bold bg-slate-100 text-slate-600 px-2 py-0.5 rounded tracking-wider uppercase">
+                        <h4 className="text-sm font-bold text-slate-900 dark:text-white">{step.title}</h4>
+                        <span className="text-[10px] font-bold bg-slate-100 dark:bg-[#1A122E] text-slate-600 dark:text-purple-300 px-2 py-0.5 rounded tracking-wider uppercase border border-slate-200 dark:border-purple-900/40">
                           {step.category}
                         </span>
                       </div>
-                      <p className="text-xs text-slate-600 mt-1 font-mono">{step.result}</p>
+                      <p className="text-xs text-slate-600 dark:text-slate-300 mt-1 font-mono">{step.result}</p>
                     </div>
-                    <div className="shrink-0 flex items-center gap-1 text-xs font-bold text-green-700 bg-green-50 px-2.5 py-1 rounded-md border border-green-200">
+                    <div className="shrink-0 flex items-center gap-1 text-xs font-bold text-green-700 dark:text-emerald-400 bg-green-50 dark:bg-emerald-950/60 px-2.5 py-1 rounded-md border border-green-200 dark:border-emerald-800/60">
                       <CheckCircle2 className="w-3.5 h-3.5" />
                       VERIFIED
                     </div>
@@ -1663,46 +1663,46 @@ export default function App() {
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-2xl font-bold tracking-tight text-slate-900">Lot Traceability & Statutory Audit</h2>
-                  <p className="text-sm text-slate-500">Unbroken chain of custody from raw material supplier GRN to customer invoice delivery.</p>
+                  <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Lot Traceability & Statutory Audit</h2>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">Unbroken chain of custody from raw material supplier GRN to customer invoice delivery.</p>
                 </div>
               </div>
 
-              <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                <div className="relative pl-6 space-y-8 before:absolute before:left-2.5 before:top-3 before:bottom-3 before:w-0.5 before:bg-purple-200">
+              <div className="bg-white dark:bg-[#150F24] p-6 rounded-xl border border-slate-200 dark:border-purple-900/40 shadow-sm transition-colors">
+                <div className="relative pl-6 space-y-8 before:absolute before:left-2.5 before:top-3 before:bottom-3 before:w-0.5 before:bg-purple-200 dark:before:bg-purple-800">
                   <div className="relative">
-                    <div className="absolute -left-6 top-1 w-5 h-5 rounded-full bg-purple-600 border-4 border-white shadow"></div>
-                    <div className="bg-slate-50 p-4 rounded-lg border border-slate-200 text-xs">
-                      <span className="font-bold text-purple-600 uppercase tracking-wider block">1. Raw Material Supplier Receipt (GRN)</span>
-                      <p className="font-semibold text-slate-900 mt-1">Cauvery Agro Mills $\rightarrow$ 60 kg Flour received @ ₹45/kg (PO-2026-001)</p>
-                      <p className="text-slate-500 mt-1 font-mono">Lot #FL-202611-01 | Weighted rate updated from ₹42.00 to ₹43.1250 / kg</p>
+                    <div className="absolute -left-6 top-1 w-5 h-5 rounded-full bg-purple-600 border-4 border-white dark:border-[#150F24] shadow"></div>
+                    <div className="bg-slate-50 dark:bg-[#1A122E] p-4 rounded-lg border border-slate-200 dark:border-purple-900/40 text-xs">
+                      <span className="font-bold text-purple-600 dark:text-purple-400 uppercase tracking-wider block">1. Raw Material Supplier Receipt (GRN)</span>
+                      <p className="font-semibold text-slate-900 dark:text-white mt-1">Cauvery Agro Mills $\rightarrow$ 60 kg Flour received @ ₹45/kg (PO-2026-001)</p>
+                      <p className="text-slate-500 dark:text-slate-400 mt-1 font-mono">Lot #FL-202611-01 | Weighted rate updated from ₹42.00 to ₹43.1250 / kg</p>
                     </div>
                   </div>
 
                   <div className="relative">
-                    <div className="absolute -left-6 top-1 w-5 h-5 rounded-full bg-purple-600 border-4 border-white shadow"></div>
-                    <div className="bg-slate-50 p-4 rounded-lg border border-slate-200 text-xs">
-                      <span className="font-bold text-purple-600 uppercase tracking-wider block">2. Production Execution & Quality Check</span>
-                      <p className="font-semibold text-slate-900 mt-1">Batch #BAT-MK-001 $\rightarrow$ 40kg Flour + 10.5L Oil consumed</p>
-                      <p className="text-slate-500 mt-1 font-mono">188 good packets Murukku 200g credited to warehouse | 6 damaged pouches scrapped</p>
+                    <div className="absolute -left-6 top-1 w-5 h-5 rounded-full bg-purple-600 border-4 border-white dark:border-[#150F24] shadow"></div>
+                    <div className="bg-slate-50 dark:bg-[#1A122E] p-4 rounded-lg border border-slate-200 dark:border-purple-900/40 text-xs">
+                      <span className="font-bold text-purple-600 dark:text-purple-400 uppercase tracking-wider block">2. Production Execution & Quality Check</span>
+                      <p className="font-semibold text-slate-900 dark:text-white mt-1">Batch #BAT-MK-001 $\rightarrow$ 40kg Flour + 10.5L Oil consumed</p>
+                      <p className="text-slate-500 dark:text-slate-400 mt-1 font-mono">188 good packets Murukku 200g credited to warehouse | 6 damaged pouches scrapped</p>
                     </div>
                   </div>
 
                   <div className="relative">
-                    <div className="absolute -left-6 top-1 w-5 h-5 rounded-full bg-purple-600 border-4 border-white shadow"></div>
-                    <div className="bg-slate-50 p-4 rounded-lg border border-slate-200 text-xs">
-                      <span className="font-bold text-purple-600 uppercase tracking-wider block">3. Commercial Order & Statutory Billing</span>
-                      <p className="font-semibold text-slate-900 mt-1">Order #SO-001 $\rightarrow$ Tax Invoice #INV/2026-27/0001 (150 packets)</p>
-                      <p className="text-slate-500 mt-1 font-mono">Taxable ₹7,500.00 + CGST ₹187.50 + SGST ₹187.50 = ₹7,875.00</p>
+                    <div className="absolute -left-6 top-1 w-5 h-5 rounded-full bg-purple-600 border-4 border-white dark:border-[#150F24] shadow"></div>
+                    <div className="bg-slate-50 dark:bg-[#1A122E] p-4 rounded-lg border border-slate-200 dark:border-purple-900/40 text-xs">
+                      <span className="font-bold text-purple-600 dark:text-purple-400 uppercase tracking-wider block">3. Commercial Order & Statutory Billing</span>
+                      <p className="font-semibold text-slate-900 dark:text-white mt-1">Order #SO-001 $\rightarrow$ Tax Invoice #INV/2026-27/0001 (150 packets)</p>
+                      <p className="text-slate-500 dark:text-slate-400 mt-1 font-mono">Taxable ₹7,500.00 + CGST ₹187.50 + SGST ₹187.50 = ₹7,875.00</p>
                     </div>
                   </div>
 
                   <div className="relative">
-                    <div className="absolute -left-6 top-1 w-5 h-5 rounded-full bg-green-600 border-4 border-white shadow"></div>
-                    <div className="bg-green-50 p-4 rounded-lg border border-green-200 text-xs">
-                      <span className="font-bold text-green-700 uppercase tracking-wider block">4. Dispatch & Partial Payment Reconciliation</span>
-                      <p className="font-semibold text-slate-900 mt-1">Challan #DSP-001 Dispatched $\rightarrow$ Payment Receipt #REC-001 (₹4,000.00)</p>
-                      <p className="text-slate-600 mt-1 font-mono">Customer Outstanding Balance: ₹3,875.00 | Warehouse FG Stock: 88 pkts</p>
+                    <div className="absolute -left-6 top-1 w-5 h-5 rounded-full bg-green-600 border-4 border-white dark:border-[#150F24] shadow"></div>
+                    <div className="bg-green-50 dark:bg-emerald-950/40 p-4 rounded-lg border border-green-200 dark:border-emerald-800/60 text-xs">
+                      <span className="font-bold text-green-700 dark:text-emerald-400 uppercase tracking-wider block">4. Dispatch & Partial Payment Reconciliation</span>
+                      <p className="font-semibold text-slate-900 dark:text-white mt-1">Challan #DSP-001 Dispatched $\rightarrow$ Payment Receipt #REC-001 (₹4,000.00)</p>
+                      <p className="text-slate-600 dark:text-slate-300 mt-1 font-mono">Customer Outstanding Balance: ₹3,875.00 | Warehouse FG Stock: 88 pkts</p>
                     </div>
                   </div>
                 </div>
@@ -1714,52 +1714,52 @@ export default function App() {
 
       {/* ===================== MODAL 1: CREATE SALES ORDER ===================== */}
       {showOrderModal && (
-        <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200">
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-[#150F24] rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-purple-900/40 text-slate-900 dark:text-slate-100 transition-colors">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-base font-bold text-slate-900">Create New Sales Order</h3>
-              <button onClick={() => setShowOrderModal(false)} className="text-slate-400 hover:text-slate-600">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white">Create New Sales Order</h3>
+              <button onClick={() => setShowOrderModal(false)} className="text-slate-400 hover:text-slate-600 dark:hover:text-white cursor-pointer">
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             <form onSubmit={handleCreateOrderSubmit} className="space-y-4">
               <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">Customer Name</label>
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">Customer Name</label>
                 <input
                   type="text"
                   value={newCustomer}
                   onChange={(e) => setNewCustomer(e.target.value)}
                   placeholder="e.g. Cauvery Wholesale Confectioneries Pvt Ltd"
-                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-purple-600 focus:outline-none"
+                  className="w-full px-3 py-2 border border-slate-300 dark:border-purple-900/60 rounded-lg text-sm bg-white dark:bg-[#0D0818] text-slate-900 dark:text-white focus:ring-2 focus:ring-purple-600 focus:outline-none"
                   required
                 />
               </div>
 
               <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">Product SKU</label>
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">Product SKU</label>
                 <select
                   value={newOrderSku}
                   onChange={(e) => setNewOrderSku(e.target.value)}
-                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs bg-white font-medium"
+                  className="w-full px-3 py-2 border border-slate-300 dark:border-purple-900/60 rounded-lg text-xs bg-white dark:bg-[#0D0818] text-slate-900 dark:text-white font-medium"
                 >
                   {products.map(p => (
-                    <option key={p.id} value={p.sku}>{p.sku} — {p.name} (Stock: {p.currentStock} pkts)</option>
+                    <option key={p.id} value={p.sku} className="dark:bg-[#0D0818]">{p.sku} — {p.name} (Stock: {p.currentStock} pkts)</option>
                   ))}
                 </select>
               </div>
 
               <div>
                 <div className="flex justify-between items-center mb-1">
-                  <label className="text-xs font-bold text-slate-700">Order Quantity (Packets)</label>
-                  <span className="text-[11px] font-bold text-slate-500">Stock on Hand: {availableFgStock} pkts</span>
+                  <label className="text-xs font-bold text-slate-700 dark:text-slate-300">Order Quantity (Packets)</label>
+                  <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400">Stock on Hand: {availableFgStock} pkts</span>
                 </div>
                 <input
                   type="number"
                   value={newOrderQty}
                   onChange={(e) => setNewOrderQty(e.target.value)}
                   placeholder="e.g. 150"
-                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm font-mono focus:ring-2 focus:ring-purple-600 focus:outline-none"
+                  className="w-full px-3 py-2 border border-slate-300 dark:border-purple-900/60 rounded-lg text-sm font-mono bg-white dark:bg-[#0D0818] text-slate-900 dark:text-white focus:ring-2 focus:ring-purple-600 focus:outline-none"
                   min="1"
                   required
                 />
@@ -1768,11 +1768,11 @@ export default function App() {
               {/* Dynamic Shortage Warning */}
               {newOrderQty && (
                 <div className={`p-3 rounded-lg text-xs font-medium border ${
-                  isOrderShortage ? 'bg-amber-50 border-amber-200 text-amber-900' : 'bg-green-50 border-green-200 text-green-900'
+                  isOrderShortage ? 'bg-amber-50 dark:bg-amber-950/40 border-amber-200 dark:border-amber-800/60 text-amber-900 dark:text-amber-200' : 'bg-green-50 dark:bg-emerald-950/40 border-green-200 dark:border-emerald-800/60 text-green-900 dark:text-emerald-200'
                 }`}>
                   {isOrderShortage ? (
                     <div className="flex items-start gap-2">
-                      <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                      <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
                       <div>
                         <strong>Shortage Exception Warning:</strong> Order of {newOrderQty} packets exceeds available stock of {availableFgStock} pkts.
                         <span className="block font-bold mt-0.5">Deficit of {Number(newOrderQty) - availableFgStock} pkts will be flagged for production fulfillment.</span>
@@ -1780,23 +1780,23 @@ export default function App() {
                     </div>
                   ) : (
                     <div className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-green-600 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-green-600 dark:text-emerald-400 shrink-0" />
                       <span>Stock available in warehouse. Order can be approved and dispatched immediately.</span>
                     </div>
                   )}
                 </div>
               )}
 
-              <div className="p-3 bg-purple-50 border border-purple-200 rounded-lg text-xs font-mono space-y-1">
-                <div className="flex justify-between text-slate-600">
+              <div className="p-3 bg-purple-50 dark:bg-[#1A122E] border border-purple-200 dark:border-purple-900/40 rounded-lg text-xs font-mono space-y-1">
+                <div className="flex justify-between text-slate-600 dark:text-slate-300">
                   <span>Taxable Value:</span>
                   <span>₹{((Number(newOrderQty) || 0) * (Number(newOrderPrice) || 50)).toFixed(2)}</span>
                 </div>
-                <div className="flex justify-between text-slate-600">
+                <div className="flex justify-between text-slate-600 dark:text-slate-300">
                   <span>GST 5% (CGST 2.5% + SGST 2.5%):</span>
                   <span>₹{((Number(newOrderQty) || 0) * (Number(newOrderPrice) || 50) * 0.05).toFixed(2)}</span>
                 </div>
-                <div className="flex justify-between font-bold text-purple-950 pt-1 border-t border-purple-200 text-sm">
+                <div className="flex justify-between font-bold text-purple-950 dark:text-purple-200 pt-1 border-t border-purple-200 dark:border-purple-900/40 text-sm">
                   <span>Total Order Value:</span>
                   <span>₹{((Number(newOrderQty) || 0) * (Number(newOrderPrice) || 50) * 1.05).toFixed(2)}</span>
                 </div>
@@ -1804,7 +1804,7 @@ export default function App() {
 
               <button
                 type="submit"
-                className="w-full bg-purple-600 text-white font-bold py-2.5 rounded-lg text-sm hover:bg-purple-700 shadow"
+                className="w-full bg-purple-600 text-white font-bold py-2.5 rounded-lg text-sm hover:bg-purple-700 shadow cursor-pointer transition-colors"
               >
                 Submit Sales Order
               </button>
@@ -1815,85 +1815,85 @@ export default function App() {
 
       {/* ===================== MODAL 2: INWARD PURCHASE GRN ===================== */}
       {showPurchaseModal && (
-        <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200">
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-[#150F24] rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-purple-900/40 text-slate-900 dark:text-slate-100 transition-colors">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-base font-bold text-slate-900">Record Inward Material Purchase (GRN)</h3>
-              <button onClick={() => setShowPurchaseModal(false)} className="text-slate-400 hover:text-slate-600">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white">Record Inward Material Purchase (GRN)</h3>
+              <button onClick={() => setShowPurchaseModal(false)} className="text-slate-400 hover:text-slate-600 dark:hover:text-white cursor-pointer">
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             <form onSubmit={handlePurchaseSubmit} className="space-y-4">
               <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">Select Material</label>
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">Select Material</label>
                 <select
                   value={purchaseMaterialCode}
                   onChange={(e) => setPurchaseMaterialCode(e.target.value)}
-                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs bg-white font-medium"
+                  className="w-full px-3 py-2 border border-slate-300 dark:border-purple-900/60 rounded-lg text-xs bg-white dark:bg-[#0D0818] text-slate-900 dark:text-white font-medium"
                 >
                   {materials.map(m => (
-                    <option key={m.id} value={m.code}>{m.code} — {m.name} (Current Stock: {m.currentStock} {m.uom})</option>
+                    <option key={m.id} value={m.code} className="dark:bg-[#0D0818]">{m.code} — {m.name} (Current Stock: {m.currentStock} {m.uom})</option>
                   ))}
                 </select>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-bold text-slate-700 block mb-1">Quantity Received</label>
+                  <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">Quantity Received</label>
                   <input
                     type="number"
                     step="0.01"
                     value={purchaseQty}
                     onChange={(e) => setPurchaseQty(e.target.value)}
                     placeholder="e.g. 60.0"
-                    className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm font-mono focus:ring-2 focus:ring-emerald-600"
+                    className="w-full px-3 py-2 border border-slate-300 dark:border-purple-900/60 rounded-lg text-sm font-mono bg-white dark:bg-[#0D0818] text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-600"
                     required
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-bold text-slate-700 block mb-1">Purchase Rate (₹/unit)</label>
+                  <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">Purchase Rate (₹/unit)</label>
                   <input
                     type="number"
                     step="0.01"
                     value={purchaseRate}
                     onChange={(e) => setPurchaseRate(e.target.value)}
                     placeholder="e.g. 45.00"
-                    className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm font-mono focus:ring-2 focus:ring-emerald-600"
+                    className="w-full px-3 py-2 border border-slate-300 dark:border-purple-900/60 rounded-lg text-sm font-mono bg-white dark:bg-[#0D0818] text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-600"
                     required
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">Supplier Name</label>
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">Supplier Name</label>
                 <input
                   type="text"
                   value={purchaseSupplier}
                   onChange={(e) => setPurchaseSupplier(e.target.value)}
                   placeholder="e.g. Thanjavur Agro Mills Pvt Ltd"
-                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm"
+                  className="w-full px-3 py-2 border border-slate-300 dark:border-purple-900/60 rounded-lg text-sm bg-white dark:bg-[#0D0818] text-slate-900 dark:text-white focus:ring-2 focus:ring-purple-600"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">Purchase Order / Challan Ref</label>
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">Purchase Order / Challan Ref</label>
                 <input
                   type="text"
                   value={purchaseInvoiceRef}
                   onChange={(e) => setPurchaseInvoiceRef(e.target.value)}
                   placeholder="e.g. PO-2026-001"
-                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm"
+                  className="w-full px-3 py-2 border border-slate-300 dark:border-purple-900/60 rounded-lg text-sm bg-white dark:bg-[#0D0818] text-slate-900 dark:text-white focus:ring-2 focus:ring-purple-600"
                 />
               </div>
 
               {purchaseQty && purchaseRate && (
-                <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-xs font-mono space-y-1">
-                  <div className="flex justify-between text-slate-600">
+                <div className="p-3 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 rounded-lg text-xs font-mono space-y-1">
+                  <div className="flex justify-between text-slate-600 dark:text-slate-300">
                     <span>Total Purchase Value:</span>
-                    <span className="font-bold text-emerald-950">₹{(Number(purchaseQty) * Number(purchaseRate)).toFixed(2)}</span>
+                    <span className="font-bold text-emerald-950 dark:text-emerald-300">₹{(Number(purchaseQty) * Number(purchaseRate)).toFixed(2)}</span>
                   </div>
-                  <div className="flex justify-between text-slate-600 text-[11px]">
+                  <div className="flex justify-between text-slate-600 dark:text-slate-400 text-[11px]">
                     <span>Weighted Rate Formula:</span>
                     <span>(Old Val + Inward Val) / New Stock</span>
                   </div>
@@ -1902,7 +1902,7 @@ export default function App() {
 
               <button
                 type="submit"
-                className="w-full bg-emerald-700 text-white font-bold py-2.5 rounded-lg text-sm hover:bg-emerald-800 shadow"
+                className="w-full bg-emerald-700 text-white font-bold py-2.5 rounded-lg text-sm hover:bg-emerald-800 shadow cursor-pointer transition-colors"
               >
                 Confirm Inward & Post to Stock Ledger
               </button>
@@ -1913,11 +1913,11 @@ export default function App() {
 
       {/* ===================== MODAL 3: RUN PRODUCTION BATCH ===================== */}
       {showBatchModal && (
-        <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200">
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-[#150F24] rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-purple-900/40 text-slate-900 dark:text-slate-100 transition-colors">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-base font-bold text-slate-900">Run Production Batch (Murukku 200g)</h3>
-              <button onClick={() => setShowBatchModal(false)} className="text-slate-400 hover:text-slate-600">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white">Run Production Batch (Murukku 200g)</h3>
+              <button onClick={() => setShowBatchModal(false)} className="text-slate-400 hover:text-slate-600 dark:hover:text-white cursor-pointer">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -1925,22 +1925,22 @@ export default function App() {
             <form onSubmit={handleCreateBatchSubmit} className="space-y-4">
               <div className="grid grid-cols-2 gap-3 text-xs">
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Standard Batch Output</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-300 block mb-1">Standard Batch Output</label>
                   <input
                     type="text"
                     disabled
                     value="200 Packets"
-                    className="w-full px-2.5 py-1.5 bg-slate-100 border border-slate-200 rounded-lg text-slate-600"
+                    className="w-full px-2.5 py-1.5 bg-slate-100 dark:bg-purple-950/40 border border-slate-200 dark:border-purple-900/40 rounded-lg text-slate-600 dark:text-slate-300"
                   />
                 </div>
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Actual Good Packets Output</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-300 block mb-1">Actual Good Packets Output</label>
                   <input
                     type="number"
                     value={batchGood}
                     onChange={(e) => setBatchGood(e.target.value)}
                     placeholder="e.g. 188"
-                    className="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg font-mono focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-2.5 py-1.5 border border-slate-300 dark:border-purple-900/60 rounded-lg font-mono bg-white dark:bg-[#0D0818] text-slate-900 dark:text-white focus:ring-2 focus:ring-amber-500"
                     required
                   />
                 </div>
@@ -1948,51 +1948,51 @@ export default function App() {
 
               <div className="grid grid-cols-3 gap-2 text-xs">
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Flour (kg)</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-300 block mb-1">Flour (kg)</label>
                   <input
                     type="number"
                     step="0.1"
                     value={batchFlour}
                     onChange={(e) => setBatchFlour(e.target.value)}
                     placeholder="e.g. 40.0"
-                    className="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg font-mono focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-2.5 py-1.5 border border-slate-300 dark:border-purple-900/60 rounded-lg font-mono bg-white dark:bg-[#0D0818] text-slate-900 dark:text-white focus:ring-2 focus:ring-amber-500"
                   />
                 </div>
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Oil Issued (L)</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-300 block mb-1">Oil Issued (L)</label>
                   <input
                     type="number"
                     step="0.1"
                     value={batchOil}
                     onChange={(e) => setBatchOil(e.target.value)}
                     placeholder="e.g. 10.5"
-                    className="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg font-mono focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-2.5 py-1.5 border border-slate-300 dark:border-purple-900/60 rounded-lg font-mono bg-white dark:bg-[#0D0818] text-slate-900 dark:text-white focus:ring-2 focus:ring-amber-500"
                   />
                 </div>
                 <div>
-                  <label className="font-bold text-slate-700 block mb-1">Scrap Pouches</label>
+                  <label className="font-bold text-slate-700 dark:text-slate-300 block mb-1">Scrap Pouches</label>
                   <input
                     type="number"
                     value={batchScrap}
                     onChange={(e) => setBatchScrap(e.target.value)}
                     placeholder="e.g. 6"
-                    className="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg font-mono focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-2.5 py-1.5 border border-slate-300 dark:border-purple-900/60 rounded-lg font-mono bg-white dark:bg-[#0D0818] text-slate-900 dark:text-white focus:ring-2 focus:ring-amber-500"
                   />
                 </div>
               </div>
 
               {batchGood && (
-                <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg text-xs font-mono space-y-1">
-                  <div className="flex justify-between text-slate-700">
+                <div className="p-3 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60 rounded-lg text-xs font-mono space-y-1">
+                  <div className="flex justify-between text-slate-700 dark:text-slate-300">
                     <span>Yield Variance:</span>
-                    <span className="font-bold text-amber-900">
+                    <span className="font-bold text-amber-900 dark:text-amber-300">
                       {(((Number(batchGood) - 200) / 200) * 100).toFixed(1)}%
                     </span>
                   </div>
                   {batchOil && (
-                    <div className="flex justify-between text-slate-700">
+                    <div className="flex justify-between text-slate-700 dark:text-slate-300">
                       <span>Oil Variance:</span>
-                      <span className="font-bold text-amber-900">
+                      <span className="font-bold text-amber-900 dark:text-amber-300">
                         {(((Number(batchOil) - 10.0) / 10.0) * 100).toFixed(1)}%
                       </span>
                     </div>
@@ -2002,7 +2002,7 @@ export default function App() {
 
               <button
                 type="submit"
-                className="w-full bg-amber-600 text-white font-bold py-2.5 rounded-lg text-sm hover:bg-amber-700 shadow"
+                className="w-full bg-amber-600 text-white font-bold py-2.5 rounded-lg text-sm hover:bg-amber-700 shadow cursor-pointer transition-colors"
               >
                 Complete Batch & Update Inventory
               </button>
@@ -2013,29 +2013,29 @@ export default function App() {
 
       {/* ===================== MODAL 4: RECORD PAYMENT ===================== */}
       {showPaymentModal && selectedInvoice && (
-        <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-slate-200">
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-[#150F24] rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-slate-200 dark:border-purple-900/40 text-slate-900 dark:text-slate-100 transition-colors">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-base font-bold text-slate-900">Record Customer Payment</h3>
-              <button onClick={() => setShowPaymentModal(false)} className="text-slate-400 hover:text-slate-600">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white">Record Customer Payment</h3>
+              <button onClick={() => setShowPaymentModal(false)} className="text-slate-400 hover:text-slate-600 dark:hover:text-white cursor-pointer">
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="p-3 bg-purple-50 rounded-lg border border-purple-200 text-xs font-mono mb-4 space-y-1">
-              <div className="flex justify-between text-slate-700">
+            <div className="p-3 bg-purple-50 dark:bg-[#1A122E] rounded-lg border border-purple-200 dark:border-purple-900/40 text-xs font-mono mb-4 space-y-1">
+              <div className="flex justify-between text-slate-700 dark:text-slate-300">
                 <span>Invoice No:</span>
-                <span className="font-bold text-purple-950">{selectedInvoice.invoiceNumber}</span>
+                <span className="font-bold text-purple-950 dark:text-purple-200">{selectedInvoice.invoiceNumber}</span>
               </div>
-              <div className="flex justify-between text-slate-700">
+              <div className="flex justify-between text-slate-700 dark:text-slate-300">
                 <span>Customer:</span>
                 <span className="font-bold truncate max-w-[180px]">{selectedInvoice.customerName}</span>
               </div>
-              <div className="flex justify-between text-slate-700">
+              <div className="flex justify-between text-slate-700 dark:text-slate-300">
                 <span>Total Invoice:</span>
-                <span className="font-bold">₹{selectedInvoice.totalInvoiceAmount.toFixed(2)}</span>
+                <span className="font-bold text-slate-900 dark:text-white">₹{selectedInvoice.totalInvoiceAmount.toFixed(2)}</span>
               </div>
-              <div className="flex justify-between text-purple-900 font-bold border-t border-purple-200 pt-1">
+              <div className="flex justify-between text-purple-900 dark:text-purple-300 font-bold border-t border-purple-200 dark:border-purple-900/40 pt-1">
                 <span>Outstanding Balance:</span>
                 <span>₹{selectedInvoice.balanceAmount.toFixed(2)}</span>
               </div>
@@ -2043,7 +2043,7 @@ export default function App() {
 
             <form onSubmit={handlePaymentSubmit} className="space-y-4">
               <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">Payment Amount (₹)</label>
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">Payment Amount (₹)</label>
                 <input
                   type="number"
                   step="0.01"
@@ -2051,27 +2051,27 @@ export default function App() {
                   onChange={(e) => setPaymentAmountInput(e.target.value)}
                   placeholder="e.g. 4000.00"
                   max={selectedInvoice.balanceAmount}
-                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm font-mono focus:ring-2 focus:ring-purple-600 focus:outline-none"
+                  className="w-full px-3 py-2 border border-slate-300 dark:border-purple-900/60 rounded-lg text-sm font-mono bg-white dark:bg-[#0D0818] text-slate-900 dark:text-white focus:ring-2 focus:ring-purple-600 focus:outline-none"
                   required
                 />
               </div>
 
               <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">Payment Channel</label>
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">Payment Channel</label>
                 <select
                   value={paymentMode}
                   onChange={(e) => setPaymentMode(e.target.value)}
-                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs bg-white font-medium"
+                  className="w-full px-3 py-2 border border-slate-300 dark:border-purple-900/60 rounded-lg text-xs bg-white dark:bg-[#0D0818] text-slate-900 dark:text-white font-medium"
                 >
-                  <option>NEFT / RTGS Bank Transfer</option>
-                  <option>UPI Corporate Transfer</option>
-                  <option>Cheque Deposit</option>
+                  <option className="dark:bg-[#0D0818]">NEFT / RTGS Bank Transfer</option>
+                  <option className="dark:bg-[#0D0818]">UPI Corporate Transfer</option>
+                  <option className="dark:bg-[#0D0818]">Cheque Deposit</option>
                 </select>
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-purple-600 text-white font-bold py-2.5 rounded-lg text-sm hover:bg-purple-700 shadow"
+                className="w-full bg-purple-600 text-white font-bold py-2.5 rounded-lg text-sm hover:bg-purple-700 shadow cursor-pointer transition-colors"
               >
                 Confirm Payment & Clear Balance
               </button>
