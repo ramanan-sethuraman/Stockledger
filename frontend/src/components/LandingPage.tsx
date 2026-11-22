@@ -9,7 +9,6 @@ import {
   FileText,
   DollarSign,
   Layers,
-  Sparkles,
   TrendingUp,
   AlertTriangle,
   UserCheck,
@@ -77,7 +76,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         <div className="max-w-5xl mx-auto text-center space-y-6">
           {/* Release Badge */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-950/70 border border-blue-500/30 text-xs font-semibold text-sky-400 shadow-inner">
-            <Sparkles className="w-3.5 h-3.5 text-sky-300 animate-pulse" />
             <span>Manufacturing & Inventory ERP v1.0 • South Indian Food Processing Engine</span>
           </div>
 
@@ -102,7 +100,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           {/* Hero Action Buttons */}
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
             <button
-              onClick={() => onQuickDemoLogin('admin@stockledger.in', 'S. Ramanan', 'ADMIN')}
+              onClick={() => onQuickDemoLogin('admin@stockledger.in', 'S Ramanan', 'ADMIN')}
               className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm shadow-xl shadow-blue-600/30 hover:shadow-blue-500/50 transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
               <span>Instant Admin Demo Access</span>
@@ -359,7 +357,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
             {/* Persona 1 */}
             <div
-              onClick={() => onQuickDemoLogin('admin@stockledger.in', 'S. Ramanan', 'ADMIN')}
+              onClick={() => onQuickDemoLogin('admin@stockledger.in', 'S Ramanan', 'ADMIN')}
               className="p-6 rounded-2xl bg-[#131B2E] border border-blue-900/40 hover:border-blue-500 hover:shadow-xl hover:shadow-blue-600/20 transition-all cursor-pointer group"
             >
               <div className="flex items-center justify-between mb-4">
@@ -371,7 +369,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 </span>
               </div>
               <h4 className="text-lg font-bold text-white">System Administrator</h4>
-              <span className="text-xs text-slate-400 block mb-2 font-mono">S. Ramanan (admin@stockledger.in)</span>
+              <span className="text-xs text-slate-400 block mb-2 font-mono">S Ramanan (admin@stockledger.in)</span>
               <p className="text-xs text-slate-400 leading-relaxed">
                 Full governance, order approvals, dispatch execution, system state resets, and executive oversight.
               </p>

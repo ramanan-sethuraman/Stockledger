@@ -771,11 +771,11 @@ export default function App() {
                 </span>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
                   <button
-                    onClick={() => handleQuickDemoLogin('admin@stockledger.in', 'S. Ramanan', 'ADMIN')}
+                    onClick={() => handleQuickDemoLogin('admin@stockledger.in', 'S Ramanan', 'ADMIN')}
                     className="p-2 border border-slate-200 rounded-lg font-semibold hover:bg-blue-50 hover:border-blue-300 text-left transition-colors cursor-pointer"
                   >
                     <span className="text-blue-900 block font-bold">Admin</span>
-                    <span className="text-[10px] text-slate-500 truncate block">S. Ramanan</span>
+                    <span className="text-[10px] text-slate-500 truncate block">S Ramanan</span>
                   </button>
 
                   <button
