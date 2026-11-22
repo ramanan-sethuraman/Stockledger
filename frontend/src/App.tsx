@@ -165,36 +165,9 @@ export default function App() {
     notify('You have been safely logged out.');
   };
 
-  // Navigation & Swipe Drawer State
+  // Navigation Drawer State
   const [activeTab, setActiveTab] = useState<'dashboard' | 'materials' | 'production' | 'invoicing' | 'ledger' | 'benchmark' | 'audit'>('dashboard');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [touchStartX, setTouchStartX] = useState<number | null>(null);
-  const [touchStartY, setTouchStartY] = useState<number | null>(null);
-
-  // Touch Swipe Gesture Recognition (Swipe Right to Open, Swipe Left to Close)
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStartX(e.targetTouches[0].clientX);
-    setTouchStartY(e.targetTouches[0].clientY);
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX === null || touchStartY === null) return;
-    const touchEndX = e.changedTouches[0].clientX;
-    const touchEndY = e.changedTouches[0].clientY;
-    const deltaX = touchEndX - touchStartX;
-    const deltaY = touchEndY - touchStartY;
-
-    // Detect horizontal swipe gesture
-    if (Math.abs(deltaX) > Math.abs(deltaY) * 1.2) {
-      if (deltaX > 45 && !isSidebarOpen) {
-        setIsSidebarOpen(true);
-      } else if (deltaX < -45 && isSidebarOpen) {
-        setIsSidebarOpen(false);
-      }
-    }
-    setTouchStartX(null);
-    setTouchStartY(null);
-  };
 
   // ERP Domain Data States (Live from Backend)
   const [materials, setMaterials] = useState<MaterialItem[]>([]);
@@ -861,31 +834,13 @@ export default function App() {
   // VIEW: LOGGED-IN ENTERPRISE APPLICATION
   // ==============================================================
   return (
-    <div
-      className="flex h-screen bg-[#F8FAFC] overflow-hidden text-slate-800 relative select-none"
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
-    >
+    <div className="flex h-screen bg-[#F8FAFC] overflow-hidden text-slate-800 relative select-none">
       {/* Toast Notification Bar */}
       {notification && (
         <div className="fixed top-4 right-4 z-50 bg-[#172554] text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 border border-blue-400/30 text-xs font-semibold animate-bounce">
           <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />
           <span>{notification}</span>
         </div>
-      )}
-
-      {/* Floating Left Edge Touch / Swipe Pill Handle */}
-      {!isSidebarOpen && (
-        <button
-          onClick={() => setIsSidebarOpen(true)}
-          className="fixed left-0 top-1/2 -translate-y-1/2 z-30 bg-[#172554] text-white py-3 px-2 rounded-r-2xl shadow-2xl border-y border-r border-blue-400/40 flex flex-col items-center gap-1.5 hover:bg-blue-800 transition-all hover:pl-3 group cursor-pointer"
-          title="Touch or Swipe Right to open navigation drawer"
-        >
-          <Menu className="w-5 h-5 text-sky-400 group-hover:scale-110 transition-transform" />
-          <span className="[writing-mode:vertical-lr] text-[9px] font-black tracking-widest uppercase text-blue-200">
-            SWIPE
-          </span>
-        </button>
       )}
 
       {/* Backdrop Overlay when Sidebar is open */}
@@ -896,7 +851,7 @@ export default function App() {
         />
       )}
 
-      {/* ----------------- LEFT SIDEBAR (SWIPE & TOUCH DRAWER) ----------------- */}
+      {/* ----------------- LEFT SIDEBAR NAVIGATION DRAWER ----------------- */}
       <aside
         className={`fixed top-0 bottom-0 left-0 w-72 bg-[#172554] text-white flex flex-col justify-between z-50 shadow-2xl transition-transform duration-300 ease-in-out ${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
@@ -909,16 +864,16 @@ export default function App() {
             <button
               onClick={() => setIsSidebarOpen(false)}
               className="p-1.5 text-slate-400 hover:text-white hover:bg-blue-900/60 rounded-lg transition-colors cursor-pointer"
-              title="Close Navigation Drawer (or swipe left)"
+              title="Close Navigation Menu"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
-          {/* Touch Gesture Instruction Indicator */}
+          {/* Context Indicator */}
           <div className="px-4 py-2 bg-blue-950/40 border-b border-blue-900/30 text-[10px] text-blue-300 flex items-center justify-between">
-            <span>👈 Swipe left or tap outside to close</span>
-            <span className="font-mono text-sky-400 font-bold">TOUCH ENABLED</span>
+            <span className="font-semibold uppercase tracking-wider">Enterprise Console</span>
+            <span className="bg-sky-500/20 text-sky-300 px-1.5 py-0.5 rounded font-mono font-bold">v2.4</span>
           </div>
 
           {/* Navigation Links */}
@@ -1048,13 +1003,13 @@ export default function App() {
 
       {/* ----------------- MAIN VIEW CONTAINER ----------------- */}
       <div className="flex-1 flex flex-col overflow-y-auto w-full">
-        {/* Top Header with Hamburger Touch Button & User Controls */}
+        {/* Top Header with Hamburger Menu Button & User Controls */}
         <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 sm:px-6 sticky top-0 z-10 shadow-sm">
           <div className="flex items-center gap-2 sm:gap-3 text-sm">
             <button
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
               className="p-2 rounded-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900 border border-slate-200 transition-colors flex items-center justify-center shrink-0 cursor-pointer shadow-sm"
-              title="Touch or Swipe to open navigation drawer"
+              title="Toggle navigation menu"
             >
               <Menu className="w-5 h-5 text-slate-800" />
             </button>
