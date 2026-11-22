@@ -612,7 +612,7 @@ export default function App() {
                 <button
                   onClick={() => { setAuthMode('LOGIN'); setAuthError(''); }}
                   className={`flex-1 pb-3 text-sm font-bold transition-all border-b-2 cursor-pointer ${
-                    authMode === 'LOGIN' ? 'border-blue-600 text-blue-600' : 'border-transparent text-slate-400 hover:text-slate-600'
+                    authMode === 'LOGIN' ? 'border-purple-600 text-purple-600' : 'border-transparent text-slate-400 hover:text-slate-600'
                   }`}
                 >
                   Sign In
@@ -620,7 +620,7 @@ export default function App() {
                 <button
                   onClick={() => { setAuthMode('REGISTER'); setAuthError(''); }}
                   className={`flex-1 pb-3 text-sm font-bold transition-all border-b-2 cursor-pointer ${
-                    authMode === 'REGISTER' ? 'border-blue-600 text-blue-600' : 'border-transparent text-slate-400 hover:text-slate-600'
+                    authMode === 'REGISTER' ? 'border-purple-600 text-purple-600' : 'border-transparent text-slate-400 hover:text-slate-600'
                   }`}
                 >
                   New User Register
@@ -646,7 +646,7 @@ export default function App() {
                         value={loginEmail}
                         onChange={(e) => setLoginEmail(e.target.value)}
                         placeholder="e.g. admin@stockledger.in"
-                        className="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                        className="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-purple-600 focus:outline-none"
                         required
                       />
                     </div>
@@ -661,7 +661,7 @@ export default function App() {
                         value={loginPassword}
                         onChange={(e) => setLoginPassword(e.target.value)}
                         placeholder="Enter account password"
-                        className="w-full pl-9 pr-10 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                        className="w-full pl-9 pr-10 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-purple-600 focus:outline-none"
                         required
                       />
                       <button
@@ -681,7 +681,7 @@ export default function App() {
                           setLoginEmail('admin@stockledger.in');
                           setLoginPassword('Password@123');
                         }}
-                        className="text-blue-600 font-bold hover:underline cursor-pointer"
+                        className="text-purple-600 font-bold hover:underline cursor-pointer"
                       >
                         Fill Admin
                       </button>
@@ -691,7 +691,7 @@ export default function App() {
                   <button
                     type="submit"
                     disabled={authLoading}
-                    className="w-full bg-[#172554] text-white font-bold py-2.5 rounded-lg text-sm hover:bg-blue-900 transition-colors shadow flex items-center justify-center gap-2 disabled:opacity-70 cursor-pointer"
+                    className="w-full bg-[#1E103A] text-white font-bold py-2.5 rounded-lg text-sm hover:bg-purple-900 transition-colors shadow flex items-center justify-center gap-2 disabled:opacity-70 cursor-pointer"
                   >
                     {authLoading ? 'Verifying...' : 'Sign In to Workspace'}
                     <ArrowRight className="w-4 h-4" />
@@ -706,7 +706,7 @@ export default function App() {
                       value={regFullName}
                       onChange={(e) => setRegFullName(e.target.value)}
                       placeholder="e.g. Ramesh Kumar"
-                      className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                      className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-purple-600 focus:outline-none"
                       required
                     />
                   </div>
@@ -718,7 +718,7 @@ export default function App() {
                       value={loginEmail}
                       onChange={(e) => setLoginEmail(e.target.value)}
                       placeholder="name@company.com"
-                      className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                      className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-purple-600 focus:outline-none"
                       required
                     />
                   </div>
@@ -731,7 +731,7 @@ export default function App() {
                         value={loginPassword}
                         onChange={(e) => setLoginPassword(e.target.value)}
                         placeholder="Create secure password"
-                        className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none pr-10"
+                        className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-purple-600 focus:outline-none pr-10"
                         required
                       />
                       <button
@@ -749,7 +749,7 @@ export default function App() {
                     <select
                       value={regRole}
                       onChange={(e: any) => setRegRole(e.target.value)}
-                      className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none bg-white font-medium"
+                      className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-purple-600 focus:outline-none bg-white font-medium"
                     >
                       <option value="ADMIN">System Administrator (Full Control)</option>
                       <option value="PRODUCTION_SUPERVISOR">Production Supervisor (Batches & Variances)</option>
@@ -762,7 +762,7 @@ export default function App() {
                   <button
                     type="submit"
                     disabled={authLoading}
-                    className="w-full bg-blue-600 text-white font-bold py-2.5 rounded-lg text-sm hover:bg-blue-700 transition-colors shadow disabled:opacity-70 cursor-pointer"
+                    className="w-full bg-purple-600 text-white font-bold py-2.5 rounded-lg text-sm hover:bg-purple-700 transition-colors shadow disabled:opacity-70 cursor-pointer"
                   >
                     {authLoading ? 'Creating Profile...' : 'Register & Enter Workspace'}
                   </button>
@@ -777,9 +777,9 @@ export default function App() {
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
                   <button
                     onClick={() => handleQuickDemoLogin('admin@stockledger.in', 'S Ramanan', 'ADMIN')}
-                    className="p-2 border border-slate-200 rounded-lg font-semibold hover:bg-blue-50 hover:border-blue-300 text-left transition-colors cursor-pointer"
+                    className="p-2 border border-slate-200 rounded-lg font-semibold hover:bg-purple-50 hover:border-purple-300 text-left transition-colors cursor-pointer"
                   >
-                    <span className="text-blue-900 block font-bold">Admin</span>
+                    <span className="text-purple-900 block font-bold">Admin</span>
                     <span className="text-[10px] text-slate-500 truncate block">S Ramanan</span>
                   </button>
 
@@ -841,17 +841,17 @@ export default function App() {
 
       {/* ----------------- LEFT SIDEBAR NAVIGATION DRAWER ----------------- */}
       <aside
-        className={`fixed top-0 bottom-0 left-0 w-72 bg-[#172554] text-white flex flex-col justify-between z-50 shadow-2xl transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 bottom-0 left-0 w-72 bg-[#1E103A] text-white flex flex-col justify-between z-50 shadow-2xl transition-transform duration-300 ease-in-out ${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         <div>
           {/* Brand Identity & Close Button */}
-          <div className="p-4 border-b border-blue-900/50 flex items-center justify-between">
+          <div className="p-4 border-b border-purple-900/50 flex items-center justify-between">
             <Logo variant="horizontal" size="md" theme="dark" showTagline={false} />
             <button
               onClick={() => setIsSidebarOpen(false)}
-              className="p-1.5 text-slate-400 hover:text-white hover:bg-blue-900/60 rounded-lg transition-colors cursor-pointer"
+              className="p-1.5 text-slate-400 hover:text-white hover:bg-purple-900/60 rounded-lg transition-colors cursor-pointer"
               title="Close Navigation Menu"
             >
               <X className="w-5 h-5" />
@@ -859,9 +859,9 @@ export default function App() {
           </div>
 
           {/* Context Indicator */}
-          <div className="px-4 py-2 bg-blue-950/40 border-b border-blue-900/30 text-[10px] text-blue-300 flex items-center justify-between">
+          <div className="px-4 py-2 bg-purple-950/40 border-b border-purple-900/30 text-[10px] text-purple-300 flex items-center justify-between">
             <span className="font-semibold uppercase tracking-wider">Enterprise Console</span>
-            <span className="bg-sky-500/20 text-sky-300 px-1.5 py-0.5 rounded font-mono font-bold">v2.4</span>
+            <span className="bg-purple-500/20 text-purple-300 px-1.5 py-0.5 rounded font-mono font-bold">v2.4</span>
           </div>
 
           {/* Navigation Links */}
@@ -869,7 +869,7 @@ export default function App() {
             <button
               onClick={() => { setActiveTab('dashboard'); setIsSidebarOpen(false); }}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all cursor-pointer ${
-                activeTab === 'dashboard' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-300 hover:bg-blue-900/40 hover:text-white'
+                activeTab === 'dashboard' ? 'bg-purple-600 text-white shadow-sm' : 'text-slate-300 hover:bg-purple-900/40 hover:text-white'
               }`}
             >
               <BarChart3 className="w-4 h-4" />
@@ -879,13 +879,13 @@ export default function App() {
             <button
               onClick={() => { setActiveTab('invoicing'); setIsSidebarOpen(false); }}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all cursor-pointer ${
-                activeTab === 'invoicing' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-300 hover:bg-blue-900/40 hover:text-white'
+                activeTab === 'invoicing' ? 'bg-purple-600 text-white shadow-sm' : 'text-slate-300 hover:bg-purple-900/40 hover:text-white'
               }`}
             >
               <FileText className="w-4 h-4" />
               Sales & Invoicing
               {salesOrders.length > 0 && (
-                <span className="ml-auto text-[10px] bg-blue-500/30 text-white px-1.5 py-0.5 rounded font-bold">
+                <span className="ml-auto text-[10px] bg-purple-500/30 text-white px-1.5 py-0.5 rounded font-bold">
                   {salesOrders.length}
                 </span>
               )}
@@ -894,7 +894,7 @@ export default function App() {
             <button
               onClick={() => { setActiveTab('production'); setIsSidebarOpen(false); }}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all cursor-pointer ${
-                activeTab === 'production' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-300 hover:bg-blue-900/40 hover:text-white'
+                activeTab === 'production' ? 'bg-purple-600 text-white shadow-sm' : 'text-slate-300 hover:bg-purple-900/40 hover:text-white'
               }`}
             >
               <Factory className="w-4 h-4" />
@@ -909,7 +909,7 @@ export default function App() {
             <button
               onClick={() => { setActiveTab('materials'); setIsSidebarOpen(false); }}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all cursor-pointer ${
-                activeTab === 'materials' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-300 hover:bg-blue-900/40 hover:text-white'
+                activeTab === 'materials' ? 'bg-purple-600 text-white shadow-sm' : 'text-slate-300 hover:bg-purple-900/40 hover:text-white'
               }`}
             >
               <Package className="w-4 h-4" />
@@ -919,7 +919,7 @@ export default function App() {
             <button
               onClick={() => { setActiveTab('ledger'); setIsSidebarOpen(false); }}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all cursor-pointer ${
-                activeTab === 'ledger' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-300 hover:bg-blue-900/40 hover:text-white'
+                activeTab === 'ledger' ? 'bg-purple-600 text-white shadow-sm' : 'text-slate-300 hover:bg-purple-900/40 hover:text-white'
               }`}
             >
               <Layers className="w-4 h-4" />
@@ -932,7 +932,7 @@ export default function App() {
             <button
               onClick={() => { setActiveTab('benchmark'); setIsSidebarOpen(false); }}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all cursor-pointer ${
-                activeTab === 'benchmark' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-300 hover:bg-blue-900/40 hover:text-white'
+                activeTab === 'benchmark' ? 'bg-purple-600 text-white shadow-sm' : 'text-slate-300 hover:bg-purple-900/40 hover:text-white'
               }`}
             >
               <Sparkles className="w-4 h-4 text-amber-400" />
@@ -943,7 +943,7 @@ export default function App() {
             <button
               onClick={() => { setActiveTab('audit'); setIsSidebarOpen(false); }}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all cursor-pointer ${
-                activeTab === 'audit' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-300 hover:bg-blue-900/40 hover:text-white'
+                activeTab === 'audit' ? 'bg-purple-600 text-white shadow-sm' : 'text-slate-300 hover:bg-purple-900/40 hover:text-white'
               }`}
             >
               <ShieldCheck className="w-4 h-4" />
@@ -953,27 +953,27 @@ export default function App() {
         </div>
 
         {/* User Profile Card & Sign Out */}
-        <div className="p-3 bg-blue-950/60 border-t border-blue-900/40">
+        <div className="p-3 bg-purple-950/60 border-t border-purple-900/40">
           <div className="flex items-center justify-between mb-3 px-1">
             <div className="flex items-center gap-2 overflow-hidden">
-              <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center font-bold text-xs shrink-0 text-white">
+              <div className="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center font-bold text-xs shrink-0 text-white">
                 {currentUser.fullName.charAt(0)}
               </div>
               <div className="overflow-hidden">
                 <span className="font-bold text-xs text-white block truncate">{currentUser.fullName}</span>
-                <span className="text-[10px] text-blue-300 font-medium block">{currentUser.role}</span>
+                <span className="text-[10px] text-purple-300 font-medium block">{currentUser.role}</span>
               </div>
             </div>
             <button
               onClick={handleLogout}
               title="Sign Out"
-              className="p-1.5 text-slate-400 hover:text-white hover:bg-blue-900/60 rounded-lg transition-colors cursor-pointer"
+              className="p-1.5 text-slate-400 hover:text-white hover:bg-purple-900/60 rounded-lg transition-colors cursor-pointer"
             >
               <LogOut className="w-4 h-4" />
             </button>
           </div>
 
-          <div className="flex items-center justify-between text-[11px] text-slate-400 px-1 pt-2 border-t border-blue-900/30">
+          <div className="flex items-center justify-between text-[11px] text-slate-400 px-1 pt-2 border-t border-purple-900/30">
             <div className="flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
               API: Online (Port 5000)
@@ -1011,7 +1011,7 @@ export default function App() {
                 setCurrentUser(null);
                 notify('Switched to Public Landing Page preview.');
               }}
-              className="ml-2 hidden md:flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold text-slate-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg border border-slate-200 transition-colors cursor-pointer"
+              className="ml-2 hidden md:flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold text-slate-600 hover:text-purple-600 hover:bg-purple-50 rounded-lg border border-slate-200 transition-colors cursor-pointer"
               title="View Public Landing Page"
             >
               <span>Landing Page</span>
@@ -1032,7 +1032,7 @@ export default function App() {
               <button
                 onClick={() => handleSystemReset('benchmark')}
                 title="Load the standard 15-step verified benchmark scenario"
-                className="px-2 py-1 rounded text-blue-900 hover:bg-white font-bold transition-all cursor-pointer text-[11px]"
+                className="px-2 py-1 rounded text-purple-900 hover:bg-white font-bold transition-all cursor-pointer text-[11px]"
               >
                 Load Demo
               </button>
@@ -1056,14 +1056,14 @@ export default function App() {
               </button>
               <button
                 onClick={() => setShowOrderModal(true)}
-                className="flex items-center gap-1.5 bg-blue-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-blue-700 shadow-sm cursor-pointer"
+                className="flex items-center gap-1.5 bg-purple-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-purple-700 shadow-sm cursor-pointer"
               >
                 <Plus className="w-3.5 h-3.5" />
                 Sales Order
               </button>
               <button
                 onClick={() => setShowBatchModal(true)}
-                className="flex items-center gap-1.5 bg-[#172554] text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-blue-900 shadow-sm cursor-pointer"
+                className="flex items-center gap-1.5 bg-[#1E103A] text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-purple-900 shadow-sm cursor-pointer"
               >
                 <Factory className="w-3.5 h-3.5" />
                 Run Batch
@@ -1075,14 +1075,14 @@ export default function App() {
 
             {/* Logged-In User Profile & Prominent Logout Button */}
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-blue-700 text-white font-black text-xs flex items-center justify-center shadow-sm shrink-0">
+              <div className="w-8 h-8 rounded-full bg-purple-700 text-white font-black text-xs flex items-center justify-center shadow-sm shrink-0">
                 {currentUser.fullName.charAt(0)}
               </div>
               <div className="hidden lg:block text-left">
                 <span className="text-xs font-bold text-slate-900 block leading-tight truncate max-w-[120px]">
                   {currentUser.fullName}
                 </span>
-                <span className="text-[10px] text-blue-600 font-bold uppercase tracking-wider block">
+                <span className="text-[10px] text-purple-600 font-bold uppercase tracking-wider block">
                   {currentUser.role.replace(/_/g, ' ')}
                 </span>
               </div>
@@ -1109,7 +1109,7 @@ export default function App() {
                   <p className="text-sm text-slate-500">Live operational indicators connected to backend REST endpoints and stock ledger.</p>
                 </div>
                 <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 bg-white px-3 py-1.5 rounded-lg border border-slate-200">
-                  <Calendar className="w-4 h-4 text-blue-600" />
+                  <Calendar className="w-4 h-4 text-purple-600" />
                   <span>Tamil Nadu Manufacturing Facility | FY 2026-27</span>
                 </div>
               </div>
@@ -1119,7 +1119,7 @@ export default function App() {
                 <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
                   <div className="flex items-center justify-between text-slate-500 mb-2">
                     <span className="text-xs font-bold uppercase tracking-wider">Raw Material Valuation</span>
-                    <Package className="w-4 h-4 text-blue-600" />
+                    <Package className="w-4 h-4 text-purple-600" />
                   </div>
                   <div className="text-2xl font-black text-slate-900 font-mono">
                     ₹{materials.reduce((acc, m) => acc + (m.currentStock * m.currentWeightedRate), 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
@@ -1175,7 +1175,7 @@ export default function App() {
                 <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="font-bold text-slate-900 text-sm">Recent Commercial Orders</h3>
-                    <button onClick={() => setActiveTab('invoicing')} className="text-xs text-blue-600 font-bold hover:underline">
+                    <button onClick={() => setActiveTab('invoicing')} className="text-xs text-purple-600 font-bold hover:underline">
                       View All
                     </button>
                   </div>
@@ -1188,13 +1188,13 @@ export default function App() {
                       salesOrders.slice(0, 3).map((o) => (
                         <div key={o.id} className="p-3 bg-slate-50 rounded-lg border border-slate-200 flex items-center justify-between text-xs">
                           <div>
-                            <span className="font-bold text-blue-900">{o.orderNumber}</span>
+                            <span className="font-bold text-purple-900">{o.orderNumber}</span>
                             <span className="text-slate-500 block">{o.customerName}</span>
                           </div>
                           <div className="text-right">
                             <span className="font-mono font-bold text-slate-900">{o.orderedQty} pkts</span>
                             <span className={`block font-bold text-[10px] ${
-                              o.status === 'SHORTAGE_EXCEPTION' ? 'text-amber-700' : o.status === 'DISPATCHED' ? 'text-green-700' : 'text-blue-700'
+                              o.status === 'SHORTAGE_EXCEPTION' ? 'text-amber-700' : o.status === 'DISPATCHED' ? 'text-green-700' : 'text-purple-700'
                             }`}>
                               {o.status}
                             </span>
@@ -1209,7 +1209,7 @@ export default function App() {
                 <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="font-bold text-slate-900 text-sm">Warehouse Stock Balances</h3>
-                    <button onClick={() => setActiveTab('materials')} className="text-xs text-blue-600 font-bold hover:underline">
+                    <button onClick={() => setActiveTab('materials')} className="text-xs text-purple-600 font-bold hover:underline">
                       Manage Stock
                     </button>
                   </div>
@@ -1239,7 +1239,7 @@ export default function App() {
                 </div>
                 <button
                   onClick={() => setShowOrderModal(true)}
-                  className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-blue-700 shadow-sm"
+                  className="flex items-center gap-2 bg-purple-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-purple-700 shadow-sm"
                 >
                   <Plus className="w-4 h-4" />
                   Create Sales Order
@@ -1273,7 +1273,7 @@ export default function App() {
                     ) : (
                       salesOrders.map((o) => (
                         <tr key={o.id} className="hover:bg-slate-50">
-                          <td className="p-3.5 font-bold text-blue-900">{o.orderNumber}</td>
+                          <td className="p-3.5 font-bold text-purple-900">{o.orderNumber}</td>
                           <td className="p-3.5 font-sans font-medium text-slate-800">{o.customerName}</td>
                           <td className="p-3.5 text-right font-bold">{o.orderedQty} pkts</td>
                           <td className="p-3.5 text-right font-bold text-slate-900">₹{o.totalOrderValue.toFixed(2)}</td>
@@ -1283,7 +1283,7 @@ export default function App() {
                                 ? 'bg-amber-100 text-amber-800 border border-amber-300'
                                 : o.status === 'DISPATCHED'
                                 ? 'bg-green-100 text-green-800 border border-green-300'
-                                : 'bg-blue-100 text-blue-800 border border-blue-300'
+                                : 'bg-purple-100 text-purple-800 border border-purple-300'
                             }`}>
                               {o.status === 'SHORTAGE_EXCEPTION' ? `SHORTAGE (Deficit: ${o.shortageQty} pkts)` : o.status}
                             </span>
@@ -1526,11 +1526,11 @@ export default function App() {
                       const isLowStock = m.currentStock <= m.minReorderQty;
                       return (
                         <tr key={m.id} className="hover:bg-slate-50">
-                          <td className="p-3.5 font-bold text-blue-900">{m.code}</td>
+                          <td className="p-3.5 font-bold text-purple-900">{m.code}</td>
                           <td className="p-3.5 font-sans font-semibold text-slate-900">{m.name}</td>
                           <td className="p-3.5 font-sans">
                             <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                              m.category === 'RAW' ? 'bg-amber-100 text-amber-800' : 'bg-blue-100 text-blue-800'
+                              m.category === 'RAW' ? 'bg-amber-100 text-amber-800' : 'bg-purple-100 text-purple-800'
                             }`}>
                               {m.category}
                             </span>
@@ -1587,7 +1587,7 @@ export default function App() {
                   <tbody className="divide-y divide-slate-100">
                     {stockLedger.map((row) => (
                       <tr key={row.id} className="hover:bg-slate-50">
-                        <td className="p-3.5 font-bold text-blue-600">{row.transactionRef}</td>
+                        <td className="p-3.5 font-bold text-purple-600">{row.transactionRef}</td>
                         <td className="p-3.5 font-sans font-medium text-slate-900">{row.itemName}</td>
                         <td className="p-3.5 font-sans">
                           <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
@@ -1632,7 +1632,7 @@ export default function App() {
               <div className="space-y-3">
                 {benchmarkSteps.map((step) => (
                   <div key={step.id} className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-start gap-4">
-                    <div className="w-8 h-8 rounded-full bg-blue-50 text-blue-900 font-bold flex items-center justify-center shrink-0 text-xs">
+                    <div className="w-8 h-8 rounded-full bg-purple-50 text-purple-900 font-bold flex items-center justify-center shrink-0 text-xs">
                       #{step.id}
                     </div>
                     <div className="flex-1">
@@ -1665,29 +1665,29 @@ export default function App() {
               </div>
 
               <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                <div className="relative pl-6 space-y-8 before:absolute before:left-2.5 before:top-3 before:bottom-3 before:w-0.5 before:bg-blue-200">
+                <div className="relative pl-6 space-y-8 before:absolute before:left-2.5 before:top-3 before:bottom-3 before:w-0.5 before:bg-purple-200">
                   <div className="relative">
-                    <div className="absolute -left-6 top-1 w-5 h-5 rounded-full bg-blue-600 border-4 border-white shadow"></div>
+                    <div className="absolute -left-6 top-1 w-5 h-5 rounded-full bg-purple-600 border-4 border-white shadow"></div>
                     <div className="bg-slate-50 p-4 rounded-lg border border-slate-200 text-xs">
-                      <span className="font-bold text-blue-600 uppercase tracking-wider block">1. Raw Material Supplier Receipt (GRN)</span>
+                      <span className="font-bold text-purple-600 uppercase tracking-wider block">1. Raw Material Supplier Receipt (GRN)</span>
                       <p className="font-semibold text-slate-900 mt-1">Cauvery Agro Mills $\rightarrow$ 60 kg Flour received @ ₹45/kg (PO-2026-001)</p>
                       <p className="text-slate-500 mt-1 font-mono">Lot #FL-202611-01 | Weighted rate updated from ₹42.00 to ₹43.1250 / kg</p>
                     </div>
                   </div>
 
                   <div className="relative">
-                    <div className="absolute -left-6 top-1 w-5 h-5 rounded-full bg-blue-600 border-4 border-white shadow"></div>
+                    <div className="absolute -left-6 top-1 w-5 h-5 rounded-full bg-purple-600 border-4 border-white shadow"></div>
                     <div className="bg-slate-50 p-4 rounded-lg border border-slate-200 text-xs">
-                      <span className="font-bold text-blue-600 uppercase tracking-wider block">2. Production Execution & Quality Check</span>
+                      <span className="font-bold text-purple-600 uppercase tracking-wider block">2. Production Execution & Quality Check</span>
                       <p className="font-semibold text-slate-900 mt-1">Batch #BAT-MK-001 $\rightarrow$ 40kg Flour + 10.5L Oil consumed</p>
                       <p className="text-slate-500 mt-1 font-mono">188 good packets Murukku 200g credited to warehouse | 6 damaged pouches scrapped</p>
                     </div>
                   </div>
 
                   <div className="relative">
-                    <div className="absolute -left-6 top-1 w-5 h-5 rounded-full bg-blue-600 border-4 border-white shadow"></div>
+                    <div className="absolute -left-6 top-1 w-5 h-5 rounded-full bg-purple-600 border-4 border-white shadow"></div>
                     <div className="bg-slate-50 p-4 rounded-lg border border-slate-200 text-xs">
-                      <span className="font-bold text-blue-600 uppercase tracking-wider block">3. Commercial Order & Statutory Billing</span>
+                      <span className="font-bold text-purple-600 uppercase tracking-wider block">3. Commercial Order & Statutory Billing</span>
                       <p className="font-semibold text-slate-900 mt-1">Order #SO-001 $\rightarrow$ Tax Invoice #INV/2026-27/0001 (150 packets)</p>
                       <p className="text-slate-500 mt-1 font-mono">Taxable ₹7,500.00 + CGST ₹187.50 + SGST ₹187.50 = ₹7,875.00</p>
                     </div>
@@ -1727,7 +1727,7 @@ export default function App() {
                   value={newCustomer}
                   onChange={(e) => setNewCustomer(e.target.value)}
                   placeholder="e.g. Cauvery Wholesale Confectioneries Pvt Ltd"
-                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-purple-600 focus:outline-none"
                   required
                 />
               </div>
@@ -1755,7 +1755,7 @@ export default function App() {
                   value={newOrderQty}
                   onChange={(e) => setNewOrderQty(e.target.value)}
                   placeholder="e.g. 150"
-                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm font-mono focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm font-mono focus:ring-2 focus:ring-purple-600 focus:outline-none"
                   min="1"
                   required
                 />
@@ -1783,7 +1783,7 @@ export default function App() {
                 </div>
               )}
 
-              <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg text-xs font-mono space-y-1">
+              <div className="p-3 bg-purple-50 border border-purple-200 rounded-lg text-xs font-mono space-y-1">
                 <div className="flex justify-between text-slate-600">
                   <span>Taxable Value:</span>
                   <span>₹{((Number(newOrderQty) || 0) * (Number(newOrderPrice) || 50)).toFixed(2)}</span>
@@ -1792,7 +1792,7 @@ export default function App() {
                   <span>GST 5% (CGST 2.5% + SGST 2.5%):</span>
                   <span>₹{((Number(newOrderQty) || 0) * (Number(newOrderPrice) || 50) * 0.05).toFixed(2)}</span>
                 </div>
-                <div className="flex justify-between font-bold text-blue-950 pt-1 border-t border-blue-200 text-sm">
+                <div className="flex justify-between font-bold text-purple-950 pt-1 border-t border-purple-200 text-sm">
                   <span>Total Order Value:</span>
                   <span>₹{((Number(newOrderQty) || 0) * (Number(newOrderPrice) || 50) * 1.05).toFixed(2)}</span>
                 </div>
@@ -1800,7 +1800,7 @@ export default function App() {
 
               <button
                 type="submit"
-                className="w-full bg-blue-600 text-white font-bold py-2.5 rounded-lg text-sm hover:bg-blue-700 shadow"
+                className="w-full bg-purple-600 text-white font-bold py-2.5 rounded-lg text-sm hover:bg-purple-700 shadow"
               >
                 Submit Sales Order
               </button>

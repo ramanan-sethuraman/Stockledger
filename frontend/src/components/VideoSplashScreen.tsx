@@ -43,7 +43,7 @@ export const VideoSplashScreen: React.FC<VideoSplashScreenProps> = ({ onComplete
       }`}
     >
       {/* Ambient background glow */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-blue-900/20 via-sky-500/10 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-tr from-purple-900/30 via-violet-600/15 to-transparent pointer-events-none" />
 
       {/* Skip Button in Top Right */}
       <button
@@ -55,12 +55,12 @@ export const VideoSplashScreen: React.FC<VideoSplashScreenProps> = ({ onComplete
         title="Skip intro"
       >
         <span>Skip</span>
-        <ArrowRight className="w-3.5 h-3.5 text-sky-400 group-hover:translate-x-0.5 transition-transform" />
+        <ArrowRight className="w-3.5 h-3.5 text-purple-400 group-hover:translate-x-0.5 transition-transform" />
       </button>
 
       {/* Centered Video Container */}
       <div className="relative z-10 w-full max-w-xl px-4 flex flex-col items-center">
-        <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-sky-950/50 border border-sky-500/20 bg-black">
+        <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-purple-950/50 border border-purple-500/30 bg-black">
           <video
             ref={videoRef}
             src="/SL_Logo.mp4"
@@ -74,11 +74,11 @@ export const VideoSplashScreen: React.FC<VideoSplashScreenProps> = ({ onComplete
 
         {/* Brand Caption & Status */}
         <div className="mt-6 text-center space-y-1.5">
-          <p className="text-xs uppercase tracking-widest text-sky-400 font-extrabold">
+          <p className="text-xs uppercase tracking-widest text-purple-400 font-extrabold">
             Stockledger Enterprise ERP
           </p>
           <p className="text-[11px] text-slate-400 font-medium flex items-center justify-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-ping" />
+            <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-ping" />
             Initializing Production & Stock Ledger Modules...
           </p>
         </div>
