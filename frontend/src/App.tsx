@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Logo } from './components/Logo.js';
 import { LandingPage } from './components/LandingPage.js';
+import { VideoSplashScreen } from './components/VideoSplashScreen.js';
 import {
   Layers,
   Package,
@@ -147,6 +148,7 @@ export default function App() {
   });
 
   const [authMode, setAuthMode] = useState<'LOGIN' | 'REGISTER'>('LOGIN');
+  const [showIntroSplash, setShowIntroSplash] = useState(true);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
@@ -574,6 +576,9 @@ export default function App() {
   if (!currentUser) {
     return (
       <div className="relative min-h-screen">
+        {showIntroSplash && (
+          <VideoSplashScreen onComplete={() => setShowIntroSplash(false)} />
+        )}
         <LandingPage
           onOpenAuth={(mode) => {
             setAuthMode(mode || 'LOGIN');
@@ -823,6 +828,9 @@ export default function App() {
   // ==============================================================
   return (
     <div className="flex h-screen bg-[#F8FAFC] overflow-hidden text-slate-800 relative select-none">
+      {showIntroSplash && (
+        <VideoSplashScreen onComplete={() => setShowIntroSplash(false)} />
+      )}
       {/* Backdrop Overlay when Sidebar is open */}
       {isSidebarOpen && (
         <div
