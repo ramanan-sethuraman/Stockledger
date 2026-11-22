@@ -25,7 +25,8 @@ import {
   ShieldCheck,
   Building2,
   FileCheck2,
-  AlertCircle
+  AlertCircle,
+  Menu
 } from 'lucide-react';
 
 interface AuthUser {
@@ -150,8 +151,36 @@ export default function App() {
   const [authError, setAuthError] = useState('');
   const [authLoading, setAuthLoading] = useState(false);
 
-  // Navigation State
+  // Navigation & Swipe Drawer State
   const [activeTab, setActiveTab] = useState<'dashboard' | 'materials' | 'production' | 'invoicing' | 'ledger' | 'benchmark' | 'audit'>('dashboard');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  const [touchStartY, setTouchStartY] = useState<number | null>(null);
+
+  // Touch Swipe Gesture Recognition (Swipe Right to Open, Swipe Left to Close)
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.targetTouches[0].clientX);
+    setTouchStartY(e.targetTouches[0].clientY);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null || touchStartY === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const touchEndY = e.changedTouches[0].clientY;
+    const deltaX = touchEndX - touchStartX;
+    const deltaY = touchEndY - touchStartY;
+
+    // Detect horizontal swipe gesture
+    if (Math.abs(deltaX) > Math.abs(deltaY) * 1.2) {
+      if (deltaX > 45 && !isSidebarOpen) {
+        setIsSidebarOpen(true);
+      } else if (deltaX < -45 && isSidebarOpen) {
+        setIsSidebarOpen(false);
+      }
+    }
+    setTouchStartX(null);
+    setTouchStartY(null);
+  };
 
   // ERP Domain Data States (Live from Backend)
   const [materials, setMaterials] = useState<MaterialItem[]>([]);
@@ -725,7 +754,11 @@ export default function App() {
   // VIEW: LOGGED-IN ENTERPRISE APPLICATION
   // ==============================================================
   return (
-    <div className="flex h-screen bg-[#F8FAFC] overflow-hidden text-slate-800">
+    <div
+      className="flex h-screen bg-[#F8FAFC] overflow-hidden text-slate-800 relative select-none"
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
       {/* Toast Notification Bar */}
       {notification && (
         <div className="fixed top-4 right-4 z-50 bg-[#172554] text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 border border-blue-400/30 text-xs font-semibold animate-bounce">
@@ -734,19 +767,58 @@ export default function App() {
         </div>
       )}
 
-      {/* ----------------- LEFT SIDEBAR ----------------- */}
-      <aside className="w-64 bg-[#172554] text-white flex flex-col justify-between shrink-0 shadow-xl">
+      {/* Floating Left Edge Touch / Swipe Pill Handle */}
+      {!isSidebarOpen && (
+        <button
+          onClick={() => setIsSidebarOpen(true)}
+          className="fixed left-0 top-1/2 -translate-y-1/2 z-30 bg-[#172554] text-white py-3 px-2 rounded-r-2xl shadow-2xl border-y border-r border-blue-400/40 flex flex-col items-center gap-1.5 hover:bg-blue-800 transition-all hover:pl-3 group cursor-pointer"
+          title="Touch or Swipe Right to open navigation drawer"
+        >
+          <Menu className="w-5 h-5 text-sky-400 group-hover:scale-110 transition-transform" />
+          <span className="[writing-mode:vertical-lr] text-[9px] font-black tracking-widest uppercase text-blue-200">
+            SWIPE
+          </span>
+        </button>
+      )}
+
+      {/* Backdrop Overlay when Sidebar is open */}
+      {isSidebarOpen && (
+        <div
+          onClick={() => setIsSidebarOpen(false)}
+          className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-40 transition-opacity duration-300"
+        />
+      )}
+
+      {/* ----------------- LEFT SIDEBAR (SWIPE & TOUCH DRAWER) ----------------- */}
+      <aside
+        className={`fixed top-0 bottom-0 left-0 w-72 bg-[#172554] text-white flex flex-col justify-between z-50 shadow-2xl transition-transform duration-300 ease-in-out ${
+          isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
         <div>
-          {/* Brand Identity */}
+          {/* Brand Identity & Close Button */}
           <div className="p-4 border-b border-blue-900/50 flex items-center justify-between">
             <Logo variant="horizontal" size="md" theme="dark" showTagline={false} />
+            <button
+              onClick={() => setIsSidebarOpen(false)}
+              className="p-1.5 text-slate-400 hover:text-white hover:bg-blue-900/60 rounded-lg transition-colors cursor-pointer"
+              title="Close Navigation Drawer (or swipe left)"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Touch Gesture Instruction Indicator */}
+          <div className="px-4 py-2 bg-blue-950/40 border-b border-blue-900/30 text-[10px] text-blue-300 flex items-center justify-between">
+            <span>👈 Swipe left or tap outside to close</span>
+            <span className="font-mono text-sky-400 font-bold">TOUCH ENABLED</span>
           </div>
 
           {/* Navigation Links */}
           <nav className="p-3 space-y-1">
             <button
-              onClick={() => setActiveTab('dashboard')}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
+              onClick={() => { setActiveTab('dashboard'); setIsSidebarOpen(false); }}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all cursor-pointer ${
                 activeTab === 'dashboard' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-300 hover:bg-blue-900/40 hover:text-white'
               }`}
             >
@@ -755,8 +827,8 @@ export default function App() {
             </button>
 
             <button
-              onClick={() => setActiveTab('invoicing')}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
+              onClick={() => { setActiveTab('invoicing'); setIsSidebarOpen(false); }}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all cursor-pointer ${
                 activeTab === 'invoicing' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-300 hover:bg-blue-900/40 hover:text-white'
               }`}
             >
@@ -770,8 +842,8 @@ export default function App() {
             </button>
 
             <button
-              onClick={() => setActiveTab('production')}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
+              onClick={() => { setActiveTab('production'); setIsSidebarOpen(false); }}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all cursor-pointer ${
                 activeTab === 'production' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-300 hover:bg-blue-900/40 hover:text-white'
               }`}
             >
@@ -785,8 +857,8 @@ export default function App() {
             </button>
 
             <button
-              onClick={() => setActiveTab('materials')}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
+              onClick={() => { setActiveTab('materials'); setIsSidebarOpen(false); }}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all cursor-pointer ${
                 activeTab === 'materials' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-300 hover:bg-blue-900/40 hover:text-white'
               }`}
             >
@@ -795,8 +867,8 @@ export default function App() {
             </button>
 
             <button
-              onClick={() => setActiveTab('ledger')}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
+              onClick={() => { setActiveTab('ledger'); setIsSidebarOpen(false); }}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all cursor-pointer ${
                 activeTab === 'ledger' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-300 hover:bg-blue-900/40 hover:text-white'
               }`}
             >
@@ -808,8 +880,8 @@ export default function App() {
             </button>
 
             <button
-              onClick={() => setActiveTab('benchmark')}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
+              onClick={() => { setActiveTab('benchmark'); setIsSidebarOpen(false); }}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all cursor-pointer ${
                 activeTab === 'benchmark' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-300 hover:bg-blue-900/40 hover:text-white'
               }`}
             >
@@ -819,8 +891,8 @@ export default function App() {
             </button>
 
             <button
-              onClick={() => setActiveTab('audit')}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
+              onClick={() => { setActiveTab('audit'); setIsSidebarOpen(false); }}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all cursor-pointer ${
                 activeTab === 'audit' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-300 hover:bg-blue-900/40 hover:text-white'
               }`}
             >
@@ -845,7 +917,7 @@ export default function App() {
             <button
               onClick={() => setCurrentUser(null)}
               title="Sign Out"
-              className="p-1.5 text-slate-400 hover:text-white hover:bg-blue-900/60 rounded-lg transition-colors"
+              className="p-1.5 text-slate-400 hover:text-white hover:bg-blue-900/60 rounded-lg transition-colors cursor-pointer"
             >
               <LogOut className="w-4 h-4" />
             </button>
@@ -859,7 +931,7 @@ export default function App() {
             <button
               onClick={fetchAllData}
               title="Refresh all data from backend"
-              className="hover:text-white text-slate-400"
+              className="hover:text-white text-slate-400 cursor-pointer"
             >
               <RefreshCw className={`w-3.5 h-3.5 ${isLoadingData ? 'animate-spin' : ''}`} />
             </button>
@@ -868,12 +940,19 @@ export default function App() {
       </aside>
 
       {/* ----------------- MAIN VIEW CONTAINER ----------------- */}
-      <div className="flex-1 flex flex-col overflow-y-auto">
-        {/* Top Header */}
-        <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-8 sticky top-0 z-10">
+      <div className="flex-1 flex flex-col overflow-y-auto w-full">
+        {/* Top Header with Hamburger Touch Button */}
+        <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 sticky top-0 z-10">
           <div className="flex items-center gap-3 text-sm">
-            <span className="font-semibold text-slate-500">Stockledger</span>
-            <ChevronRight className="w-4 h-4 text-slate-400" />
+            <button
+              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+              className="p-2 rounded-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900 border border-slate-200 transition-colors flex items-center justify-center shrink-0 cursor-pointer shadow-sm"
+              title="Touch or Swipe to open navigation drawer"
+            >
+              <Menu className="w-5 h-5 text-slate-800" />
+            </button>
+            <span className="font-semibold text-slate-500 hidden sm:inline">Stockledger</span>
+            <ChevronRight className="w-4 h-4 text-slate-400 hidden sm:inline" />
             <span className="font-bold text-slate-900 capitalize">{activeTab}</span>
           </div>
 
