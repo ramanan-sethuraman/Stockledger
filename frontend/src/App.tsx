@@ -950,6 +950,22 @@ export default function App() {
               <ShieldCheck className="w-4 h-4" />
               Traceability & Audit
             </button>
+
+            {/* Public Portal Quick Link in Sidebar */}
+            <div className="pt-2 border-t border-purple-900/30 mt-2">
+              <button
+                onClick={() => {
+                  setCurrentUser(null);
+                  setIsSidebarOpen(false);
+                  notify('Switched to Public Landing Page preview.');
+                }}
+                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-semibold text-purple-300 hover:text-white hover:bg-purple-900/40 transition-all cursor-pointer"
+                title="Preview public landing page"
+              >
+                <ArrowRight className="w-4 h-4 text-purple-400 shrink-0" />
+                <span>Public Landing Page</span>
+              </button>
+            </div>
           </nav>
         </div>
 
@@ -993,54 +1009,58 @@ export default function App() {
       {/* ----------------- MAIN VIEW CONTAINER ----------------- */}
       <div className="flex-1 flex flex-col overflow-y-auto w-full bg-[#F8FAFC] dark:bg-[#0A0614] text-slate-800 dark:text-slate-100 transition-colors duration-200">
         {/* Top Header with Hamburger Menu Button & User Controls */}
-        <header className="h-16 bg-white dark:bg-[#120B22] border-b border-slate-200 dark:border-purple-900/40 flex items-center justify-between px-4 sm:px-6 sticky top-0 z-10 shadow-sm transition-colors duration-200">
-          <div className="flex items-center gap-2 sm:gap-3 text-sm">
+        <header className="h-16 bg-white dark:bg-[#120B22] border-b border-slate-200 dark:border-purple-900/40 flex items-center justify-between px-4 sm:px-6 sticky top-0 z-10 shadow-sm transition-colors duration-200 gap-4">
+          {/* Left: Hamburger & Breadcrumbs */}
+          <div className="flex items-center gap-2 sm:gap-3 text-sm min-w-0 shrink-0">
             <button
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className="p-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-purple-900/40 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-purple-800 transition-colors flex items-center justify-center shrink-0 cursor-pointer shadow-sm"
+              className="h-9 w-9 p-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-purple-900/40 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-purple-800 transition-colors flex items-center justify-center shrink-0 cursor-pointer shadow-sm"
               title="Toggle navigation menu"
             >
               <Menu className="w-5 h-5 text-slate-800 dark:text-slate-200" />
             </button>
-            <span className="font-semibold text-slate-500 dark:text-slate-400 hidden sm:inline">Stockledger</span>
-            <ChevronRight className="w-4 h-4 text-slate-400 dark:text-slate-500 hidden sm:inline" />
-            <span className="font-bold text-slate-900 dark:text-white capitalize">{activeTab}</span>
+            <div className="flex items-center gap-1.5 font-bold text-slate-900 dark:text-white truncate">
+              <span className="font-semibold text-slate-500 dark:text-slate-400 hidden sm:inline shrink-0">Stockledger</span>
+              <ChevronRight className="w-4 h-4 text-slate-400 dark:text-slate-500 hidden sm:inline shrink-0" />
+              <span className="capitalize truncate">{activeTab}</span>
+            </div>
+          </div>
 
+          {/* Right: Controls Toolbar */}
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             {/* Quick button to view Landing Page */}
             <button
               onClick={() => {
                 setCurrentUser(null);
                 notify('Switched to Public Landing Page preview.');
               }}
-              className="ml-2 hidden md:flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-950/60 rounded-lg border border-slate-200 dark:border-purple-800 transition-colors cursor-pointer"
+              className="h-9 px-3 hidden md:inline-flex items-center gap-1.5 text-xs font-semibold whitespace-nowrap shrink-0 text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-300 bg-slate-100 dark:bg-[#1A122E] hover:bg-white dark:hover:bg-purple-900/60 rounded-lg border border-slate-200 dark:border-purple-900/50 shadow-sm transition-all cursor-pointer"
               title="View Public Landing Page"
             >
+              <ArrowRight className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400 shrink-0" />
               <span>Landing Page</span>
-              <ArrowRight className="w-3 h-3" />
             </button>
-          </div>
 
-          <div className="flex items-center gap-2 sm:gap-3">
             {/* System State Controller Dropdown */}
-            <div className="flex items-center bg-slate-100 dark:bg-purple-950/60 rounded-lg p-1 border border-slate-200 dark:border-purple-900/40 text-xs">
+            <div className="h-9 flex items-center bg-slate-100 dark:bg-[#1A122E] rounded-lg p-1 border border-slate-200 dark:border-purple-900/50 text-xs shrink-0 shadow-sm gap-0.5">
               <button
                 onClick={() => handleSystemReset('opening')}
                 title="Reset warehouse to opening stock (100kg Flour, 30L Oil, 50 pkts FG) and 0 orders"
-                className="px-2 py-1 rounded text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-purple-900/60 font-semibold transition-all cursor-pointer text-[11px]"
+                className="h-7 px-2.5 flex items-center rounded-md text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-purple-900/60 hover:text-slate-900 dark:hover:text-white font-semibold transition-all cursor-pointer text-[11px] whitespace-nowrap shrink-0"
               >
                 Reset Opening
               </button>
               <button
                 onClick={() => handleSystemReset('benchmark')}
                 title="Load the standard 15-step verified benchmark scenario"
-                className="px-2 py-1 rounded text-purple-900 dark:text-purple-300 hover:bg-white dark:hover:bg-purple-900/60 font-bold transition-all cursor-pointer text-[11px]"
+                className="h-7 px-2.5 flex items-center rounded-md text-purple-700 dark:text-purple-300 hover:bg-white dark:hover:bg-purple-900/60 hover:text-purple-900 dark:hover:text-purple-200 font-bold transition-all cursor-pointer text-[11px] whitespace-nowrap shrink-0"
               >
                 Load Demo
               </button>
               <button
                 onClick={() => handleSystemReset('blank')}
                 title="Wipe state to 0 for custom input (for new users starting fresh)"
-                className="px-2 py-1 rounded text-slate-500 dark:text-slate-400 hover:bg-white dark:hover:bg-purple-900/60 font-semibold transition-all cursor-pointer text-[11px]"
+                className="h-7 px-2.5 flex items-center rounded-md text-slate-500 dark:text-slate-400 hover:bg-white dark:hover:bg-purple-900/60 hover:text-slate-700 dark:hover:text-slate-200 font-semibold transition-all cursor-pointer text-[11px] whitespace-nowrap shrink-0"
               >
                 Clean Slate
               </button>
