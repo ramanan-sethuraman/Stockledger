@@ -78,8 +78,7 @@ export const VideoSplashScreen: React.FC<VideoSplashScreenProps> = ({ onComplete
           <p className="text-xs uppercase tracking-widest text-purple-700 font-extrabold">
             Stockledger Enterprise ERP
           </p>
-          <p className="text-xs text-slate-600 font-medium flex items-center justify-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-purple-600 animate-pulse" />
+          <p className="text-xs text-slate-600 font-medium text-center">
             Initializing Production & Stock Ledger Modules...
           </p>
           <div className="w-48 h-1 bg-purple-100 rounded-full mx-auto overflow-hidden mt-3">
