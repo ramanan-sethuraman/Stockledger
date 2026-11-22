@@ -177,7 +177,6 @@ export default function App() {
   const [batches, setBatches] = useState<ProductionBatch[]>([]);
   const [stockLedger, setStockLedger] = useState<StockLedgerEntry[]>([]);
   const [isLoadingData, setIsLoadingData] = useState(false);
-  const [notification, setNotification] = useState<string | null>(null);
 
   // Modals visibility
   const [showOrderModal, setShowOrderModal] = useState(false);
@@ -213,11 +212,8 @@ export default function App() {
   const [paymentAmountInput, setPaymentAmountInput] = useState('');
   const [paymentMode, setPaymentMode] = useState('NEFT / RTGS Bank Transfer');
 
-  // Show Toast Notification
-  const notify = (msg: string) => {
-    setNotification(msg);
-    setTimeout(() => setNotification(null), 5000);
-  };
+  // Silent Notification (Toast popups disabled per user preference)
+  const notify = (_msg?: string) => {};
 
   // Persist User Session
   useEffect(() => {
@@ -589,14 +585,6 @@ export default function App() {
           }}
         />
 
-        {/* Global Toast Notification */}
-        {notification && (
-          <div className="fixed top-4 right-4 z-50 bg-[#172554] text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 border border-blue-400/30 text-xs font-semibold animate-bounce">
-            <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />
-            <span>{notification}</span>
-          </div>
-        )}
-
         {/* Interactive Auth Modal Dialog */}
         {showAuthModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fadeIn">
@@ -835,14 +823,6 @@ export default function App() {
   // ==============================================================
   return (
     <div className="flex h-screen bg-[#F8FAFC] overflow-hidden text-slate-800 relative select-none">
-      {/* Toast Notification Bar */}
-      {notification && (
-        <div className="fixed top-4 right-4 z-50 bg-[#172554] text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 border border-blue-400/30 text-xs font-semibold animate-bounce">
-          <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />
-          <span>{notification}</span>
-        </div>
-      )}
-
       {/* Backdrop Overlay when Sidebar is open */}
       {isSidebarOpen && (
         <div
