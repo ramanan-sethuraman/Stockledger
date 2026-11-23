@@ -31,7 +31,8 @@ import {
   AlertCircle,
   Menu,
   Eye,
-  EyeOff
+  EyeOff,
+  Download
 } from 'lucide-react';
 
 interface AuthUser {
@@ -1342,9 +1343,20 @@ export default function App() {
 
               {/* Invoices & Payments Table */}
               <div className="bg-white dark:bg-[#150F24] rounded-xl border border-slate-200 dark:border-purple-900/40 shadow-sm overflow-hidden mt-6 transition-colors">
-                <div className="p-4 bg-slate-50 dark:bg-[#1A122E] border-b border-slate-200 dark:border-purple-900/40 font-bold text-xs text-slate-700 dark:text-slate-300 uppercase tracking-wider flex justify-between items-center">
+                <div className="p-4 bg-slate-50 dark:bg-[#1A122E] border-b border-slate-200 dark:border-purple-900/40 font-bold text-xs text-slate-700 dark:text-slate-300 uppercase tracking-wider flex justify-between items-center gap-2">
                   <span>GST Tax Invoices & Partial Payment Reconciliation</span>
-                  <span className="text-slate-500 dark:text-slate-400 font-mono font-normal">Total: {invoices.length} invoices</span>
+                  <div className="flex items-center gap-3">
+                    <span className="text-slate-500 dark:text-slate-400 font-mono font-normal hidden sm:inline">Total: {invoices.length} invoices</span>
+                    <a
+                      href="/api/v1/invoices/export-csv"
+                      download="stockledger_invoices.csv"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 bg-white dark:bg-purple-900/40 border border-slate-200 dark:border-purple-800 text-purple-700 dark:text-purple-300 hover:text-purple-900 dark:hover:text-white rounded text-[11px] font-bold shadow-sm transition-colors cursor-pointer"
+                      title="Export Invoices as CSV"
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                      <span>Export CSV</span>
+                    </a>
+                  </div>
                 </div>
                 <div className="overflow-x-auto scrollbar-thin">
                   <table className="w-full text-left text-xs whitespace-nowrap">
@@ -1528,13 +1540,24 @@ export default function App() {
                   <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Warehouse Raw & Packaging Materials</h2>
                   <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Live stock on hand, weighted-average valuation, inward purchases (GRN), and reorder alerts.</p>
                 </div>
-                <button
-                  onClick={() => setShowPurchaseModal(true)}
-                  className="flex items-center gap-2 bg-emerald-700 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-emerald-800 shadow-sm cursor-pointer w-fit"
-                >
-                  <Package className="w-4 h-4" />
-                  Record Inward Purchase (GRN)
-                </button>
+                <div className="flex items-center gap-2">
+                  <a
+                    href="/api/v1/materials/export-csv"
+                    download="stockledger_materials_inventory.csv"
+                    className="inline-flex items-center gap-1.5 px-3 py-2 bg-white dark:bg-[#150F24] border border-slate-200 dark:border-purple-900/40 text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-300 rounded-lg text-xs font-bold shadow-sm transition-colors cursor-pointer"
+                    title="Export Materials as CSV"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    <span>Export CSV</span>
+                  </a>
+                  <button
+                    onClick={() => setShowPurchaseModal(true)}
+                    className="flex items-center gap-2 bg-emerald-700 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-emerald-800 shadow-sm cursor-pointer w-fit"
+                  >
+                    <Package className="w-4 h-4" />
+                    Record Inward Purchase (GRN)
+                  </button>
+                </div>
               </div>
 
               {/* Materials Table */}
@@ -1599,8 +1622,19 @@ export default function App() {
                   <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Immutable Double-Entry Stock Movement Ledger</h2>
                   <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Every inventory movement requires an explicit journal entry, reference document, and running balance.</p>
                 </div>
-                <div className="text-xs font-mono text-slate-500 dark:text-slate-300 bg-white dark:bg-[#150F24] px-3 py-1.5 rounded-lg border border-slate-200 dark:border-purple-900/40 shadow-sm w-fit">
-                  Total Entries: <strong className="text-slate-900 dark:text-white">{stockLedger.length}</strong>
+                <div className="flex items-center gap-2 w-fit">
+                  <a
+                    href="/api/v1/inventory/ledger/export-csv"
+                    download="stockledger_double_entry_log.csv"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-[#150F24] border border-slate-200 dark:border-purple-900/40 text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-300 rounded-lg text-xs font-bold shadow-sm transition-colors cursor-pointer"
+                    title="Export Double-Entry Ledger as CSV"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    <span>Export CSV</span>
+                  </a>
+                  <div className="text-xs font-mono text-slate-500 dark:text-slate-300 bg-white dark:bg-[#150F24] px-3 py-1.5 rounded-lg border border-slate-200 dark:border-purple-900/40 shadow-sm">
+                    Total Entries: <strong className="text-slate-900 dark:text-white">{stockLedger.length}</strong>
+                  </div>
                 </div>
               </div>
 

@@ -19,6 +19,18 @@ materialRouter.get('/', (req: Request, res: Response) => {
   });
 });
 
+// CSV Export for Materials and Inventory Valuation
+materialRouter.get('/export-csv', (req: Request, res: Response) => {
+  const headers = 'Code,Name,Category,StockOnHand,UOM,WeightedRate,TotalValuation,MinReorderQty';
+  const rows = erpState.materials.map(m =>
+    `"${m.code}","${m.name}","${m.category}",${m.currentStock},"${m.uom}",${m.currentWeightedRate},${(m.currentStock * m.currentWeightedRate).toFixed(2)},${m.minReorderQty}`
+  );
+  const csv = [headers, ...rows].join('\n');
+  res.setHeader('Content-Type', 'text/csv');
+  res.setHeader('Content-Disposition', 'attachment; filename="stockledger_materials_inventory.csv"');
+  res.send(csv);
+});
+
 materialRouter.get('/:id', (req: Request, res: Response) => {
   const material = erpState.materials.find((m) => m.id === req.params.id || m.code === req.params.id);
   if (!material) {
