@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Logo } from './Logo.js';
 import { ThemeToggle } from './ThemeToggle.js';
 import {
@@ -12,7 +12,9 @@ import {
   Layers,
   TrendingUp,
   UserCheck,
-  ChevronRight
+  ChevronRight,
+  Menu,
+  X
 } from 'lucide-react';
 
 interface LandingPageProps {
@@ -24,11 +26,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({
   onOpenAuth,
   onQuickDemoLogin,
 }) => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-white dark:bg-[#0A0614] text-slate-900 dark:text-slate-100 font-sans selection:bg-purple-600 selection:text-white transition-colors duration-200">
       {/* ----------------- TOP NAVBAR ----------------- */}
       <header className="sticky top-0 z-50 backdrop-blur-md bg-white/95 dark:bg-[#0E091B]/95 border-b border-slate-200/80 dark:border-purple-900/40 shadow-sm transition-colors duration-200">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Logo variant="horizontal" size="md" />
           </div>
@@ -42,25 +46,79 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           </nav>
 
           {/* Controls & Auth CTA Buttons */}
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2 sm:gap-2.5">
             {/* Dark Mode Moon/Sun Toggle */}
             <ThemeToggle />
 
             <button
               onClick={() => onOpenAuth('LOGIN')}
-              className="text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white px-4 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-purple-900/40 transition-colors cursor-pointer"
+              className="text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-purple-900/40 transition-colors cursor-pointer"
             >
               Sign In
             </button>
             <button
               onClick={() => onOpenAuth('REGISTER')}
-              className="text-xs font-bold bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg shadow-md shadow-purple-600/20 transition-all flex items-center gap-1.5 cursor-pointer"
+              className="hidden sm:flex text-xs font-bold bg-purple-600 hover:bg-purple-700 text-white px-3 sm:px-4 py-2 rounded-lg shadow-md shadow-purple-600/20 transition-all items-center gap-1.5 cursor-pointer whitespace-nowrap"
             >
               Launch ERP
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
+
+            {/* Mobile Hamburger Menu Toggle Button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-purple-900/40 transition-colors cursor-pointer"
+              title="Toggle mobile menu"
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
           </div>
         </div>
+
+        {/* Mobile Navigation Dropdown Drawer */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-white dark:bg-[#120B22] border-b border-slate-200 dark:border-purple-900/40 px-5 py-4 space-y-3 shadow-xl animate-fadeIn">
+            <nav className="flex flex-col space-y-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200">
+              <a
+                href="#features"
+                onClick={() => setMobileMenuOpen(false)}
+                className="py-1.5 px-2 rounded-md hover:bg-purple-50 dark:hover:bg-purple-950/60 hover:text-purple-600 dark:hover:text-purple-300 transition-colors"
+              >
+                Core Architecture
+              </a>
+              <a
+                href="#workflow"
+                onClick={() => setMobileMenuOpen(false)}
+                className="py-1.5 px-2 rounded-md hover:bg-purple-50 dark:hover:bg-purple-950/60 hover:text-purple-600 dark:hover:text-purple-300 transition-colors"
+              >
+                Order-to-Audit Flow
+              </a>
+              <a
+                href="#personas"
+                onClick={() => setMobileMenuOpen(false)}
+                className="py-1.5 px-2 rounded-md hover:bg-purple-50 dark:hover:bg-purple-950/60 hover:text-purple-600 dark:hover:text-purple-300 transition-colors"
+              >
+                Roles & Workspaces
+              </a>
+              <a
+                href="#benchmark"
+                onClick={() => setMobileMenuOpen(false)}
+                className="py-1.5 px-2 rounded-md hover:bg-purple-50 dark:hover:bg-purple-950/60 hover:text-purple-600 dark:hover:text-purple-300 transition-colors"
+              >
+                Benchmark Proof
+              </a>
+            </nav>
+            <div className="pt-2 border-t border-slate-100 dark:border-purple-900/40 flex gap-2">
+              <button
+                onClick={() => { setMobileMenuOpen(false); onOpenAuth('REGISTER'); }}
+                className="w-full text-xs font-bold bg-purple-600 hover:bg-purple-700 text-white py-2.5 rounded-lg shadow-md transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+              >
+                Launch ERP
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        )}
       </header>
 
       {/* ----------------- HERO SECTION ----------------- */}
@@ -294,7 +352,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4 text-left">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 text-left">
             <div className="p-5 rounded-xl bg-slate-50 dark:bg-[#120B22] border border-slate-200/80 dark:border-purple-900/40 space-y-3 shadow-sm">
               <div className="text-purple-600 dark:text-purple-400 font-mono font-bold text-xs">STEP 01</div>
               <h4 className="font-bold text-slate-900 dark:text-white text-sm">Purchase GRN</h4>
@@ -476,7 +534,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono text-left">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs font-mono text-left">
               <div className="p-3.5 bg-white dark:bg-[#1A122E] rounded-xl border border-slate-200 dark:border-purple-900/40 shadow-sm">
                 <span className="text-slate-500 dark:text-slate-400 block text-[10px]">Criteria 1: Purchase 60kg Flour</span>
                 <span className="font-bold text-slate-900 dark:text-white">Stock: 160kg @ ₹43.1250/kg</span>

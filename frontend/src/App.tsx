@@ -1046,23 +1046,26 @@ export default function App() {
               <button
                 onClick={() => handleSystemReset('opening')}
                 title="Reset warehouse to opening stock (100kg Flour, 30L Oil, 50 pkts FG) and 0 orders"
-                className="h-7 px-2.5 flex items-center rounded-md text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-purple-900/60 hover:text-slate-900 dark:hover:text-white font-semibold transition-all cursor-pointer text-[11px] whitespace-nowrap shrink-0"
+                className="h-7 px-2 sm:px-2.5 flex items-center rounded-md text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-purple-900/60 hover:text-slate-900 dark:hover:text-white font-semibold transition-all cursor-pointer text-[11px] whitespace-nowrap shrink-0"
               >
-                Reset Opening
+                <span className="sm:hidden">Reset</span>
+                <span className="hidden sm:inline">Reset Opening</span>
               </button>
               <button
                 onClick={() => handleSystemReset('benchmark')}
                 title="Load the standard 15-step verified benchmark scenario"
-                className="h-7 px-2.5 flex items-center rounded-md text-purple-700 dark:text-purple-300 hover:bg-white dark:hover:bg-purple-900/60 hover:text-purple-900 dark:hover:text-purple-200 font-bold transition-all cursor-pointer text-[11px] whitespace-nowrap shrink-0"
+                className="h-7 px-2 sm:px-2.5 flex items-center rounded-md text-purple-700 dark:text-purple-300 hover:bg-white dark:hover:bg-purple-900/60 hover:text-purple-900 dark:hover:text-purple-200 font-bold transition-all cursor-pointer text-[11px] whitespace-nowrap shrink-0"
               >
-                Load Demo
+                <span className="sm:hidden">Demo</span>
+                <span className="hidden sm:inline">Load Demo</span>
               </button>
               <button
                 onClick={() => handleSystemReset('blank')}
                 title="Wipe state to 0 for custom input (for new users starting fresh)"
-                className="h-7 px-2.5 flex items-center rounded-md text-slate-500 dark:text-slate-400 hover:bg-white dark:hover:bg-purple-900/60 hover:text-slate-700 dark:hover:text-slate-200 font-semibold transition-all cursor-pointer text-[11px] whitespace-nowrap shrink-0"
+                className="h-7 px-2 sm:px-2.5 flex items-center rounded-md text-slate-500 dark:text-slate-400 hover:bg-white dark:hover:bg-purple-900/60 hover:text-slate-700 dark:hover:text-slate-200 font-semibold transition-all cursor-pointer text-[11px] whitespace-nowrap shrink-0"
               >
-                Clean Slate
+                <span className="sm:hidden">Clean</span>
+                <span className="hidden sm:inline">Clean Slate</span>
               </button>
             </div>
 
@@ -1112,10 +1115,10 @@ export default function App() {
               </div>
               <button
                 onClick={handleLogout}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-rose-50 dark:bg-rose-950/40 hover:bg-rose-100 dark:hover:bg-rose-900/60 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-900/60 rounded-lg text-xs font-bold transition-all shadow-sm cursor-pointer ml-1"
+                className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 bg-rose-50 dark:bg-rose-950/40 hover:bg-rose-100 dark:hover:bg-rose-900/60 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-900/60 rounded-lg text-xs font-bold transition-all shadow-sm cursor-pointer ml-1"
                 title="Sign out of Stockledger"
               >
-                <LogOut className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400" />
+                <LogOut className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400 shrink-0" />
                 <span className="hidden sm:inline">Log Out</span>
               </button>
             </div>
@@ -1123,17 +1126,17 @@ export default function App() {
         </header>
 
         {/* Content Body */}
-        <main className="p-8 space-y-6 max-w-7xl w-full mx-auto">
+        <main className="p-3.5 sm:p-6 lg:p-8 space-y-6 max-w-7xl w-full mx-auto">
           {/* ===================== VIEW 1: DASHBOARD ===================== */}
           {activeTab === 'dashboard' && (
             <div className="space-y-6">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                  <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Manufacturing & Commercial Overview</h2>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">Live operational indicators connected to backend REST endpoints and stock ledger.</p>
+                  <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Manufacturing & Commercial Overview</h2>
+                  <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Live operational indicators connected to backend REST endpoints and stock ledger.</p>
                 </div>
-                <div className="flex items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-300 bg-white dark:bg-[#150F24] px-3 py-1.5 rounded-lg border border-slate-200 dark:border-purple-900/40 shadow-sm">
-                  <Calendar className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                <div className="flex items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-300 bg-white dark:bg-[#150F24] px-3 py-1.5 rounded-lg border border-slate-200 dark:border-purple-900/40 shadow-sm w-fit">
+                  <Calendar className="w-4 h-4 text-purple-600 dark:text-purple-400 shrink-0" />
                   <span>Tamil Nadu Manufacturing Facility | FY 2026-27</span>
                 </div>
               </div>
@@ -1256,14 +1259,14 @@ export default function App() {
           {/* ===================== VIEW 2: SALES & INVOICING ===================== */}
           {activeTab === 'invoicing' && (
             <div className="space-y-6">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                  <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Commercial Orders & GST Invoices</h2>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">Order approval, real-time inventory shortage verification, dispatch, and partial payments.</p>
+                  <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Commercial Orders & GST Invoices</h2>
+                  <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Order approval, real-time inventory shortage verification, dispatch, and partial payments.</p>
                 </div>
                 <button
                   onClick={() => setShowOrderModal(true)}
-                  className="flex items-center gap-2 bg-purple-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-purple-700 shadow-sm cursor-pointer"
+                  className="flex items-center gap-2 bg-purple-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-purple-700 shadow-sm cursor-pointer w-fit"
                 >
                   <Plus className="w-4 h-4" />
                   Create Sales Order
@@ -1276,63 +1279,65 @@ export default function App() {
                   <span>Sales Orders & Shortage Exception Workflow</span>
                   <span className="text-slate-500 dark:text-slate-400 font-mono font-normal">Total: {salesOrders.length} orders</span>
                 </div>
-                <table className="w-full text-left text-xs">
-                  <thead className="bg-slate-100 dark:bg-[#1C1433] text-slate-600 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-purple-900/40">
-                    <tr>
-                      <th className="p-3.5">Order No</th>
-                      <th className="p-3.5">Customer Name</th>
-                      <th className="p-3.5 text-right">Ordered Qty</th>
-                      <th className="p-3.5 text-right">Total (Incl GST)</th>
-                      <th className="p-3.5 text-center">Status</th>
-                      <th className="p-3.5 text-right">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-100 dark:divide-purple-950/40 font-mono">
-                    {salesOrders.length === 0 ? (
+                <div className="overflow-x-auto scrollbar-thin">
+                  <table className="w-full text-left text-xs whitespace-nowrap">
+                    <thead className="bg-slate-100 dark:bg-[#1C1433] text-slate-600 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-purple-900/40">
                       <tr>
-                        <td colSpan={6} className="p-8 text-center text-slate-400 dark:text-slate-500 font-sans">
-                          No sales orders found. Click "Create Sales Order" to test the order lifecycle.
-                        </td>
+                        <th className="p-3.5">Order No</th>
+                        <th className="p-3.5">Customer Name</th>
+                        <th className="p-3.5 text-right">Ordered Qty</th>
+                        <th className="p-3.5 text-right">Total (Incl GST)</th>
+                        <th className="p-3.5 text-center">Status</th>
+                        <th className="p-3.5 text-right">Action</th>
                       </tr>
-                    ) : (
-                      salesOrders.map((o) => (
-                        <tr key={o.id} className="hover:bg-slate-50 dark:hover:bg-purple-950/30 transition-colors">
-                          <td className="p-3.5 font-bold text-purple-900 dark:text-purple-300">{o.orderNumber}</td>
-                          <td className="p-3.5 font-sans font-medium text-slate-800 dark:text-slate-200">{o.customerName}</td>
-                          <td className="p-3.5 text-right font-bold text-slate-900 dark:text-white">{o.orderedQty} pkts</td>
-                          <td className="p-3.5 text-right font-bold text-slate-900 dark:text-white">₹{o.totalOrderValue.toFixed(2)}</td>
-                          <td className="p-3.5 text-center font-sans">
-                            <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold ${
-                              o.status === 'SHORTAGE_EXCEPTION'
-                                ? 'bg-amber-100 dark:bg-amber-950/70 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-700'
-                                : o.status === 'DISPATCHED'
-                                ? 'bg-green-100 dark:bg-emerald-950/70 text-green-800 dark:text-emerald-300 border border-green-300 dark:border-emerald-700'
-                                : 'bg-purple-100 dark:bg-purple-950/70 text-purple-800 dark:text-purple-300 border border-purple-300 dark:border-purple-700'
-                            }`}>
-                              {o.status === 'SHORTAGE_EXCEPTION' ? `SHORTAGE (Deficit: ${o.shortageQty} pkts)` : o.status}
-                            </span>
-                          </td>
-                          <td className="p-3.5 text-right font-sans">
-                            {o.status === 'SUBMITTED' ? (
-                              <button
-                                onClick={() => handleApproveOrder(o.id)}
-                                className="bg-emerald-600 text-white px-3 py-1 rounded text-xs font-bold hover:bg-emerald-700 shadow-sm cursor-pointer"
-                              >
-                                Approve & Dispatch
-                              </button>
-                            ) : o.status === 'SHORTAGE_EXCEPTION' ? (
-                              <span className="text-[11px] text-amber-700 dark:text-amber-300 font-bold bg-amber-50 dark:bg-amber-950/50 px-2 py-1 rounded border border-amber-200 dark:border-amber-800/60">
-                                Blocked: Need Production
-                              </span>
-                            ) : (
-                              <span className="text-[11px] text-green-700 dark:text-emerald-400 font-bold">Dispatched</span>
-                            )}
+                    </thead>
+                    <tbody className="divide-y divide-slate-100 dark:divide-purple-950/40 font-mono">
+                      {salesOrders.length === 0 ? (
+                        <tr>
+                          <td colSpan={6} className="p-8 text-center text-slate-400 dark:text-slate-500 font-sans">
+                            No sales orders found. Click "Create Sales Order" to test the order lifecycle.
                           </td>
                         </tr>
-                      ))
-                    )}
-                  </tbody>
-                </table>
+                      ) : (
+                        salesOrders.map((o) => (
+                          <tr key={o.id} className="hover:bg-slate-50 dark:hover:bg-purple-950/30 transition-colors">
+                            <td className="p-3.5 font-bold text-purple-900 dark:text-purple-300">{o.orderNumber}</td>
+                            <td className="p-3.5 font-sans font-medium text-slate-800 dark:text-slate-200">{o.customerName}</td>
+                            <td className="p-3.5 text-right font-bold text-slate-900 dark:text-white">{o.orderedQty} pkts</td>
+                            <td className="p-3.5 text-right font-bold text-slate-900 dark:text-white">₹{o.totalOrderValue.toFixed(2)}</td>
+                            <td className="p-3.5 text-center font-sans">
+                              <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold ${
+                                o.status === 'SHORTAGE_EXCEPTION'
+                                  ? 'bg-amber-100 dark:bg-amber-950/70 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-700'
+                                  : o.status === 'DISPATCHED'
+                                  ? 'bg-green-100 dark:bg-emerald-950/70 text-green-800 dark:text-emerald-300 border border-green-300 dark:border-emerald-700'
+                                  : 'bg-purple-100 dark:bg-purple-950/70 text-purple-800 dark:text-purple-300 border border-purple-300 dark:border-purple-700'
+                              }`}>
+                                {o.status === 'SHORTAGE_EXCEPTION' ? `SHORTAGE (Deficit: ${o.shortageQty} pkts)` : o.status}
+                              </span>
+                            </td>
+                            <td className="p-3.5 text-right font-sans">
+                              {o.status === 'SUBMITTED' ? (
+                                <button
+                                  onClick={() => handleApproveOrder(o.id)}
+                                  className="bg-emerald-600 text-white px-3 py-1 rounded text-xs font-bold hover:bg-emerald-700 shadow-sm cursor-pointer"
+                                >
+                                  Approve & Dispatch
+                                </button>
+                              ) : o.status === 'SHORTAGE_EXCEPTION' ? (
+                                <span className="text-[11px] text-amber-700 dark:text-amber-300 font-bold bg-amber-50 dark:bg-amber-950/50 px-2 py-1 rounded border border-amber-200 dark:border-amber-800/60">
+                                  Blocked: Need Production
+                                </span>
+                              ) : (
+                                <span className="text-[11px] text-green-700 dark:text-emerald-400 font-bold">Dispatched</span>
+                              )}
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
               </div>
 
               {/* Invoices & Payments Table */}
@@ -1341,68 +1346,70 @@ export default function App() {
                   <span>GST Tax Invoices & Partial Payment Reconciliation</span>
                   <span className="text-slate-500 dark:text-slate-400 font-mono font-normal">Total: {invoices.length} invoices</span>
                 </div>
-                <table className="w-full text-left text-xs">
-                  <thead className="bg-slate-100 dark:bg-[#1C1433] text-slate-600 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-purple-900/40">
-                    <tr>
-                      <th className="p-3.5">Invoice No</th>
-                      <th className="p-3.5">Customer</th>
-                      <th className="p-3.5 text-right">Taxable (₹)</th>
-                      <th className="p-3.5 text-right">GST 5% (₹)</th>
-                      <th className="p-3.5 text-right">Total (₹)</th>
-                      <th className="p-3.5 text-right">Paid (₹)</th>
-                      <th className="p-3.5 text-right">Balance Due</th>
-                      <th className="p-3.5 text-center">Status</th>
-                      <th className="p-3.5 text-right">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-100 dark:divide-purple-950/40 font-mono">
-                    {invoices.length === 0 ? (
+                <div className="overflow-x-auto scrollbar-thin">
+                  <table className="w-full text-left text-xs whitespace-nowrap">
+                    <thead className="bg-slate-100 dark:bg-[#1C1433] text-slate-600 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-purple-900/40">
                       <tr>
-                        <td colSpan={9} className="p-8 text-center text-slate-400 dark:text-slate-500 font-sans">
-                          No invoices generated yet. Invoices are automatically generated when a sales order is approved and dispatched.
-                        </td>
+                        <th className="p-3.5">Invoice No</th>
+                        <th className="p-3.5">Customer</th>
+                        <th className="p-3.5 text-right">Taxable (₹)</th>
+                        <th className="p-3.5 text-right">GST 5% (₹)</th>
+                        <th className="p-3.5 text-right">Total (₹)</th>
+                        <th className="p-3.5 text-right">Paid (₹)</th>
+                        <th className="p-3.5 text-right">Balance Due</th>
+                        <th className="p-3.5 text-center">Status</th>
+                        <th className="p-3.5 text-right">Action</th>
                       </tr>
-                    ) : (
-                      invoices.map((inv) => (
-                        <tr key={inv.id} className="hover:bg-slate-50 dark:hover:bg-purple-950/30 transition-colors">
-                          <td className="p-3.5 font-bold text-purple-900 dark:text-purple-300">{inv.invoiceNumber}</td>
-                          <td className="p-3.5 font-sans font-medium text-slate-800 dark:text-slate-200">{inv.customerName}</td>
-                          <td className="p-3.5 text-right text-slate-700 dark:text-slate-300">₹{inv.taxableValue.toFixed(2)}</td>
-                          <td className="p-3.5 text-right text-slate-500 dark:text-slate-400">
-                            ₹{(inv.cgstAmount + inv.sgstAmount).toFixed(2)}
-                            <span className="text-[10px] block text-slate-400 dark:text-slate-500">CGST+SGST</span>
-                          </td>
-                          <td className="p-3.5 text-right font-black text-slate-900 dark:text-white">₹{inv.totalInvoiceAmount.toFixed(2)}</td>
-                          <td className="p-3.5 text-right text-green-700 dark:text-emerald-400 font-bold">₹{inv.paidAmount.toFixed(2)}</td>
-                          <td className="p-3.5 text-right text-red-600 dark:text-rose-400 font-black">₹{inv.balanceAmount.toFixed(2)}</td>
-                          <td className="p-3.5 text-center font-sans">
-                            <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                              inv.status === 'PAID' ? 'bg-green-100 dark:bg-emerald-950/70 text-green-800 dark:text-emerald-300' : 'bg-purple-100 dark:bg-purple-950/70 text-purple-800 dark:text-purple-300'
-                            }`}>
-                              {inv.status}
-                            </span>
-                          </td>
-                          <td className="p-3.5 text-right font-sans">
-                            {inv.balanceAmount > 0 ? (
-                              <button
-                                onClick={() => {
-                                  setSelectedInvoice(inv);
-                                  setPaymentAmountInput(inv.balanceAmount.toFixed(2));
-                                  setShowPaymentModal(true);
-                                }}
-                                className="bg-purple-600 text-white px-2.5 py-1 rounded text-xs font-bold hover:bg-purple-700 shadow-sm cursor-pointer"
-                              >
-                                Record Payment
-                              </button>
-                            ) : (
-                              <span className="text-green-700 dark:text-emerald-400 font-bold text-xs">Cleared</span>
-                            )}
+                    </thead>
+                    <tbody className="divide-y divide-slate-100 dark:divide-purple-950/40 font-mono">
+                      {invoices.length === 0 ? (
+                        <tr>
+                          <td colSpan={9} className="p-8 text-center text-slate-400 dark:text-slate-500 font-sans">
+                            No invoices generated yet. Invoices are automatically generated when a sales order is approved and dispatched.
                           </td>
                         </tr>
-                      ))
-                    )}
-                  </tbody>
-                </table>
+                      ) : (
+                        invoices.map((inv) => (
+                          <tr key={inv.id} className="hover:bg-slate-50 dark:hover:bg-purple-950/30 transition-colors">
+                            <td className="p-3.5 font-bold text-purple-900 dark:text-purple-300">{inv.invoiceNumber}</td>
+                            <td className="p-3.5 font-sans font-medium text-slate-800 dark:text-slate-200">{inv.customerName}</td>
+                            <td className="p-3.5 text-right text-slate-700 dark:text-slate-300">₹{inv.taxableValue.toFixed(2)}</td>
+                            <td className="p-3.5 text-right text-slate-500 dark:text-slate-400">
+                              ₹{(inv.cgstAmount + inv.sgstAmount).toFixed(2)}
+                              <span className="text-[10px] block text-slate-400 dark:text-slate-500">CGST+SGST</span>
+                            </td>
+                            <td className="p-3.5 text-right font-black text-slate-900 dark:text-white">₹{inv.totalInvoiceAmount.toFixed(2)}</td>
+                            <td className="p-3.5 text-right text-green-700 dark:text-emerald-400 font-bold">₹{inv.paidAmount.toFixed(2)}</td>
+                            <td className="p-3.5 text-right text-red-600 dark:text-rose-400 font-black">₹{inv.balanceAmount.toFixed(2)}</td>
+                            <td className="p-3.5 text-center font-sans">
+                              <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                                inv.status === 'PAID' ? 'bg-green-100 dark:bg-emerald-950/70 text-green-800 dark:text-emerald-300' : 'bg-purple-100 dark:bg-purple-950/70 text-purple-800 dark:text-purple-300'
+                              }`}>
+                                {inv.status}
+                              </span>
+                            </td>
+                            <td className="p-3.5 text-right font-sans">
+                              {inv.balanceAmount > 0 ? (
+                                <button
+                                  onClick={() => {
+                                    setSelectedInvoice(inv);
+                                    setPaymentAmountInput(inv.balanceAmount.toFixed(2));
+                                    setShowPaymentModal(true);
+                                  }}
+                                  className="bg-purple-600 text-white px-2.5 py-1 rounded text-xs font-bold hover:bg-purple-700 shadow-sm cursor-pointer"
+                                >
+                                  Record Payment
+                                </button>
+                              ) : (
+                                <span className="text-green-700 dark:text-emerald-400 font-bold text-xs">Cleared</span>
+                              )}
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           )}
@@ -1410,14 +1417,14 @@ export default function App() {
           {/* ===================== VIEW 3: PRODUCTION ===================== */}
           {activeTab === 'production' && (
             <div className="space-y-6">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                  <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Production Batches & Costing</h2>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">Bill of Materials execution, yield variance, oil consumption, and unit packet costing.</p>
+                  <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Production Batches & Costing</h2>
+                  <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Bill of Materials execution, yield variance, oil consumption, and unit packet costing.</p>
                 </div>
                 <button
                   onClick={() => setShowBatchModal(true)}
-                  className="flex items-center gap-2 bg-amber-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-amber-700 shadow-sm cursor-pointer"
+                  className="flex items-center gap-2 bg-amber-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-amber-700 shadow-sm cursor-pointer w-fit"
                 >
                   <Plus className="w-4 h-4" />
                   Run Production Batch
@@ -1466,7 +1473,7 @@ export default function App() {
                   ) : (
                     batches.map((b) => (
                       <div key={b.id} className="p-5 hover:bg-slate-50/50 dark:hover:bg-purple-950/30 transition-colors">
-                        <div className="flex items-center justify-between mb-3">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
                           <div className="flex items-center gap-3">
                             <span className="font-bold text-slate-900 dark:text-white text-sm font-mono">{b.batchNumber}</span>
                             <span className="text-xs text-slate-600 dark:text-slate-300 font-medium">{b.productName}</span>
@@ -1516,14 +1523,14 @@ export default function App() {
           {/* ===================== VIEW 4: WAREHOUSE & MATERIALS ===================== */}
           {activeTab === 'materials' && (
             <div className="space-y-6">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                  <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Warehouse Raw & Packaging Materials</h2>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">Live stock on hand, weighted-average valuation, inward purchases (GRN), and reorder alerts.</p>
+                  <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Warehouse Raw & Packaging Materials</h2>
+                  <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Live stock on hand, weighted-average valuation, inward purchases (GRN), and reorder alerts.</p>
                 </div>
                 <button
                   onClick={() => setShowPurchaseModal(true)}
-                  className="flex items-center gap-2 bg-emerald-700 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-emerald-800 shadow-sm cursor-pointer"
+                  className="flex items-center gap-2 bg-emerald-700 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-emerald-800 shadow-sm cursor-pointer w-fit"
                 >
                   <Package className="w-4 h-4" />
                   Record Inward Purchase (GRN)
@@ -1532,52 +1539,54 @@ export default function App() {
 
               {/* Materials Table */}
               <div className="bg-white dark:bg-[#150F24] rounded-xl border border-slate-200 dark:border-purple-900/40 shadow-sm overflow-hidden transition-colors">
-                <table className="w-full text-left text-xs">
-                  <thead className="bg-slate-100 dark:bg-[#1C1433] text-slate-600 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-purple-900/40">
-                    <tr>
-                      <th className="p-3.5">Code</th>
-                      <th className="p-3.5">Material Name</th>
-                      <th className="p-3.5">Category</th>
-                      <th className="p-3.5 text-right">Stock on Hand</th>
-                      <th className="p-3.5 text-right">Weighted Rate</th>
-                      <th className="p-3.5 text-right">Total Valuation</th>
-                      <th className="p-3.5 text-center">Reorder Status</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-100 dark:divide-purple-950/40 font-mono">
-                    {materials.map((m) => {
-                      const valuation = m.currentStock * m.currentWeightedRate;
-                      const isLowStock = m.currentStock <= m.minReorderQty;
-                      return (
-                        <tr key={m.id} className="hover:bg-slate-50 dark:hover:bg-purple-950/30 transition-colors">
-                          <td className="p-3.5 font-bold text-purple-900 dark:text-purple-300">{m.code}</td>
-                          <td className="p-3.5 font-sans font-semibold text-slate-900 dark:text-white">{m.name}</td>
-                          <td className="p-3.5 font-sans">
-                            <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                              m.category === 'RAW' ? 'bg-amber-100 dark:bg-amber-950/70 text-amber-800 dark:text-amber-300' : 'bg-purple-100 dark:bg-purple-950/70 text-purple-800 dark:text-purple-300'
-                            }`}>
-                              {m.category}
-                            </span>
-                          </td>
-                          <td className="p-3.5 text-right font-black text-slate-900 dark:text-white">{m.currentStock} {m.uom}</td>
-                          <td className="p-3.5 text-right font-bold text-slate-700 dark:text-slate-300">₹{m.currentWeightedRate.toFixed(4)}</td>
-                          <td className="p-3.5 text-right font-black text-slate-900 dark:text-white">₹{valuation.toFixed(2)}</td>
-                          <td className="p-3.5 text-center font-sans">
-                            {isLowStock ? (
-                              <span className="bg-red-100 dark:bg-rose-950/70 text-red-800 dark:text-rose-300 px-2 py-0.5 rounded text-[10px] font-bold">
-                                Low Stock Alert
+                <div className="overflow-x-auto scrollbar-thin">
+                  <table className="w-full text-left text-xs whitespace-nowrap">
+                    <thead className="bg-slate-100 dark:bg-[#1C1433] text-slate-600 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-purple-900/40">
+                      <tr>
+                        <th className="p-3.5">Code</th>
+                        <th className="p-3.5">Material Name</th>
+                        <th className="p-3.5">Category</th>
+                        <th className="p-3.5 text-right">Stock on Hand</th>
+                        <th className="p-3.5 text-right">Weighted Rate</th>
+                        <th className="p-3.5 text-right">Total Valuation</th>
+                        <th className="p-3.5 text-center">Reorder Status</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100 dark:divide-purple-950/40 font-mono">
+                      {materials.map((m) => {
+                        const valuation = m.currentStock * m.currentWeightedRate;
+                        const isLowStock = m.currentStock <= m.minReorderQty;
+                        return (
+                          <tr key={m.id} className="hover:bg-slate-50 dark:hover:bg-purple-950/30 transition-colors">
+                            <td className="p-3.5 font-bold text-purple-900 dark:text-purple-300">{m.code}</td>
+                            <td className="p-3.5 font-sans font-semibold text-slate-900 dark:text-white">{m.name}</td>
+                            <td className="p-3.5 font-sans">
+                              <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                                m.category === 'RAW' ? 'bg-amber-100 dark:bg-amber-950/70 text-amber-800 dark:text-amber-300' : 'bg-purple-100 dark:bg-purple-950/70 text-purple-800 dark:text-purple-300'
+                              }`}>
+                                {m.category}
                               </span>
-                            ) : (
-                              <span className="bg-green-100 dark:bg-emerald-950/70 text-green-800 dark:text-emerald-300 px-2 py-0.5 rounded text-[10px] font-bold">
-                                Adequate
-                              </span>
-                            )}
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
+                            </td>
+                            <td className="p-3.5 text-right font-black text-slate-900 dark:text-white">{m.currentStock} {m.uom}</td>
+                            <td className="p-3.5 text-right font-bold text-slate-700 dark:text-slate-300">₹{m.currentWeightedRate.toFixed(4)}</td>
+                            <td className="p-3.5 text-right font-black text-slate-900 dark:text-white">₹{valuation.toFixed(2)}</td>
+                            <td className="p-3.5 text-center font-sans">
+                              {isLowStock ? (
+                                <span className="bg-red-100 dark:bg-rose-950/70 text-red-800 dark:text-rose-300 px-2 py-0.5 rounded text-[10px] font-bold">
+                                  Low Stock Alert
+                                </span>
+                              ) : (
+                                <span className="bg-green-100 dark:bg-emerald-950/70 text-green-800 dark:text-emerald-300 px-2 py-0.5 rounded text-[10px] font-bold">
+                                  Adequate
+                                </span>
+                              )}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           )}
@@ -1585,53 +1594,55 @@ export default function App() {
           {/* ===================== VIEW 5: DOUBLE-ENTRY LEDGER ===================== */}
           {activeTab === 'ledger' && (
             <div className="space-y-6">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                  <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Immutable Double-Entry Stock Movement Ledger</h2>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">Every inventory movement requires an explicit journal entry, reference document, and running balance.</p>
+                  <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Immutable Double-Entry Stock Movement Ledger</h2>
+                  <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Every inventory movement requires an explicit journal entry, reference document, and running balance.</p>
                 </div>
-                <div className="text-xs font-mono text-slate-500 dark:text-slate-300 bg-white dark:bg-[#150F24] px-3 py-1.5 rounded-lg border border-slate-200 dark:border-purple-900/40 shadow-sm">
+                <div className="text-xs font-mono text-slate-500 dark:text-slate-300 bg-white dark:bg-[#150F24] px-3 py-1.5 rounded-lg border border-slate-200 dark:border-purple-900/40 shadow-sm w-fit">
                   Total Entries: <strong className="text-slate-900 dark:text-white">{stockLedger.length}</strong>
                 </div>
               </div>
 
               <div className="bg-white dark:bg-[#150F24] rounded-xl border border-slate-200 dark:border-purple-900/40 shadow-sm overflow-hidden transition-colors">
-                <table className="w-full text-left text-xs font-mono">
-                  <thead className="bg-slate-100 dark:bg-[#1C1433] text-slate-600 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-purple-900/40 font-sans">
-                    <tr>
-                      <th className="p-3.5">Journal Ref</th>
-                      <th className="p-3.5">Item Name</th>
-                      <th className="p-3.5">Movement Type</th>
-                      <th className="p-3.5 text-right">Change</th>
-                      <th className="p-3.5 text-right">Balance After</th>
-                      <th className="p-3.5">Reference Doc</th>
-                      <th className="p-3.5">Actor</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-100 dark:divide-purple-950/40">
-                    {stockLedger.map((row) => (
-                      <tr key={row.id} className="hover:bg-slate-50 dark:hover:bg-purple-950/30 transition-colors">
-                        <td className="p-3.5 font-bold text-purple-600 dark:text-purple-400">{row.transactionRef}</td>
-                        <td className="p-3.5 font-sans font-medium text-slate-900 dark:text-white">{row.itemName}</td>
-                        <td className="p-3.5 font-sans">
-                          <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                            row.movementType.includes('PURCHASE') || row.movementType.includes('YIELD') || row.movementType.includes('OPENING')
-                              ? 'bg-green-100 dark:bg-emerald-950/70 text-green-800 dark:text-emerald-300'
-                              : 'bg-amber-100 dark:bg-amber-950/70 text-amber-800 dark:text-amber-300'
-                          }`}>
-                            {row.movementType}
-                          </span>
-                        </td>
-                        <td className={`p-3.5 text-right font-bold ${row.quantityIn > 0 ? 'text-green-700 dark:text-emerald-400' : 'text-red-600 dark:text-rose-400'}`}>
-                          {row.quantityIn > 0 ? `+${row.quantityIn} ${row.uom}` : `-${row.quantityOut} ${row.uom}`}
-                        </td>
-                        <td className="p-3.5 text-right font-black text-slate-900 dark:text-white">{row.balanceAfter} {row.uom}</td>
-                        <td className="p-3.5 font-sans text-slate-700 dark:text-slate-300">{row.referenceDoc}</td>
-                        <td className="p-3.5 font-sans text-slate-500 dark:text-slate-400">{row.actor}</td>
+                <div className="overflow-x-auto scrollbar-thin">
+                  <table className="w-full text-left text-xs font-mono whitespace-nowrap">
+                    <thead className="bg-slate-100 dark:bg-[#1C1433] text-slate-600 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-purple-900/40 font-sans">
+                      <tr>
+                        <th className="p-3.5">Journal Ref</th>
+                        <th className="p-3.5">Item Name</th>
+                        <th className="p-3.5">Movement Type</th>
+                        <th className="p-3.5 text-right">Change</th>
+                        <th className="p-3.5 text-right">Balance After</th>
+                        <th className="p-3.5">Reference Doc</th>
+                        <th className="p-3.5">Actor</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100 dark:divide-purple-950/40">
+                      {stockLedger.map((row) => (
+                        <tr key={row.id} className="hover:bg-slate-50 dark:hover:bg-purple-950/30 transition-colors">
+                          <td className="p-3.5 font-bold text-purple-600 dark:text-purple-400">{row.transactionRef}</td>
+                          <td className="p-3.5 font-sans font-medium text-slate-900 dark:text-white">{row.itemName}</td>
+                          <td className="p-3.5 font-sans">
+                            <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                              row.movementType.includes('PURCHASE') || row.movementType.includes('YIELD') || row.movementType.includes('OPENING')
+                                ? 'bg-green-100 dark:bg-emerald-950/70 text-green-800 dark:text-emerald-300'
+                                : 'bg-amber-100 dark:bg-amber-950/70 text-amber-800 dark:text-amber-300'
+                            }`}>
+                              {row.movementType}
+                            </span>
+                          </td>
+                          <td className={`p-3.5 text-right font-bold ${row.quantityIn > 0 ? 'text-green-700 dark:text-emerald-400' : 'text-red-600 dark:text-rose-400'}`}>
+                            {row.quantityIn > 0 ? `+${row.quantityIn} ${row.uom}` : `-${row.quantityOut} ${row.uom}`}
+                          </td>
+                          <td className="p-3.5 text-right font-black text-slate-900 dark:text-white">{row.balanceAfter} {row.uom}</td>
+                          <td className="p-3.5 font-sans text-slate-700 dark:text-slate-300">{row.referenceDoc}</td>
+                          <td className="p-3.5 font-sans text-slate-500 dark:text-slate-400">{row.actor}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           )}
@@ -1639,12 +1650,12 @@ export default function App() {
           {/* ===================== VIEW 6: STANDARD BENCHMARK PROOF ===================== */}
           {activeTab === 'benchmark' && (
             <div className="space-y-6">
-              <div className="bg-white dark:bg-[#150F24] p-6 rounded-xl border border-slate-200 dark:border-purple-900/40 shadow-sm flex items-center justify-between transition-colors">
+              <div className="bg-white dark:bg-[#150F24] p-4 sm:p-6 rounded-xl border border-slate-200 dark:border-purple-900/40 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition-colors">
                 <div>
-                  <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Standard Manufacturing Benchmark Verification</h2>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">Automated acceptance proof against the 15-step South Indian Food Manufacturing scenario.</p>
+                  <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Standard Manufacturing Benchmark Verification</h2>
+                  <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Automated acceptance proof against the 15-step South Indian Food Manufacturing scenario.</p>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 shrink-0">
                   <span className="inline-flex items-center gap-1.5 bg-green-100 dark:bg-emerald-950/70 text-green-800 dark:text-emerald-300 px-3 py-1.5 rounded-full text-xs font-bold border border-green-200 dark:border-emerald-800">
                     <CheckCircle2 className="w-4 h-4 text-green-600 dark:text-emerald-400" />
                     All 15 Criteria 100% Passed
@@ -1655,7 +1666,7 @@ export default function App() {
               {/* 15 Steps Verification Grid */}
               <div className="space-y-3">
                 {benchmarkSteps.map((step) => (
-                  <div key={step.id} className="bg-white dark:bg-[#150F24] p-4 rounded-xl border border-slate-200 dark:border-purple-900/40 shadow-sm flex items-start gap-4 transition-colors">
+                  <div key={step.id} className="bg-white dark:bg-[#150F24] p-4 rounded-xl border border-slate-200 dark:border-purple-900/40 shadow-sm flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 transition-colors">
                     <div className="w-8 h-8 rounded-full bg-purple-50 dark:bg-purple-950/70 text-purple-900 dark:text-purple-300 font-bold flex items-center justify-center shrink-0 text-xs border border-purple-200 dark:border-purple-800/80">
                       #{step.id}
                     </div>
@@ -1681,10 +1692,10 @@ export default function App() {
           {/* ===================== VIEW 7: TRACEABILITY & AUDIT ===================== */}
           {activeTab === 'audit' && (
             <div className="space-y-6">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                  <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Lot Traceability & Statutory Audit</h2>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">Unbroken chain of custody from raw material supplier GRN to customer invoice delivery.</p>
+                  <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Lot Traceability & Statutory Audit</h2>
+                  <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Unbroken chain of custody from raw material supplier GRN to customer invoice delivery.</p>
                 </div>
               </div>
 
@@ -1734,8 +1745,8 @@ export default function App() {
 
       {/* ===================== MODAL 1: CREATE SALES ORDER ===================== */}
       {showOrderModal && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-[#150F24] rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-purple-900/40 text-slate-900 dark:text-slate-100 transition-colors">
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white dark:bg-[#150F24] rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-2xl border border-slate-200 dark:border-purple-900/40 text-slate-900 dark:text-slate-100 transition-colors max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-base font-bold text-slate-900 dark:text-white">Create New Sales Order</h3>
               <button onClick={() => setShowOrderModal(false)} className="text-slate-400 hover:text-slate-600 dark:hover:text-white cursor-pointer">
@@ -1835,8 +1846,8 @@ export default function App() {
 
       {/* ===================== MODAL 2: INWARD PURCHASE GRN ===================== */}
       {showPurchaseModal && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-[#150F24] rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-purple-900/40 text-slate-900 dark:text-slate-100 transition-colors">
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white dark:bg-[#150F24] rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-2xl border border-slate-200 dark:border-purple-900/40 text-slate-900 dark:text-slate-100 transition-colors max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-base font-bold text-slate-900 dark:text-white">Record Inward Material Purchase (GRN)</h3>
               <button onClick={() => setShowPurchaseModal(false)} className="text-slate-400 hover:text-slate-600 dark:hover:text-white cursor-pointer">
@@ -1933,8 +1944,8 @@ export default function App() {
 
       {/* ===================== MODAL 3: RUN PRODUCTION BATCH ===================== */}
       {showBatchModal && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-[#150F24] rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-purple-900/40 text-slate-900 dark:text-slate-100 transition-colors">
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white dark:bg-[#150F24] rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-2xl border border-slate-200 dark:border-purple-900/40 text-slate-900 dark:text-slate-100 transition-colors max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-base font-bold text-slate-900 dark:text-white">Run Production Batch (Murukku 200g)</h3>
               <button onClick={() => setShowBatchModal(false)} className="text-slate-400 hover:text-slate-600 dark:hover:text-white cursor-pointer">
@@ -2033,8 +2044,8 @@ export default function App() {
 
       {/* ===================== MODAL 4: RECORD PAYMENT ===================== */}
       {showPaymentModal && selectedInvoice && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-[#150F24] rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-slate-200 dark:border-purple-900/40 text-slate-900 dark:text-slate-100 transition-colors">
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white dark:bg-[#150F24] rounded-2xl max-w-sm w-full p-5 sm:p-6 shadow-2xl border border-slate-200 dark:border-purple-900/40 text-slate-900 dark:text-slate-100 transition-colors max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-base font-bold text-slate-900 dark:text-white">Record Customer Payment</h3>
               <button onClick={() => setShowPaymentModal(false)} className="text-slate-400 hover:text-slate-600 dark:hover:text-white cursor-pointer">
