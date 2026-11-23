@@ -2,8 +2,9 @@ import app from './app.js';
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  console.log(`
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`
   ==============================================================
   🚀 STOCKLEDGER BACKEND ONLINE
   ==============================================================
@@ -12,8 +13,9 @@ app.listen(PORT, () => {
   🎯 Benchmark Runner: http://localhost:${PORT}/api/v1/reports/benchmark/run
   🔒 Auth Portal: http://localhost:${PORT}/api/v1/auth/login
   ==============================================================
-  `);
-});
+    `);
+  });
+}
 
 export default app;
 export { app };

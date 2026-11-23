@@ -4,6 +4,16 @@ import { LandingPage } from './components/LandingPage.js';
 import { VideoSplashScreen } from './components/VideoSplashScreen.js';
 import { ThemeToggle } from './components/ThemeToggle.js';
 import {
+  benchmarkMaterials,
+  benchmarkProducts,
+  benchmarkOrders,
+  benchmarkInvoices,
+  benchmarkBatches,
+  benchmarkLedger,
+  openingMaterials,
+  openingProducts,
+} from './data/mockData.js';
+import {
   Layers,
   Package,
   Factory,
@@ -173,14 +183,16 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<'dashboard' | 'materials' | 'production' | 'invoicing' | 'ledger' | 'benchmark' | 'audit'>('dashboard');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  // ERP Domain Data States (Live from Backend)
-  const [materials, setMaterials] = useState<MaterialItem[]>([]);
-  const [products, setProducts] = useState<ProductItem[]>([]);
-  const [salesOrders, setSalesOrders] = useState<SalesOrder[]>([]);
-  const [invoices, setInvoices] = useState<Invoice[]>([]);
-  const [batches, setBatches] = useState<ProductionBatch[]>([]);
-  const [stockLedger, setStockLedger] = useState<StockLedgerEntry[]>([]);
+  // ERP Domain Data States (Live from Backend with benchmark fallback)
+  const [materials, setMaterials] = useState<MaterialItem[]>(benchmarkMaterials);
+  const [products, setProducts] = useState<ProductItem[]>(benchmarkProducts);
+  const [salesOrders, setSalesOrders] = useState<SalesOrder[]>(benchmarkOrders);
+  const [invoices, setInvoices] = useState<Invoice[]>(benchmarkInvoices);
+  const [batches, setBatches] = useState<ProductionBatch[]>(benchmarkBatches);
+  const [stockLedger, setStockLedger] = useState<StockLedgerEntry[]>(benchmarkLedger);
   const [isLoadingData, setIsLoadingData] = useState(false);
+  const [activeScenario, setActiveScenario] = useState<'benchmark' | 'opening' | 'blank'>('benchmark');
+  const [scenarioToast, setScenarioToast] = useState<string | null>(null);
 
   // Modals visibility
   const [showOrderModal, setShowOrderModal] = useState(false);
@@ -241,12 +253,12 @@ export default function App() {
         fetch('/api/v1/inventory/ledger').then(r => r.json()).catch(() => ({ data: [] })),
       ]);
 
-      if (matRes.success && matRes.data) setMaterials(matRes.data);
-      if (prodRes.success && prodRes.data) setProducts(prodRes.data);
-      if (ordersRes.success && ordersRes.data) setSalesOrders(ordersRes.data);
-      if (invRes.success && invRes.data) setInvoices(invRes.data);
-      if (batchesRes.success && batchesRes.data) setBatches(batchesRes.data);
-      if (ledgerRes.success && ledgerRes.data) setStockLedger(ledgerRes.data);
+      if (matRes.success && Array.isArray(matRes.data) && matRes.data.length > 0) setMaterials(matRes.data);
+      if (prodRes.success && Array.isArray(prodRes.data) && prodRes.data.length > 0) setProducts(prodRes.data);
+      if (ordersRes.success && Array.isArray(ordersRes.data)) setSalesOrders(ordersRes.data);
+      if (invRes.success && Array.isArray(invRes.data)) setInvoices(invRes.data);
+      if (batchesRes.success && Array.isArray(batchesRes.data)) setBatches(batchesRes.data);
+      if (ledgerRes.success && Array.isArray(ledgerRes.data)) setStockLedger(ledgerRes.data);
     } catch (err) {
       console.error('Failed to sync ERP state:', err);
     } finally {
@@ -547,6 +559,38 @@ export default function App() {
 
   // 6. Reset System State Controls
   const handleSystemReset = async (type: 'opening' | 'benchmark' | 'blank') => {
+    setActiveScenario(type);
+
+    // 1. Instantly apply client-side state so UI responds immediately in all deployment environments
+    if (type === 'opening') {
+      setMaterials(openingMaterials);
+      setProducts(openingProducts);
+      setSalesOrders([]);
+      setInvoices([]);
+      setBatches([]);
+      setStockLedger([]);
+      setScenarioToast('Warehouse reset to Opening Stock (100kg Flour, 30L Oil, 50 pkts FG). Ready for new transactions.');
+    } else if (type === 'blank') {
+      setMaterials([]);
+      setProducts([]);
+      setSalesOrders([]);
+      setInvoices([]);
+      setBatches([]);
+      setStockLedger([]);
+      setScenarioToast('Clean Slate active: All materials, products, batches, and ledger wiped.');
+    } else {
+      setMaterials(benchmarkMaterials);
+      setProducts(benchmarkProducts);
+      setSalesOrders(benchmarkOrders);
+      setInvoices(benchmarkInvoices);
+      setBatches(benchmarkBatches);
+      setStockLedger(benchmarkLedger);
+      setScenarioToast('Standard Benchmark Demo loaded (15-step verified manufacturing run).');
+    }
+    setShowResetModal(false);
+    setTimeout(() => setScenarioToast(null), 3500);
+
+    // 2. Also sync with backend asynchronously if online
     try {
       const endpoint =
         type === 'opening'
@@ -555,15 +599,9 @@ export default function App() {
           ? '/api/v1/system/reset-blank'
           : '/api/v1/system/reset-benchmark';
 
-      const res = await fetch(endpoint, { method: 'POST' });
-      const data = await res.json();
-      if (res.ok && data.success) {
-        notify(data.message);
-        setShowResetModal(false);
-        fetchAllData();
-      }
+      await fetch(endpoint, { method: 'POST' });
     } catch (err) {
-      alert('Failed to reset system data');
+      // Local state is already active
     }
   };
 
@@ -1047,7 +1085,7 @@ export default function App() {
               <button
                 onClick={() => handleSystemReset('opening')}
                 title="Reset warehouse to opening stock (100kg Flour, 30L Oil, 50 pkts FG) and 0 orders"
-                className="h-7 px-2 xl:px-2.5 flex items-center rounded-md text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-purple-900/60 hover:text-slate-900 dark:hover:text-white font-semibold transition-all cursor-pointer text-[11px] whitespace-nowrap shrink-0"
+                className={`h-7 px-2 xl:px-2.5 flex items-center rounded-md transition-all cursor-pointer text-[11px] whitespace-nowrap shrink-0 ${activeScenario === 'opening' ? 'bg-[#50128B] text-white font-bold shadow-sm' : 'text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-purple-900/60 font-semibold'}`}
               >
                 <span className="xl:hidden">Reset</span>
                 <span className="hidden xl:inline">Reset Opening</span>
@@ -1055,7 +1093,7 @@ export default function App() {
               <button
                 onClick={() => handleSystemReset('benchmark')}
                 title="Load the standard 15-step verified benchmark scenario"
-                className="h-7 px-2 xl:px-2.5 flex items-center rounded-md text-purple-700 dark:text-purple-300 hover:bg-white dark:hover:bg-purple-900/60 hover:text-purple-900 dark:hover:text-purple-200 font-bold transition-all cursor-pointer text-[11px] whitespace-nowrap shrink-0"
+                className={`h-7 px-2 xl:px-2.5 flex items-center rounded-md transition-all cursor-pointer text-[11px] whitespace-nowrap shrink-0 ${activeScenario === 'benchmark' ? 'bg-[#50128B] text-white font-bold shadow-sm' : 'text-purple-700 dark:text-purple-300 hover:bg-white dark:hover:bg-purple-900/60 font-bold'}`}
               >
                 <span className="xl:hidden">Demo</span>
                 <span className="hidden xl:inline">Load Demo</span>
@@ -1063,7 +1101,7 @@ export default function App() {
               <button
                 onClick={() => handleSystemReset('blank')}
                 title="Wipe state to 0 for custom input (for new users starting fresh)"
-                className="h-7 px-2 xl:px-2.5 flex items-center rounded-md text-slate-500 dark:text-slate-400 hover:bg-white dark:hover:bg-purple-900/60 hover:text-slate-700 dark:hover:text-slate-200 font-semibold transition-all cursor-pointer text-[11px] whitespace-nowrap shrink-0"
+                className={`h-7 px-2 xl:px-2.5 flex items-center rounded-md transition-all cursor-pointer text-[11px] whitespace-nowrap shrink-0 ${activeScenario === 'blank' ? 'bg-[#50128B] text-white font-bold shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:bg-white dark:hover:bg-purple-900/60 font-semibold'}`}
               >
                 <span className="xl:hidden">Clean</span>
                 <span className="hidden xl:inline">Clean Slate</span>
@@ -1125,6 +1163,14 @@ export default function App() {
             </div>
           </div>
         </header>
+
+        {/* Dynamic Scenario Reset Feedback Toast */}
+        {scenarioToast && (
+          <div className="fixed top-18 right-4 sm:right-6 z-50 flex items-center gap-2.5 bg-[#1E103A] text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-2xl border border-purple-500/50 backdrop-blur-md animate-fade-in">
+            <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+            <span>{scenarioToast}</span>
+          </div>
+        )}
 
         {/* Content Body */}
         <main className="p-3.5 sm:p-6 lg:p-8 space-y-6 max-w-7xl w-full mx-auto">
