@@ -1010,9 +1010,9 @@ export default function App() {
       {/* ----------------- MAIN VIEW CONTAINER ----------------- */}
       <div className="flex-1 flex flex-col overflow-y-auto w-full bg-[#F8FAFC] dark:bg-[#0A0614] text-slate-800 dark:text-slate-100 transition-colors duration-200">
         {/* Top Header with Hamburger Menu Button & User Controls */}
-        <header className="h-16 bg-white dark:bg-[#120B22] border-b border-slate-200 dark:border-purple-900/40 flex items-center justify-between px-4 sm:px-6 sticky top-0 z-10 shadow-sm transition-colors duration-200 gap-4">
+        <header className="h-16 bg-white dark:bg-[#120B22] border-b border-slate-200 dark:border-purple-900/40 flex items-center justify-between px-3.5 sm:px-6 sticky top-0 z-10 shadow-sm transition-colors duration-200 gap-2 sm:gap-4">
           {/* Left: Hamburger & Breadcrumbs */}
-          <div className="flex items-center gap-2 sm:gap-3 text-sm min-w-0 shrink-0">
+          <div className="flex items-center gap-2 sm:gap-3 text-sm min-w-0 shrink">
             <button
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
               className="h-9 w-9 p-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-purple-900/40 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-purple-800 transition-colors flex items-center justify-center shrink-0 cursor-pointer shadow-sm"
@@ -1028,14 +1028,14 @@ export default function App() {
           </div>
 
           {/* Right: Controls Toolbar */}
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
             {/* Quick button to view Landing Page */}
             <button
               onClick={() => {
                 setCurrentUser(null);
                 notify('Switched to Public Landing Page preview.');
               }}
-              className="h-9 px-3 hidden md:inline-flex items-center gap-1.5 text-xs font-semibold whitespace-nowrap shrink-0 text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-300 bg-slate-100 dark:bg-[#1A122E] hover:bg-white dark:hover:bg-purple-900/60 rounded-lg border border-slate-200 dark:border-purple-900/50 shadow-sm transition-all cursor-pointer"
+              className="h-9 px-3 hidden xl:inline-flex items-center gap-1.5 text-xs font-semibold whitespace-nowrap shrink-0 text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-300 bg-slate-100 dark:bg-[#1A122E] hover:bg-white dark:hover:bg-purple-900/60 rounded-lg border border-slate-200 dark:border-purple-900/50 shadow-sm transition-all cursor-pointer"
               title="View Public Landing Page"
             >
               <ArrowRight className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400 shrink-0" />
@@ -1047,26 +1047,26 @@ export default function App() {
               <button
                 onClick={() => handleSystemReset('opening')}
                 title="Reset warehouse to opening stock (100kg Flour, 30L Oil, 50 pkts FG) and 0 orders"
-                className="h-7 px-2 sm:px-2.5 flex items-center rounded-md text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-purple-900/60 hover:text-slate-900 dark:hover:text-white font-semibold transition-all cursor-pointer text-[11px] whitespace-nowrap shrink-0"
+                className="h-7 px-2 xl:px-2.5 flex items-center rounded-md text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-purple-900/60 hover:text-slate-900 dark:hover:text-white font-semibold transition-all cursor-pointer text-[11px] whitespace-nowrap shrink-0"
               >
-                <span className="sm:hidden">Reset</span>
-                <span className="hidden sm:inline">Reset Opening</span>
+                <span className="xl:hidden">Reset</span>
+                <span className="hidden xl:inline">Reset Opening</span>
               </button>
               <button
                 onClick={() => handleSystemReset('benchmark')}
                 title="Load the standard 15-step verified benchmark scenario"
-                className="h-7 px-2 sm:px-2.5 flex items-center rounded-md text-purple-700 dark:text-purple-300 hover:bg-white dark:hover:bg-purple-900/60 hover:text-purple-900 dark:hover:text-purple-200 font-bold transition-all cursor-pointer text-[11px] whitespace-nowrap shrink-0"
+                className="h-7 px-2 xl:px-2.5 flex items-center rounded-md text-purple-700 dark:text-purple-300 hover:bg-white dark:hover:bg-purple-900/60 hover:text-purple-900 dark:hover:text-purple-200 font-bold transition-all cursor-pointer text-[11px] whitespace-nowrap shrink-0"
               >
-                <span className="sm:hidden">Demo</span>
-                <span className="hidden sm:inline">Load Demo</span>
+                <span className="xl:hidden">Demo</span>
+                <span className="hidden xl:inline">Load Demo</span>
               </button>
               <button
                 onClick={() => handleSystemReset('blank')}
                 title="Wipe state to 0 for custom input (for new users starting fresh)"
-                className="h-7 px-2 sm:px-2.5 flex items-center rounded-md text-slate-500 dark:text-slate-400 hover:bg-white dark:hover:bg-purple-900/60 hover:text-slate-700 dark:hover:text-slate-200 font-semibold transition-all cursor-pointer text-[11px] whitespace-nowrap shrink-0"
+                className="h-7 px-2 xl:px-2.5 flex items-center rounded-md text-slate-500 dark:text-slate-400 hover:bg-white dark:hover:bg-purple-900/60 hover:text-slate-700 dark:hover:text-slate-200 font-semibold transition-all cursor-pointer text-[11px] whitespace-nowrap shrink-0"
               >
-                <span className="sm:hidden">Clean</span>
-                <span className="hidden sm:inline">Clean Slate</span>
+                <span className="xl:hidden">Clean</span>
+                <span className="hidden xl:inline">Clean Slate</span>
               </button>
             </div>
 
@@ -1102,11 +1102,11 @@ export default function App() {
             <div className="h-6 w-px bg-slate-200 dark:bg-purple-900/40 hidden sm:block mx-0.5" />
 
             {/* Logged-In User Profile & Prominent Logout Button */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 shrink-0">
               <div className="w-8 h-8 rounded-full bg-purple-700 text-white font-black text-xs flex items-center justify-center shadow-sm shrink-0">
                 {currentUser.fullName.charAt(0)}
               </div>
-              <div className="hidden lg:block text-left">
+              <div className="hidden xl:block text-left">
                 <span className="text-xs font-bold text-slate-900 dark:text-white block leading-tight truncate max-w-[120px]">
                   {currentUser.fullName}
                 </span>
@@ -1116,7 +1116,7 @@ export default function App() {
               </div>
               <button
                 onClick={handleLogout}
-                className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 bg-rose-50 dark:bg-rose-950/40 hover:bg-rose-100 dark:hover:bg-rose-900/60 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-900/60 rounded-lg text-xs font-bold transition-all shadow-sm cursor-pointer ml-1"
+                className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 bg-rose-50 dark:bg-rose-950/40 hover:bg-rose-100 dark:hover:bg-rose-900/60 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-900/60 rounded-lg text-xs font-bold transition-all shadow-sm cursor-pointer shrink-0 ml-1"
                 title="Sign out of Stockledger"
               >
                 <LogOut className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400 shrink-0" />
