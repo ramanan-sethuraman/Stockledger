@@ -1,5 +1,9 @@
 <div align="center">
-  <img src="frontend/public/logo-full.svg" alt="STOCKLEDGER Logo" width="440" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="frontend/public/stockledger-brand-light.png">
+    <source media="(prefers-color-scheme: light)" srcset="frontend/public/stockledger-brand-cropped.png">
+    <img src="frontend/public/stockledger-brand-cropped.png" alt="STOCKLEDGER Logo" width="460" />
+  </picture>
 
   ### *Every Stock. Every Transaction. Every Detail.*
   **Enterprise-grade Food Manufacturing & Inventory Management ERP**
