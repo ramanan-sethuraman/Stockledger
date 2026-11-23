@@ -192,7 +192,6 @@ export default function App() {
   const [stockLedger, setStockLedger] = useState<StockLedgerEntry[]>(benchmarkLedger);
   const [isLoadingData, setIsLoadingData] = useState(false);
   const [activeScenario, setActiveScenario] = useState<'benchmark' | 'opening' | 'blank'>('benchmark');
-  const [scenarioToast, setScenarioToast] = useState<string | null>(null);
 
   // Modals visibility
   const [showOrderModal, setShowOrderModal] = useState(false);
@@ -561,7 +560,7 @@ export default function App() {
   const handleSystemReset = async (type: 'opening' | 'benchmark' | 'blank') => {
     setActiveScenario(type);
 
-    // 1. Instantly apply client-side state so UI responds immediately in all deployment environments
+    // 1. Instantly and silently apply client-side state
     if (type === 'opening') {
       setMaterials(openingMaterials);
       setProducts(openingProducts);
@@ -569,7 +568,6 @@ export default function App() {
       setInvoices([]);
       setBatches([]);
       setStockLedger([]);
-      setScenarioToast('Warehouse reset to Opening Stock (100kg Flour, 30L Oil, 50 pkts FG). Ready for new transactions.');
     } else if (type === 'blank') {
       setMaterials([]);
       setProducts([]);
@@ -577,7 +575,6 @@ export default function App() {
       setInvoices([]);
       setBatches([]);
       setStockLedger([]);
-      setScenarioToast('Clean Slate active: All materials, products, batches, and ledger wiped.');
     } else {
       setMaterials(benchmarkMaterials);
       setProducts(benchmarkProducts);
@@ -585,10 +582,8 @@ export default function App() {
       setInvoices(benchmarkInvoices);
       setBatches(benchmarkBatches);
       setStockLedger(benchmarkLedger);
-      setScenarioToast('Standard Benchmark Demo loaded (15-step verified manufacturing run).');
     }
     setShowResetModal(false);
-    setTimeout(() => setScenarioToast(null), 3500);
 
     // 2. Also sync with backend asynchronously if online
     try {
@@ -1163,14 +1158,6 @@ export default function App() {
             </div>
           </div>
         </header>
-
-        {/* Dynamic Scenario Reset Feedback Toast */}
-        {scenarioToast && (
-          <div className="fixed top-18 right-4 sm:right-6 z-50 flex items-center gap-2.5 bg-[#1E103A] text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-2xl border border-purple-500/50 backdrop-blur-md animate-fade-in">
-            <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-            <span>{scenarioToast}</span>
-          </div>
-        )}
 
         {/* Content Body */}
         <main className="p-3.5 sm:p-6 lg:p-8 space-y-6 max-w-7xl w-full mx-auto">
